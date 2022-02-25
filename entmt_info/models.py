@@ -6,6 +6,7 @@ class Movies(models.Model):
     m_posterPath = models.CharField(max_length=50)   # 포스터 path
     m_likeCount = models.IntegerField(default=0)    # 찜 수
     m_releaseDate = models.DateField()    # 개봉일
+    m_popularity = models.FloatField()    # 인기도
 
     def __str__(self):
         return self.m_title
@@ -18,6 +19,7 @@ class Series(models.Model):
     s_likeCount = models.IntegerField(default=0)    # 찜 수
     s_firstAirDate = models.DateField()    # 첫 방영일
     s_lastAirDate = models.DateField()    # 마지막 방영일
+    s_popularity = models.FloatField()    # 인기도
 
     def __str__(self):
         return self.s_title
