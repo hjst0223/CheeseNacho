@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+AUTH_USER_MODEL = 'users.Members'
 
 # Application definition
 
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'entmt_info.apps.EntmtInfoConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'entmt_manage.apps.EntmtManageConfig',
 ]
 
 MIDDLEWARE = [
@@ -87,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cheese_db',
         'USER': 'root',
-        'PASSWORD': 'Sqlalert1!',
+        'PASSWORD': 'test1234',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
