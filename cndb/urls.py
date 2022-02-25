@@ -24,6 +24,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path('admin/', admin.site.urls),    # Admin page
     path('entmt_info/', include('entmt_info.urls')),
+    path('entmt_manage/', include('entmt_manage.urls')),
     path('users/', include('users.urls'))
 ] + static(settings.MEDIA_URL,
            document_root=settings.MEDIA_ROOT)
