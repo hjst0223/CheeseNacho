@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'entmt_info.apps.EntmtInfoConfig',
     'users.apps.UsersConfig',
     'entmt_manage.apps.EntmtManageConfig',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
