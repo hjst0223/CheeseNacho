@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My page</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block html_body %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>마</th>
+            <th>이</th>
+            <th>페</th>
+            <th>이</th>
+            <th>지</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                여기에 찜한 영화 리스트!!!
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

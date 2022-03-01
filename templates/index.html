@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block html_body %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>포스터 이미지</th>
+            <th>제목</th>
+            <th>개봉일</th>
+            <th>장르</th>
+            <th>상영 시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                여기에 영화/드라마 정보(~5위?)
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

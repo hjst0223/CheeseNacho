@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cheese_db',
         'USER': 'root',
-        'PASSWORD': 'test1234',
+        'PASSWORD': 'haejoo123',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
@@ -137,6 +137,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # http://127.0.0.1:8000/media/
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 로그인/로그아웃 성공 시
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
