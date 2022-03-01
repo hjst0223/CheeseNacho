@@ -6,6 +6,7 @@ from entmt_info import api_python # api 관련 함수 모음
 from django.db.models import Q # 두개이상의 인자를 사용해 검색할 경우
 import csv
 
+
 # Create your views here.
 
 def ei_page(request):
@@ -27,7 +28,7 @@ def ei_genre(request):
             genre.genre_id = value['id']
             genre.g_name = value['name']
             genre.save()
-    return redirect('entmt_info:ei_import')
+    return redirect('entmt_info:ei_page')
 
 
 # 영화 세부정보, genre import
@@ -64,7 +65,7 @@ def ei_movie(request):
                     m_genre.save()
 
     # f.close() # with open으로 해서 close 필요 없음
-    return redirect('entmt_info:ei_import')
+    return redirect('entmt_info:ei_page')
 
 
 # poster path가 null인 값이 있어 오류가 납니다.
@@ -103,5 +104,17 @@ def ei_tv(request):
                     s_genre.save()
 
     # f.close()
-    return redirect('entmt_info:ei_import')
+    return redirect('entmt_info:ei_page')
+
+
+# 상세 정보 페이지
+def e_detail(request):
+
+    return render(request, 'entmt_info/detail.html')
+
+
+# 검색 결과 페이지
+def e_results(request):
+
+    return render(request, 'entmt_info/results.html')
 

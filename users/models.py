@@ -10,6 +10,7 @@ class Members(AbstractUser):
                               blank=True,
                               null=True)    # 프로필 이미지
 
+
 class Mlike(models.Model):
     ml_member = models.ForeignKey(Members,
                               on_delete=models.CASCADE)
