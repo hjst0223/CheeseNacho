@@ -2,8 +2,14 @@ from django.shortcuts import render, redirect
 from entmt_info.models import Movies, Series, Genres
 from entmt_manage.models import Mgenres, Sgenres
 
-from entmt_info import api_python # api 관련 함수 모음
-from django.db.models import Q # 두개이상의 인자를 사용해 검색할 경우
+# from entmt_info.forms import PostSearchForm
+# from django.views.generic import FormView
+# from django import forms
+# from django.http import HttpResponse, HttpResponseRedirect
+
+
+from entmt_info import api_python   # api 관련 함수 모음
+from django.db.models import Q      # 두개이상의 인자를 사용해 검색할 경우
 import csv
 
 
@@ -115,6 +121,15 @@ def e_detail(request):
 
 # 검색 결과 페이지
 def e_results(request):
-
-    return render(request, 'entmt_info/results.html')
+    search_word = request.GET.get('search', '')
+    result = api_python.api_search(search_word)
+    # result 순서에 맞춰서 img Form list를 만들어 같이 content에 주는 방식으로 도전
+    # html에서 직접 불러오는 방식으로 쓰기로 결정
+    # img_form = [api_python.api_img(result_img['poster_path']) for result_img in result]
+    # img_form = api_python.api_img(result[0]['poster_path'])
+    content = {
+        'results': result,
+        # 'images': img_form
+    }
+    return render(request, 'entmt_info/results.html', content)
 
