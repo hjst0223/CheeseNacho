@@ -17,28 +17,38 @@
         <thead>
         <tr class="thead-dark">
             <th>포스터 이미지</th>
+            <th>media_type</th>
             <th>제목</th>
             <th>개봉일</th>
             <th>장르</th>
-            <th>상영 시간</th>
+            <th>점수 / 투표수</th>
         </tr>
         </thead>
         <tbody>
-        {% for result in results %}
-        <tr>
+        {% for res in results %}
+        <tr onclick="location.href='/entmt_info/detail_jy/?res_id={{ res.id }}&media_type={{ res.media_type }}'"
+{#            <tr onclick="location.href='http://www.naver.com'"#}
+            style="cursor:pointer;">
 {#          <td>{{ result }}</td>#}
             <td>
-                <img src="https://image.tmdb.org/t/p/w200{{ result.poster_path }}"
+                <img src="https://image.tmdb.org/t/p/w200{{ res.poster_path }}"
                         style="width:125px; height:175px;">
             </td>
-            {% if result.original_title %}
-                <td>{{ result.original_title }}</td>
-                <td>{{ result.release_date }}</td>
+            <td>{{ res.media_type }}</td>
+            {% if res.original_title %}
+                <td>{{ res.original_title }}</td>
+                <td>{{ res.release_date }}</td>
             {% else %}
-                <td>{{ result.name }}</td>
-                <td>{{ result.first_air_date }}</td>
+                <td>{{ res.name }}</td>
+                <td>{{ res.first_air_date }}</td>
             {% endif %}
-            <td></td>
+            <td>
+                {% for res_id in res.genre_ids %}
+                {{ res_id }}<br>
+                {% endfor %}
+            </td>
+
+            <td>{{ res.vote_average }}점 / {{ res.vote_count }}</td>
             <td></td>
         </tr>
         {% endfor %}
