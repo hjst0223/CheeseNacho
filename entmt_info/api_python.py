@@ -52,14 +52,19 @@ def api_tv(import_genres_url):
 def api_search(search_word):
     url = 'https://api.themoviedb.org/3/search/multi?language=ko&page=1&include_adult=false'
     queryParms = '&api_key=' + USER_API_KEY + '&query=' + quote(search_word)
-    print(queryParms)
     request = Request(url + queryParms + '&_type=json')
-    print(request)
     request.get_method = lambda: 'GET'
-    print('----------2---------------')
     response_body = urlopen(request).read()
     # print(response_body)
     getJson = json.loads(response_body)['results']
+    return getJson
+
+def api_detail(search_url):
+    queryParms = '?api_key=' + USER_API_KEY
+    request = Request(search_url + queryParms + '&_type=json')
+    request.get_method = lambda: 'GET'
+    response_body = urlopen(request).read()
+    getJson = json.loads(response_body)
     return getJson
 
 # def api_img(import_img_url):
