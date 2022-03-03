@@ -13,19 +13,36 @@
         </tr>
         </thead>
         <tbody>
+            <tr>
+                <td>
+                <img src="https://image.tmdb.org/t/p/w200{{ results.poster_path }}"
+                        style="width:125px; height:175px;">
+                </td>
+{#                <td>{{ results.media_type }}</td>#}
+                {% if results.original_title %}
+                    <td>{{ results.original_title }}</td>
+                    <td>{{ results.release_date }}</td>
+                {% else %}
+                    <td>{{ results.name }}</td>
+                    <td>{{ results.first_air_date }}</td>
+                {% endif %}
+{#                <td>#}
+{#                    {% for res_id in results.genre_ids %}#}
+{#                    {{ res_id }}<br>#}
+{#                    {% endfor %}#}
+{#                </td>#}
+            </tr>
 
-        <tr>
-            <td>
-                여기에 상세 정보 나옴!!!
-            </td>
-            <td>{{ post.id }}</td>
-            <td><a href="/bbs/{{ post.id }}/detail/">{{ post.b_title }}</a></td>
-            <td>{{ post.b_author }}</td>
-            <td>{{ post.b_date }}</td>
-            <td>{{ post.b_comment_count }}</td>
-            <td>{{ post.b_like_count }}</td>
-            <td><a href="/bbs/{{ post.id }}/detail/">{{ post.b_title }}</a></td>
-        </tr>
+
+{#        <tr>#}
+{#            <td>{{ post.id }}</td>#}
+{#            <td><a href="/bbs/{{ post.id }}/detail/">{{ post.b_title }}</a></td>#}
+{#            <td>{{ post.b_author }}</td>#}
+{#            <td>{{ post.b_date }}</td>#}
+{#            <td>{{ post.b_comment_count }}</td>#}
+{#            <td>{{ post.b_like_count }}</td>#}
+{#            <td><a href="/bbs/{{ post.id }}/detail/">{{ post.b_title }}</a></td>#}
+{#        </tr>#}
         </tbody>
     </table>
 </div>

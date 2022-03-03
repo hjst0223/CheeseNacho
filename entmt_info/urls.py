@@ -10,6 +10,6 @@ urlpatterns = [
     path('import_tv/', views.ei_tv, name='ei_tv'),
     # path('<int:movie_id>/detail/', views.e_detail, name='e_detail'),
     path('detail/', views.e_detail, name='e_detail'),
-    path('detail_jy/', views.e_detail_jy, name='e_detail_jy'), # 영화 상세내용 업로드
+    # path('detail_jy/', views.e_detail_jy, name='e_detail_jy'),  # 영화 상세내용 업로드
     path('results/', views.e_results, name='e_results'),
 ]
