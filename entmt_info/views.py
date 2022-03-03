@@ -121,7 +121,6 @@ def e_detail(request):
         result = api_python.api_detail(url_movies + request.GET.get('res_id'))
     elif request.GET.get('media_type') == 'tv':
         result = api_python.api_detail(url_tv + request.GET.get('res_id'))
-
     else:
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
     content = {
