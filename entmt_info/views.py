@@ -115,12 +115,18 @@ def ei_tv(request):
 
 # 상세 정보 페이지
 def e_detail(request):
-
-    return render(request, 'entmt_info/detail.html')
-
-def e_detail_jy(request):
-    print(request.Get('res_id'))
-    return render(request, 'entmt_info/detail.html')
+    url_movies = 'https://api.themoviedb.org/3/movie/'
+    url_tv = 'https://api.themoviedb.org/3/tv/'
+    if request.GET.get('media_type') == 'movie':
+        result = api_python.api_detail(url_movies + request.GET.get('res_id'))
+    elif request.GET.get('media_type') == 'tv':
+        result = api_python.api_detail(url_tv + request.GET.get('res_id'))
+    else:
+        print('movie, tv 이외의 거라서 구현이 안되어있어요!')
+    content = {
+        'results': result
+    }
+    return render(request, 'entmt_info/detail.html', content)
 
 
 # 검색 결과 페이지
