@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="/static/js/menu_btn.js"></script>
+
+</head>
+<body>
+     <br>
+     <button type="button"
+        class="btn btn-success"
+        onclick="import_genres()">장르목록 download 하기 : import_genres</button>
+     <br>
+     <button type="button"
+        class="btn btn-success"
+        onclick="import_movie()">영화내용 download 하기 : import_movie</button>
+     <br>
+     <button type="button"
+        class="btn btn-success"
+        onclick="import_tv()">시리즈내용 download 하기 : import_tv</button>
+     <br>
+     <a href="{% url 'home' %}">main으로 가기</a>
+</body>
+</html>

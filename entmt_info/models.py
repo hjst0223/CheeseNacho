@@ -27,3 +27,4 @@ class Series(models.Model):
 class Genres(models.Model):
     genre_id = models.IntegerField(primary_key=True)    # 장르 id
     g_name = models.CharField(max_length=30)   # 장르명
+
