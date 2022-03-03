@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block html_body %}
+<br>
+
+<div class="container my-3">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">회원정보 수정</legend>
+            {{ update_form|crispy }}
+        </fieldset>
+        <br>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">업데이트</button>
+        </div>
+    </form>
+<br>
+<!-- 회원정보 변경 완료/오류 메시지 -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == "error"%}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</div>
+
+{% endblock %}

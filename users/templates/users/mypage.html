@@ -1,6 +1,31 @@
 {% extends 'base.html' %}
-
 {% block html_body %}
+
+<div class="container my-3">
+    <div style="text-align: right;"><a href="{% url 'users:update' %}"><button type="button" class="btn btn-outline-primary">
+        회원정보 수정</button></a>
+    </div>
+    <br>
+    <div style="text-align: right;"><a href="{% url 'users:change_password' %}"><button type="button" class="btn btn-outline-info">
+        비밀번호 변경</button></a>
+    </div>
+
+    <!-- 프로필 정보-->
+    <div class="content-section">
+        <div class="media" style="text-align: center;">
+            <!-- 프로필 이미지 -->
+            <img class="rounded-circle account-img" src="{{ user.u_image.url }}">
+            <div class="media-body">
+                <br>
+                <!-- 사용자 이름과 이메일 주소 -->
+                <h2 class="account-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <div class="container my-3">
     <table class="table">
         <thead>

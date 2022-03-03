@@ -9,4 +9,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # django 자체 로그인/로그아웃 기능(views.py X)
     path('signup/', views.signup, name='signup'),
     path('mypage/', views.mypage, name='mypage'),
+    path('changePassword/', views.change_password, name='change_password'),
+    path('update/', views.update, name='update'),
 ]
