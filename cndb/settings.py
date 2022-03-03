@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'entmt_info.apps.EntmtInfoConfig',
     'users.apps.UsersConfig',
     'entmt_manage.apps.EntmtManageConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # http://127.0.0.1:8000/media/
 MEDIA_URL = '/media/'
