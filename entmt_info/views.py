@@ -123,13 +123,23 @@ def e_detail(request):
 def e_results(request):
     search_word = request.GET.get('search', '')
     result = api_python.api_search(search_word)
+
     # result 순서에 맞춰서 img Form list를 만들어 같이 content에 주는 방식으로 도전
     # html에서 직접 불러오는 방식으로 쓰기로 결정
     # img_form = [api_python.api_img(result_img['poster_path']) for result_img in result]
     # img_form = api_python.api_img(result[0]['poster_path'])
+
+    # 장르 한글로 변경
+    for i in range(len(result)):
+        for j in range(len(result[i]['genre_ids'])):
+            # print(result[i]['genre_ids'][j])
+            # print(Genres.objects.get(genre_id=result[i]['genre_ids'][j]).g_name)
+            result[i]['genre_ids'][j] = Genres.objects.get(genre_id=result[i]['genre_ids'][j]).g_name
+
     content = {
         'results': result,
         # 'images': img_form
     }
+
     return render(request, 'entmt_info/results.html', content)
 
