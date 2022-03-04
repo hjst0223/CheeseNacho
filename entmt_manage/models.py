@@ -2,9 +2,11 @@ from django.db import models
 from users.models import Members
 from entmt_info.models import Movies, Series, Genres
 
+
 class Mcomment(models.Model):
-    mc_star = models.IntegerField(default=0)    # 별점
-    mc_content = models.CharField(max_length=100)    # 댓글 내용
+    mc_title = models.CharField(max_length=30, blank=False, default='')  # 댓글 제목
+    mc_star = models.FloatField()    # 별점
+    mc_content = models.CharField(max_length=100, blank=True)    # 댓글 내용
     mc_member = models.ForeignKey(Members,
                               on_delete=models.CASCADE)    # 작성자
     mc_movie = models.ForeignKey(Movies,
@@ -13,7 +15,8 @@ class Mcomment(models.Model):
 
 
 class Scomment(models.Model):
-    sc_star = models.IntegerField(default=0)    # 별점
+    sc_title = models.CharField(max_length=30, blank=False, default='')  # 댓글 제목
+    sc_star = models.FloatField()  # 별점
     sc_content = models.CharField(max_length=255)    # 댓글 내용
     sc_member = models.ForeignKey(Members,
                               on_delete=models.CASCADE)    # 작성자

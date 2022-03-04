@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from entmt_info.models import Movies, Series, Genres
-from entmt_manage.models import Mgenres, Sgenres
+from entmt_manage.models import Mcomment, Scomment, Mgenres, Sgenres
+from entmt_info.forms import CommentForm
+from django.contrib import messages
+from users.models import Members
 
 # from entmt_info.forms import PostSearchForm
 # from django.views.generic import FormView
@@ -119,12 +122,17 @@ def e_detail(request):
     url_tv = 'https://api.themoviedb.org/3/tv/'
     if request.GET.get('media_type') == 'movie':
         result = api_python.api_detail(url_movies + request.GET.get('res_id'))
+        comments = Mcomment.objects.filter(mc_movie=request.GET.get('res_id'))
+
     elif request.GET.get('media_type') == 'tv':
         result = api_python.api_detail(url_tv + request.GET.get('res_id'))
+        comments = Scomment.objects.filter(sc_movie=request.GET.get('res_id'))
     else:
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
+
     content = {
-        'results': result
+        'results': result,
+        'comments': comments
     }
     return render(request, 'entmt_info/detail.html', content)
 
@@ -152,4 +160,42 @@ def e_results(request):
     }
 
     return render(request, 'entmt_info/results.html', content)
+
+
+# 댓글 등록
+def submit_comment(request, movie_id):
+    # 현재 페이지 url
+    url = request.META.get('HTTP_REFERER')
+
+    if request.method == 'POST':
+        # 기존 리뷰를 업데이트하는 경우
+        if Mcomment.objects.filter(pk=movie_id):
+
+            # filter에 객체가 존재하는 경우 업데이트
+            comments = Mcomment.objects.filter(pk=movie_id)
+            form = CommentForm(request.POST, instance=comments)
+            form.save()
+            messages.success(request, '리뷰가 업데이트되었습니다!')
+            return redirect(url)
+
+        # 새 리뷰를 등록하는 경우
+        else:
+            # 필터에 객체가 없는 경우 새로 등록
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                user = Members.objects.get(pk=request.user.id)
+                movie = Movies.objects.get(pk=movie_id)
+
+                data = Mcomment()
+                data.mc_title = form.cleaned_data['mc_title']
+                data.mc_star = form.cleaned_data['mc_star']
+                data.mc_content = form.cleaned_data['mc_content']
+                data.mc_movie = movie
+                data.mc_member = user
+                data.save()
+                messages.success(request, '리뷰가 등록되었습니다!')
+
+                return redirect(url)
+            else:
+                messages.error(request, '오류!')
 

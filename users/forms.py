@@ -20,19 +20,10 @@ class UserForm(UserCreationForm):
     #     fields = ("username", "email")
 
 
-class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
-
-    class Meta:
-        model = Members
-        fields = ['username', 'email']
-
-
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = Members
         fields = ['username', 'email', 'u_mobile', 'u_image']
-        # fields = ['u_mobile', 'u_image']
 
         labels = {
             'username': '사용자 이름',
@@ -57,10 +48,4 @@ class UpdateForm(forms.ModelForm):
                     'class': 'form-control w-25',
                 }
             )
-            # 'u_image': forms.TextInput(
-            #     attrs={
-            #         'class': 'form-control w-25',
-            #         'placeholder': '작성자를 입력하세요!'
-            #     }
-            # )
         }

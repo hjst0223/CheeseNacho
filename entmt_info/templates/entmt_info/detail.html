@@ -48,36 +48,86 @@
 </div>
 
 <div class="container">
-    <h3>댓글</h3>
-    <label for="c_name">이름</label>
-    <input type="text"
-           class="form-control w-25"
-           id="c_name">
 
-    <label for="c_content">내용</label>
-    <input type="text"
-           class="form-control w-50"
-           id="c_content">
+    <form action="{% url 'entmt_info:submit_comment' results.id %}" method="POST">
+        {% csrf_token %}
+        <h4>리뷰</h4>
+        <div>
+            <!-- 리뷰 등록하기 -->
+            <label>평가를 남겨주세요!</label>
+            <br>
+            <div class="rate">
+                <input type="radio" name="mc_star" id="rating10" value="5" required />
+                <label for="rating10" title="5"></label>
+                <input type="radio" name="mc_star" id="rating9" value="4.5" required />
+                <label for="rating9" title="4.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating8" value="4" required />
+                <label for="rating8" title="4"></label>
+                <input type="radio" name="mc_star" id="rating7" value="3.5" required />
+                <label for="rating7" title="3.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating6" value="3" required />
+                <label for="rating6" title="3"></label>
+                <input type="radio" name="mc_star" id="rating5" value="2.5" required />
+                <label for="rating5" title="2.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating4" value="2" required />
+                <label for="rating4" title="2"></label>
+                <input type="radio" name="mc_star" id="rating3" value="1.5" required />
+                <label for="rating3" title="1.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating2" value="1" required />
+                <label for="rating2" title="1"></label>
+                <input type="radio" name="mc_star" id="rating1" value="0.5" required />
+                <label for="rating1" title="0.5" class="half"></label>
+            </div>
+        </div>
+        <br>
+
+        리뷰 제목:
+        <input type="text" class="form-control" name="mc_title">
+        <br>
+        리뷰:
+        <textarea name="mc_content" rows="4" class="form-control"></textarea>
+        <br>
+        {% if user.is_authenticated %}
+        <input type="submit" value="리뷰 등록하기" class="btn btn-outline-info">
+        {% else %}
+        <p>리뷰를 남기기 위해서는 로그인해야 합니다. <span><a href="{% url 'users:login' %}">로그인</a></span></p>
+        {% endif %}
+
+        <!-- 리뷰 등록/오류 메시지 -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "error"%}
+                    <div class="alert alert-danger" style="text-align: center;">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" style="text-align: center;">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    </form>
     <br>
-{#    <button type="button"#}
-{#            class="btn btn-info"#}
-{#            onclick="create_comment()">댓글 등록</button>#}
 
+    <!-- 댓글 목록 -->
     <table class="table table-hover">
         <thead class="thread-dark">
             <tr>
-                <th scope="col">작성한 영화</th>
+                <th scope="col">댓글 제목</th>
+                <th scope="col">영화</th>
                 <th scope="col">별점</th>
-                <th scope="col">댓글 작성자</th>
-                <th scope="col">댓글 내용</th>
-                <th scope="col">댓글 작성시간</th>
+                <th scope="col">작성자</th>
+                <th scope="col">내용</th>
+                <th scope="col">작성시간</th>
 
-                <th scope="col">삭제</th>
             </tr>
         </thead>
         <tbody>
-            {% for comment in m_comments %}
+            {% for comment in comments %}
             <tr>
+                <td>{{ comment.mc_title }}</td>
                 <td>{{ comment.mc_movie }}</td>
                 <td>{{ comment.mc_star }}</td>
                 <td>{{ comment.mc_member }}</td>

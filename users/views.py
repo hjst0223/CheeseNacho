@@ -70,7 +70,6 @@ def update(request):
             return redirect('users:update')
 
     else:
-        # user_update_form = UserUpdateForm(instance=request.user)
         update_form = UpdateForm(instance=request.user)
 
     context = {

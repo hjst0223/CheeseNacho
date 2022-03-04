@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Movies(models.Model):
     movie_id = models.IntegerField(primary_key=True)   # 영화 id
     m_title = models.CharField(max_length=255)    # 영화 제목
@@ -10,6 +11,17 @@ class Movies(models.Model):
 
     def __str__(self):
         return self.m_title
+
+    # def avg_rating(self):
+    #     sum = 0
+    #     ratings = Mcomment.objects.filter(movies=self)
+    #     for rating in ratings:
+    #         sum += rating.mc_star
+    #
+    #     if len(ratings) > 0:
+    #         return sum / len(ratings)
+    #     else:
+    #         return 0
 
 
 class Series(models.Model):
@@ -27,4 +39,3 @@ class Series(models.Model):
 class Genres(models.Model):
     genre_id = models.IntegerField(primary_key=True)    # 장르 id
     g_name = models.CharField(max_length=30)   # 장르명
-
