@@ -30,7 +30,13 @@ class Mlike(models.Model):
                               on_delete=models.CASCADE)
     ml_movie = models.ForeignKey(Movies,
                               on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.ml_member) + ' + ' + str(self.ml_movie)
 
+# class Mlike(models.Model):
+#     ml_member = models.ForeignKey(Members,
+#                               on_delete=models.CASCADE)
+#     ml_movie = models.IntegerField()
 
 class Slike(models.Model):
     sl_member = models.ForeignKey(Members,

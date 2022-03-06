@@ -6,6 +6,7 @@
         <thead>
         <tr class="thead-dark">
             <th>포스터 이미지</th>
+            <th>찜하기</th>
             <th>제목</th>
             <th>개봉일</th>
             <th>장르</th>
@@ -18,6 +19,27 @@
                 <img src="https://image.tmdb.org/t/p/w200{{ results.poster_path }}"
                         style="width:125px; height:175px;">
                 </td>
+                <td>
+                    <div>
+                    <span id="like_count">{{ like_count }}</span><br>
+                    <input id="like_count_button"
+                           onclick="location.href='/entmt_manage/like/?results_id={{ results.id }}&media_type={{ media_type }}'"
+{#                           onclick="click_like()"#}
+                           {% if like_status %}
+                               style="background-color:hotpink"
+                           {% else %}
+                               style="background-color:white"
+                           {% endif %}
+                           type="button" value="찜하기">
+{#                    <form method="GET" action="{% url 'entmt_info:e_results' %}">#}
+{#                    <div id="search">#}
+{#                        <input name="search" type="text">#}
+{#                        <button class="btn btn-primary" type="submit">찜하기</button>#}
+{#                    </div>#}
+{#                    </form>#}
+                    </div>
+                </td>
+
 {#                <td>{{ results.media_type }}</td>#}
                 {% if results.original_title %}
                     <td>{{ results.original_title }}</td>

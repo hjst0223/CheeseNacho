@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from entmt_info.models import Movies, Series, Genres
 from entmt_manage.models import Mgenres, Sgenres
+from users.models import Mlike, Slike
 
 # from entmt_info.forms import PostSearchForm
 # from django.views.generic import FormView
@@ -44,7 +45,7 @@ def ei_movie(request):
     with open(movie_csv, 'r', encoding='utf-8') as f:
         rdr = csv.reader(f)
         for line in rdr:
-            print(line[0]) # 문제 생길것에 대비해 print
+            print(line[0])      # 문제 생길것에 대비해 print
             url_movies = 'https://api.themoviedb.org/3/movie/' + line[0]
             result = api_python.api_movie(url_movies)
 
@@ -76,6 +77,7 @@ def ei_movie(request):
 
 # poster path가 null인 값이 있어 오류가 납니다.
 # model의 poster path의 null 수정 후 돌려주세요 ㅠㅠ
+# 수정 완료 : null=True 추가, migrations, migrate 새로 해주세요
 def ei_tv(request):
     tv_csv = 'entmt_info/data/tv_200.csv'
 
@@ -114,17 +116,86 @@ def ei_tv(request):
 
 
 # 상세 정보 페이지
+# media_type과 response_id 필요
 def e_detail(request):
     url_movies = 'https://api.themoviedb.org/3/movie/'
     url_tv = 'https://api.themoviedb.org/3/tv/'
-    if request.GET.get('media_type') == 'movie':
-        result = api_python.api_detail(url_movies + request.GET.get('res_id'))
-    elif request.GET.get('media_type') == 'tv':
-        result = api_python.api_detail(url_tv + request.GET.get('res_id'))
+    res_id = request.GET.get('res_id')
+    media_type = request.GET.get('media_type')
+    if media_type == 'movie':
+        result = api_python.api_detail(url_movies + res_id)
+        if Movies.objects.filter(movie_id=res_id).exists() == False:
+            print('으악')
+            # DB에 존재하지 않을 경우 넣어줌
+            movie = Movies()
+            movie.movie_id = result['id']
+            movie.m_title = result['original_title']
+            movie.m_posterPath = result['poster_path']
+            movie.m_releaseDate = result['release_date']
+            movie.m_popularity = result['popularity']
+            movie.save()
+
+            # Genre model 객체 생성
+            Movie = Movies.objects.get(movie_id=result['id'])
+            for v in result['genres']:
+                Genre = Genres.objects.get(genre_id=v['id'])
+                # Primary Key 가 없어서 자동으로 중복제외를 해주지 않아 try-except 구문으로 해줌
+                try:
+                    Mgenres.objects.get(Q(mg_movie=result['id']) & Q(mg_genre=v['id']))
+                except:
+                    m_genre = Mgenres()
+                    m_genre.mg_movie = Movie
+                    m_genre.mg_genre = Genre
+                    m_genre.save()
+
+        # like_count = Movies.objects.get(movie_id=result['id']).m_likeCount
+        like_count = Mlike.objects.filter(ml_movie=result['id']).count()
+
+        # 로그인을 안했을 때에는 내가 하트를 했는지 안했는지 모름으로 생기는 오류 수정
+        try: like_status = Mlike.objects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user)).exists()
+        except: like_status = False
+        print(like_status)
+        # print(like_count)
+
+    elif media_type == 'tv':
+        result = api_python.api_detail(url_tv + res_id)
+        if Series.objects.filter(series_id=res_id).exists() == False:
+            series = Series()
+            series.series_id = result['id']
+            series.s_title = result['original_name']
+            series.s_posterPath = result['poster_path']
+            series.s_firstAirDate = result['first_air_date']
+            series.s_lastAirDate = result['last_air_date']
+            series.s_popularity = result['popularity']
+            series.save()
+
+            # Genre model 객체 생성
+            Series_e = Series.objects.get(series_id=result['id'])
+            for v in result['genres']:
+                Genre = Genres.objects.get(genre_id=v['id'])
+                # Primary Key 가 없어서 자동으로 중복제외를 해주지 않아 try-except 구문으로 해줌
+                try:
+                    Sgenres.objects.get(Q(sg_series=result['id']) & Q(sg_genre=v['id']))
+                except:
+                    s_genre = Sgenres()
+                    s_genre.sg_series = Series_e
+                    s_genre.sg_genre = Genre
+                    s_genre.save()
+
+        # like_count = Series.objects.get(series_id=result['id']).s_likeCount
+        like_count = Slike.objects.filter(sl_series=result['id']).count()
+
+        try: like_status = Slike.objects.filter(Q(sl_series=result['id']) & Q(sl_member=request.user)).exists()
+        except: like_status = False
+        # print(like_count)
     else:
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
+
     content = {
-        'results': result
+        'results': result,
+        'like_count': like_count,
+        'like_status': like_status,
+        'media_type': media_type,
     }
     return render(request, 'entmt_info/detail.html', content)
 

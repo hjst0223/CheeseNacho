@@ -6,6 +6,10 @@ from django.contrib.auth.hashers import check_password
 from django.contrib import messages, auth
 # from django.views.decorators.csrf import csrf_exempt
 
+from users.models import Mlike, Slike, Ugenres
+from entmt_info.models import Movies, Series
+from django.db.models import Q
+
 
 # csrf token의 다른 방법
 # @csrf_exempt
@@ -33,8 +37,30 @@ def signup(request):
 
 
 def mypage(request):
+    user_id = request.user.id
+    mlike_list = Mlike.objects.filter(ml_member=user_id)
+    mlike_code_list = []
+    movie_list = []
+    print(mlike_list)
+    print('-------------------')
+    for mlike in mlike_list:
+        # mlike_code_list.append(mlike.ml_movie_id)
+        movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
+        # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
 
-    return render(request, 'users/mypage.html')
+    # 객체체
+
+   # -------------안됌
+    # User_a = request.user
+    # movies = User_a.mlike_set.movies_set.all()
+    # print(movies)
+
+    print('-------------------')
+    print(movie_list)
+    content = {
+        'movie_list': movie_list
+    }
+    return render(request, 'users/mypage.html', content)
 
 
 def change_password(request):

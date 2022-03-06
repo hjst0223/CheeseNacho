@@ -14,9 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from entmt_manage import views
 
 app_name = 'entmt_manage'
 
 urlpatterns = [
-
+    path('like/', views.em_like, name='em_like'), # API 데이터 다운로드 페이지
 ]
