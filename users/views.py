@@ -39,26 +39,20 @@ def signup(request):
 def mypage(request):
     user_id = request.user.id
     mlike_list = Mlike.objects.filter(ml_member=user_id)
-    mlike_code_list = []
+    slike_list = Slike.objects.filter(sl_member=user_id)
     movie_list = []
-    print(mlike_list)
-    print('-------------------')
+    series_list = []
+
     for mlike in mlike_list:
         # mlike_code_list.append(mlike.ml_movie_id)
         movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
         # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
+    for slike in slike_list:
+        series_list.append(Series.objects.get(series_id=slike.sl_series_id))
 
-    # 객체체
-
-   # -------------안됌
-    # User_a = request.user
-    # movies = User_a.mlike_set.movies_set.all()
-    # print(movies)
-
-    print('-------------------')
-    print(movie_list)
     content = {
-        'movie_list': movie_list
+        'movie_list': movie_list,
+        'series_list': series_list
     }
     return render(request, 'users/mypage.html', content)
 

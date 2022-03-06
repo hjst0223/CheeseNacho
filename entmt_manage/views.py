@@ -22,6 +22,7 @@ def em_like(request):
                 movie_like.ml_member = request.user
                 movie_like.ml_movie = Movie
                 movie_like.save()
+
         elif media_type == 'tv':
             if Slike.objects.filter(Q(sl_series=results_id) & Q(sl_member=user_id)).exists():
                 series_like = Slike.objects.get(Q(sl_series=results_id) & Q(sl_member=user_id))
