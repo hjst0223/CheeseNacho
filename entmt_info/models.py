@@ -12,17 +12,6 @@ class Movies(models.Model):
     def __str__(self):
         return self.m_title
 
-    # def avg_rating(self):
-    #     sum = 0
-    #     ratings = Mcomment.objects.filter(movies=self)
-    #     for rating in ratings:
-    #         sum += rating.mc_star
-    #
-    #     if len(ratings) > 0:
-    #         return sum / len(ratings)
-    #     else:
-    #         return 0
-
 
 class Series(models.Model):
     series_id = models.IntegerField(primary_key=True)   # 드라마 id

@@ -11,4 +11,5 @@ urlpatterns = [
     path('mypage/', views.mypage, name='mypage'),
     path('changePassword/', views.change_password, name='change_password'),
     path('update/', views.update, name='update'),
+    path('genre/', views.genre, name='genre'),
 ]

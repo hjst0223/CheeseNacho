@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from users.forms import UserForm
+from users.forms import UserForm, GenreForm
 from .forms import UpdateForm
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages, auth
@@ -76,3 +76,21 @@ def update(request):
         'update_form': update_form
     }
     return render(request, 'users/update.html', context)
+
+
+def genre(request):
+    if request.method == 'POST':
+        genre_form = GenreForm(request.POST, instance=request.user)
+
+        if genre_form.is_valid():
+            genre_form.save()
+            messages.success(request, '선호 장르가 업데이트되었습니다!')
+            return redirect('users:genre')
+
+    else:
+        genre_form = GenreForm(instance=request.user)
+
+    context = {
+        'genre_form': genre_form
+    }
+    return render(request, 'users/genre.html', context)

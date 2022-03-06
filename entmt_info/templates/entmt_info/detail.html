@@ -48,12 +48,24 @@
 </div>
 
 <div class="container">
+    <!-- 별점 평균 -->
+    <script type="text/javascript">
+    var sum = 0
+    var length = 0
+    {% for comment in comments %}
+        length += 1
+        sum += {{ comment.mc_star }}
+    {% endfor %}
+    var avg = sum/length
+    document.write('★ ', avg.toFixed(1))
+    document.write('/5', '<br />')
+    </script><br>
 
+    <!-- 리뷰 등록 -->
     <form action="{% url 'entmt_info:submit_comment' results.id %}" method="POST">
         {% csrf_token %}
         <h4>리뷰</h4>
         <div>
-            <!-- 리뷰 등록하기 -->
             <label>평가를 남겨주세요!</label>
             <br>
             <div class="rate">
@@ -89,6 +101,7 @@
         <br>
         {% if user.is_authenticated %}
         <input type="submit" value="리뷰 등록하기" class="btn btn-outline-info">
+        <br>
         {% else %}
         <p>리뷰를 남기기 위해서는 로그인해야 합니다. <span><a href="{% url 'users:login' %}">로그인</a></span></p>
         {% endif %}
