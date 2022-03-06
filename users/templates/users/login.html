@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% block html_body %}
 <div class="container my-3">
 {#    <div class="row">#}
@@ -17,7 +16,6 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">로그인</legend>
-{#            {{ form|crispy }}#}
         </fieldset>
 
         <input type="hidden" name="next" value="{{ next }}">  <!-- 로그인 성공후 이동되는 URL -->

@@ -1,5 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from entmt_info.models import Movies, Series, Genres
+from entmt_manage.models import Mcomment, Scomment, Mgenres, Sgenres
+from entmt_info.forms import CommentForm
+from django.contrib import messages
+from users.models import Members
 from entmt_manage.models import Mgenres, Sgenres
 from users.models import Mlike, Slike
 
@@ -120,6 +124,13 @@ def ei_tv(request):
 def e_detail(request):
     url_movies = 'https://api.themoviedb.org/3/movie/'
     url_tv = 'https://api.themoviedb.org/3/tv/'
+    # if request.GET.get('media_type') == 'movie':
+    #     result = api_python.api_detail(url_movies + request.GET.get('res_id'))
+    #     comments = Mcomment.objects.filter(mc_movie=request.GET.get('res_id'))
+    #
+    # elif request.GET.get('media_type') == 'tv':
+    #     result = api_python.api_detail(url_tv + request.GET.get('res_id'))
+    #     comments = Scomment.objects.filter(sc_movie=request.GET.get('res_id'))
     res_id = request.GET.get('res_id')
     media_type = request.GET.get('media_type')
     if media_type == 'movie':
@@ -147,6 +158,8 @@ def e_detail(request):
                     m_genre.mg_movie = Movie
                     m_genre.mg_genre = Genre
                     m_genre.save()
+
+        comments = Mcomment.objects.filter(mc_movie=result['id'])
 
         # like_count = Movies.objects.get(movie_id=result['id']).m_likeCount
         like_count = Mlike.objects.filter(ml_movie=result['id']).count()
@@ -182,17 +195,20 @@ def e_detail(request):
                     s_genre.sg_genre = Genre
                     s_genre.save()
 
+        comments = Scomment.objects.filter(sc_movie=result['id'])
+
         # like_count = Series.objects.get(series_id=result['id']).s_likeCount
         like_count = Slike.objects.filter(sl_series=result['id']).count()
 
         try: like_status = Slike.objects.filter(Q(sl_series=result['id']) & Q(sl_member=request.user)).exists()
         except: like_status = False
         # print(like_count)
-    else:
-        print('movie, tv 이외의 거라서 구현이 안되어있어요!')
+    # else:
+    #     print('movie, tv 이외의 거라서 구현이 안되어있어요!')
 
     content = {
         'results': result,
+        'comments': comments,
         'like_count': like_count,
         'like_status': like_status,
         'media_type': media_type,
@@ -223,4 +239,42 @@ def e_results(request):
     }
 
     return render(request, 'entmt_info/results.html', content)
+
+
+# 댓글 등록
+def submit_comment(request, movie_id):
+    # 현재 페이지 url
+    url = request.META.get('HTTP_REFERER')
+
+    if request.method == 'POST':
+        # 기존 리뷰를 업데이트하는 경우
+        if Mcomment.objects.filter(pk=movie_id):
+
+            # filter에 객체가 존재하는 경우 업데이트
+            comments = Mcomment.objects.filter(pk=movie_id)
+            form = CommentForm(request.POST, instance=comments)
+            form.save()
+            messages.success(request, '리뷰가 업데이트되었습니다!')
+            return redirect(url)
+
+        # 새 리뷰를 등록하는 경우
+        else:
+            # 필터에 객체가 없는 경우 새로 등록
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                user = Members.objects.get(pk=request.user.id)
+                movie = Movies.objects.get(pk=movie_id)
+
+                data = Mcomment()
+                data.mc_title = form.cleaned_data['mc_title']
+                data.mc_star = form.cleaned_data['mc_star']
+                data.mc_content = form.cleaned_data['mc_content']
+                data.mc_movie = movie
+                data.mc_member = user
+                data.save()
+                messages.success(request, '리뷰가 등록되었습니다!')
+
+                return redirect(url)
+            else:
+                messages.error(request, '오류!')
 
