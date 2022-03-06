@@ -36,6 +36,10 @@ class Series(models.Model):
     def __str__(self):
         return self.s_title
 
+
 class Genres(models.Model):
     genre_id = models.IntegerField(primary_key=True)    # 장르 id
     g_name = models.CharField(max_length=30)   # 장르명
+
+    def __str__(self):
+        return self.g_name
