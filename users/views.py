@@ -30,11 +30,12 @@ def signup(request):
             login(request, user)
 
             # 회원가입 후 로그인 상태로 메인 페이지 돌아가기
-            return redirect('home')
+            return render(request, 'users/genre.html')
+            # return HttpResponseRedirect('users:genre', {'login_status': True})
+            # return redirect('/users/genre/0/')
     else:
         form = UserForm()
     return render(request, 'users/signup.html', {'form': form})
-
 
 def mypage(request):
     user_id = request.user.id
