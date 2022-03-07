@@ -1,10 +1,14 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from users.forms import UserForm
+from users.forms import UserForm, GenreForm
 from .forms import UpdateForm
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages, auth
 # from django.views.decorators.csrf import csrf_exempt
+
+from users.models import Mlike, Slike, Ugenres
+from entmt_info.models import Movies, Series
+from django.db.models import Q
 
 
 # csrf token의 다른 방법
@@ -33,8 +37,24 @@ def signup(request):
 
 
 def mypage(request):
+    user_id = request.user.id
+    mlike_list = Mlike.objects.filter(ml_member=user_id)
+    slike_list = Slike.objects.filter(sl_member=user_id)
+    movie_list = []
+    series_list = []
 
-    return render(request, 'users/mypage.html')
+    for mlike in mlike_list:
+        # mlike_code_list.append(mlike.ml_movie_id)
+        movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
+        # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
+    for slike in slike_list:
+        series_list.append(Series.objects.get(series_id=slike.sl_series_id))
+
+    content = {
+        'movie_list': movie_list,
+        'series_list': series_list
+    }
+    return render(request, 'users/mypage.html', content)
 
 
 def change_password(request):
@@ -70,10 +90,27 @@ def update(request):
             return redirect('users:update')
 
     else:
-        # user_update_form = UserUpdateForm(instance=request.user)
         update_form = UpdateForm(instance=request.user)
 
     context = {
         'update_form': update_form
     }
     return render(request, 'users/update.html', context)
+
+
+def genre(request):
+    if request.method == 'POST':
+        genre_form = GenreForm(request.POST, instance=request.user)
+
+        if genre_form.is_valid():
+            genre_form.save()
+            messages.success(request, '선호 장르가 업데이트되었습니다!')
+            return redirect('users:genre')
+
+    else:
+        genre_form = GenreForm(instance=request.user)
+
+    context = {
+        'genre_form': genre_form
+    }
+    return render(request, 'users/genre.html', context)

@@ -9,12 +9,19 @@
     <div style="text-align: right;"><a href="{% url 'users:change_password' %}"><button type="button" class="btn btn-outline-info">
         비밀번호 변경</button></a>
     </div>
+    <br>
+    <div style="text-align: right;"><a href="{% url 'users:genre' %}"><button type="button" class="btn btn-outline-success">
+        선호장르 등록</button></a>
+    </div>
 
     <!-- 프로필 정보-->
     <div class="content-section">
         <div class="media" style="text-align: center;">
             <!-- 프로필 이미지 -->
-            <img class="rounded-circle account-img" src="{{ user.u_image.url }}">
+            <img class="rounded-circle account-img" src="{{ user.u_image.url }}"
+                    width="200" height="200">
+{#            <img class="rounded-circle account-img" src="/static/img/default.jpg">#}
+{#            {{ user.u_image.url }}#}
             <div class="media-body">
                 <br>
                 <!-- 사용자 이름과 이메일 주소 -->
@@ -40,9 +47,38 @@
         <tbody>
         <tr>
             <td>
-                여기에 찜한 영화 리스트!!!
+                찜한 영화
             </td>
         </tr>
+        {% for movie in movie_list %}
+        <tr onclick="location.href='/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie'"
+            style="cursor:pointer;">
+            <td>
+                <img src="https://image.tmdb.org/t/p/w200{{ movie.m_posterPath }}"
+                        style="width:125px; height:175px;">
+                <br>
+                <div>{{ movie.m_title }}</div>
+                <dif>별점</dif>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                찜한 시리즈
+            </td>
+        </tr>
+        {% for series in series_list %}
+        <tr onclick="location.href='/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv'"
+            style="cursor:pointer;">
+            <td>
+                <img src="https://image.tmdb.org/t/p/w200{{ series.s_posterPath }}"
+                        style="width:125px; height:175px;">
+                <br>
+                <div>{{ series.s_title }}</div>
+                <dif>별점</dif>
+            </td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>

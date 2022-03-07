@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block html_body %}
+<br>
+
+<div class="container my-3">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">선호 장르 등록</legend>
+            {{ genre_form|crispy }}
+        </fieldset>
+        <br>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">업데이트</button>
+        </div>
+
+{#        <fieldset>#}
+{#            <legend>장르 선택</legend>#}
+{#            <p>#}
+{#              <input type="checkbox" name="genre" id="genre_12" value="small" />#}
+{#              <label for="size_1">Small</label>#}
+{#            </p>#}
+{#            <p>#}
+{#              <input type="checkbox" name="genre" id="genre_14" value="medium" />#}
+{#              <label for="size_2">Medium</label>#}
+{#            </p>#}
+{#            <p>#}
+{#              <input type="checkbox" name="genre" id="size_3" value="large" />#}
+{#              <label for="size_3">Large</label>#}
+{#            </p>#}
+{#        </fieldset>#}
+
+    </form>
+<br>
+<!-- 회원정보 변경 완료/오류 메시지 -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == "error"%}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</div>
+
+{% endblock %}
