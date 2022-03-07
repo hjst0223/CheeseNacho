@@ -99,36 +99,14 @@ def ei_movie(request):
     with open(movie_csv, 'r', encoding='utf-8') as f:
         rdr = csv.reader(f)
         for line in rdr:
-            print(line[0])      # 문제 생길것에 대비해 print
             url_movies = 'https://api.themoviedb.org/3/movie/' + line[0]
             result = api_python.api_request(url_movies)
 
+            # db에 추가
             dbsave_movie(result)
 
-            # movie model 객체 생성
-            # movie = Movies()
-            # movie.movie_id = result['id']
-            # movie.m_title = result['original_title']
-            # movie.m_posterPath = result['poster_path']
-            # movie.m_releaseDate = result['release_date']
-            # movie.m_popularity = result['popularity']
-            # movie.save()
-            #
-            # # Genre model 객체 생성
-            # Movie = Movies.objects.get(movie_id=result['id'])
-            # for v in result['genres']:
-            #     Genre = Genres.objects.get(genre_id=v['id'])
-            #     # Primary Key 가 없어서 자동으로 중복제외를 해주지 않아 try-except 구문으로 해줌
-            #     try:
-            #         Mgenres.objects.get(Q(mg_movie=result['id']) & Q(mg_genre=v['id']))
-            #     except:
-            #         m_genre = Mgenres()
-            #         m_genre.mg_movie = Movie
-            #         m_genre.mg_genre = Genre
-            #         m_genre.save()
-
-    # f.close() # with open으로 해서 close 필요 없음
     return redirect('entmt_info:ei_page')
+
 
 # add series object, add genre object
 def ei_tv(request):
@@ -137,35 +115,12 @@ def ei_tv(request):
     with open(tv_csv, 'r', encoding='utf-8') as f:
         rdr = csv.reader(f)
         for line in rdr:
-            print(line[0])
             url_series = 'https://api.themoviedb.org/3/tv/' + line[0]
             result = api_python.api_request(url_series)
 
+            # db에 추가
             dbsave_series(result)
-            # movie model 객체 생성
-            # series = Series()
-            # series.series_id = result['id']
-            # series.s_title = result['original_name']
-            # series.s_posterPath = result['poster_path']
-            # series.s_firstAirDate = result['first_air_date']
-            # series.s_lastAirDate = result['last_air_date']
-            # series.s_popularity = result['popularity']
-            # series.save()
-            #
-            # # Genre model 객체 생성
-            # Series_e = Series.objects.get(series_id=result['id'])
-            # for v in result['genres']:
-            #     Genre = Genres.objects.get(genre_id=v['id'])
-            #     # Primary Key 가 없어서 자동으로 중복제외를 해주지 않아 try-except 구문으로 해줌
-            #     try:
-            #         Sgenres.objects.get(Q(sg_series=result['id']) & Q(sg_genre=v['id']))
-            #     except:
-            #         s_genre = Sgenres()
-            #         s_genre.sg_series = Series_e
-            #         s_genre.sg_genre = Genre
-            #         s_genre.save()
 
-    # f.close()
     return redirect('entmt_info:ei_page')
 
 
@@ -174,81 +129,42 @@ def ei_tv(request):
 def e_detail(request):
     url_movies = 'https://api.themoviedb.org/3/movie/'
     url_tv = 'https://api.themoviedb.org/3/tv/'
-
     res_id = request.GET.get('res_id')
     media_type = request.GET.get('media_type')
+
     if media_type == 'movie':
         result = api_python.api_request(url_movies + res_id)
-        if Movies.objects.filter(movie_id=res_id).exists() == False:
-            # DB에 존재하지 않을 경우 넣어줌
 
+        # DB에 존재하지 않을 경우 넣어줌
+        if Movies.objects.filter(movie_id=res_id).exists() == False:
             dbsave_movie(result)
-            # movie = Movies()
-            # movie.movie_id = result['id']
-            # movie.m_title = result['original_title']
-            # movie.m_posterPath = result['poster_path']
-            # movie.m_releaseDate = result['release_date']
-            # movie.m_popularity = result['popularity']
-            # movie.save()
-            #
-            # # Genre model 객체 생성
-            # Movie = Movies.objects.get(movie_id=result['id'])
-            # for v in result['genres']:
-            #     Genre = Genres.objects.get(genre_id=v['id'])
-            #     # Primary Key 가 없어서 자동으로 중복제외를 해주지 않아 try-except 구문으로 해줌
-            #     try:
-            #         Mgenres.objects.get(Q(mg_movie=result['id']) & Q(mg_genre=v['id']))
-            #     except:
-            #         m_genre = Mgenres()
-            #         m_genre.mg_movie = Movie
-            #         m_genre.mg_genre = Genre
-            #         m_genre.save()
 
         comments = Mcomment.objects.filter(mc_movie=result['id'])
 
         # like_count = Movies.objects.get(movie_id=result['id']).m_likeCount
         like_count = Mlike.objects.filter(ml_movie=result['id']).count()
 
-        # 로그인을 안했을 때에는 내가 하트를 했는지 안했는지 모름으로 생기는 오류 수정
-        try: like_status = Mlike.objects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user)).exists()
+        # 로그인되지 않았을 때 생기는 오류 수정
+        try: like_status = Mlike.ojects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user)).exists()
         except: like_status = False
-        print(like_status)
-        # print(like_count)
+
 
     elif media_type == 'tv':
         result = api_python.api_request(url_tv + res_id)
+
+        # DB에 존재하지 않을 경우 넣어줌
         if Series.objects.filter(series_id=res_id).exists() == False:
             dbsave_series(result)
-            # series = Series()
-            # series.series_id = result['id']
-            # series.s_title = result['original_name']
-            # series.s_posterPath = result['poster_path']
-            # series.s_firstAirDate = result['first_air_date']
-            # series.s_lastAirDate = result['last_air_date']
-            # series.s_popularity = result['popularity']
-            # series.save()
-            #
-            # # Genre model 객체 생성
-            # Series_e = Series.objects.get(series_id=result['id'])
-            # for v in result['genres']:
-            #     Genre = Genres.objects.get(genre_id=v['id'])
-            #     # Primary Key 가 없어서 자동으로 중복제외를 해주지 않아 try-except 구문으로 해줌
-            #     try:
-            #         Sgenres.objects.get(Q(sg_series=result['id']) & Q(sg_genre=v['id']))
-            #     except:
-            #         s_genre = Sgenres()
-            #         s_genre.sg_series = Series_e
-            #         s_genre.sg_genre = Genre
-            #         s_genre.save()
 
         comments = Scomment.objects.filter(sc_series=result['id'])
 
         # like_count = Series.objects.get(series_id=result['id']).s_likeCount
         like_count = Slike.objects.filter(sl_series=result['id']).count()
 
+        # 로그인되지 않았을 때 생기는 오류 수정
         try: like_status = Slike.objects.filter(Q(sl_series=result['id']) & Q(sl_member=request.user)).exists()
         except: like_status = False
-        # print(like_count)
+
     else:
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
         print(media_type)
@@ -268,21 +184,13 @@ def e_results(request):
     search_word = request.GET.get('search', '')
     result = api_python.api_search(search_word)
 
-    # result 순서에 맞춰서 img Form list를 만들어 같이 content에 주는 방식으로 도전
-    # html에서 직접 불러오는 방식으로 쓰기로 결정
-    # img_form = [api_python.api_img(result_img['poster_path']) for result_img in result]
-    # img_form = api_python.api_img(result[0]['poster_path'])
-
     # 장르 한글로 변경
     for i in range(len(result)):
         for j in range(len(result[i]['genre_ids'])):
-            # print(result[i]['genre_ids'][j])
-            # print(Genres.objects.get(genre_id=result[i]['genre_ids'][j]).g_name)
             result[i]['genre_ids'][j] = Genres.objects.get(genre_id=result[i]['genre_ids'][j]).g_name
 
     content = {
         'results': result,
-        # 'images': img_form
     }
 
     return render(request, 'entmt_info/results.html', content)
