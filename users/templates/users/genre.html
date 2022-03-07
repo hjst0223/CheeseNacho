@@ -4,6 +4,20 @@
 <br>
 
 <div class="container my-3">
+<!-- 선호장르 변경 완료/오류 메시지 -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == "error"%}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 <form action="{% url 'users:edit_genre' %}" method="post">
 {% csrf_token %}
@@ -47,20 +61,6 @@
 
     </form>
 <br>
-<!-- 회원정보 변경 완료/오류 메시지 -->
-{% if messages %}
-    {% for message in messages %}
-        {% if message.tags == "error"%}
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% else %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endif %}
-    {% endfor %}
-{% endif %}
 </div>
 
 {% endblock %}

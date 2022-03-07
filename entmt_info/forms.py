@@ -1,12 +1,18 @@
 from django import forms
 from entmt_info.models import Movies, Series
-from entmt_manage.models import Mcomment
+from entmt_manage.models import Mcomment, Scomment
 
 
-class CommentForm(forms.ModelForm):
+class McommentForm(forms.ModelForm):
     class Meta:
         model = Mcomment
         fields = ['mc_title', 'mc_star', 'mc_content']
+
+
+class ScommentForm(forms.ModelForm):
+    class Meta:
+        model = Scomment
+        fields = ['sc_title', 'sc_star', 'sc_content']
 
 # class MoviesDetailForm(forms.ModelForm):
 #     class Meta:
