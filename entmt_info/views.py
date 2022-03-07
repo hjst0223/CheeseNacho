@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from entmt_info.models import Movies, Series, Genres
 from entmt_manage.models import Mcomment, Scomment, Mgenres, Sgenres
-from entmt_info.forms import CommentForm
+from entmt_info.forms import McommentForm, ScommentForm
 from django.contrib import messages
 from users.models import Members
 from entmt_manage.models import Mgenres, Sgenres
@@ -195,7 +195,7 @@ def e_detail(request):
                     s_genre.sg_genre = Genre
                     s_genre.save()
 
-        comments = Scomment.objects.filter(sc_movie=result['id'])
+        comments = Scomment.objects.filter(sc_series=result['id'])
 
         # like_count = Series.objects.get(series_id=result['id']).s_likeCount
         like_count = Slike.objects.filter(sl_series=result['id']).count()
@@ -242,39 +242,75 @@ def e_results(request):
 
 
 # 댓글 등록
-def submit_comment(request, movie_id):
+def submit_comment(request, media_id, media_type):
     # 현재 페이지 url
     url = request.META.get('HTTP_REFERER')
 
     if request.method == 'POST':
         # 기존 리뷰를 업데이트하는 경우
-        if Mcomment.objects.filter(pk=movie_id):
-
+        if Mcomment.objects.filter(pk=media_id):
             # filter에 객체가 존재하는 경우 업데이트
-            comments = Mcomment.objects.filter(pk=movie_id)
-            form = CommentForm(request.POST, instance=comments)
+            comments = Mcomment.objects.filter(pk=media_id)
+            form = McommentForm(request.POST, instance=comments)
             form.save()
             messages.success(request, '리뷰가 업데이트되었습니다!')
             return redirect(url)
 
         # 새 리뷰를 등록하는 경우
         else:
-            # 필터에 객체가 없는 경우 새로 등록
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                user = Members.objects.get(pk=request.user.id)
-                movie = Movies.objects.get(pk=movie_id)
+            print('새 리뷰 등록')
+            print(media_type)
+            if media_type == 'movie':
+                print('영화 타입 구분===')
 
-                data = Mcomment()
-                data.mc_title = form.cleaned_data['mc_title']
-                data.mc_star = form.cleaned_data['mc_star']
-                data.mc_content = form.cleaned_data['mc_content']
-                data.mc_movie = movie
-                data.mc_member = user
-                data.save()
-                messages.success(request, '리뷰가 등록되었습니다!')
+                # 필터에 객체가 없는 경우 새로 등록
+                form = McommentForm(request.POST)
+                if form.is_valid():
+                    user = Members.objects.get(pk=request.user.id)
+                    movie = Movies.objects.get(pk=media_id)
 
-                return redirect(url)
-            else:
-                messages.error(request, '오류!')
+                    data = Mcomment()
+                    data.mc_title = form.cleaned_data['mc_title']
+                    data.mc_star = form.cleaned_data['mc_star']
+                    data.mc_content = form.cleaned_data['mc_content']
+                    data.mc_movie = movie
+                    data.mc_member = user
+                    data.save()
+                    messages.success(request, '리뷰가 등록되었습니다!')
+
+                    return redirect(url)
+
+                else:
+                    messages.error(request, '오류!')
+
+            elif media_type == 'tv':
+
+                print('시리즈 타입 구분===')
+
+                # 필터에 객체가 없는 경우 새로 등록
+                form = ScommentForm(request.POST)
+                print('폼에 입력--')
+                if form.is_valid():
+                    print('유효한 폼!')
+                    user = Members.objects.get(pk=request.user.id)
+                    series = Series.objects.get(pk=media_id)
+
+                    data = Scomment()
+                    data.sc_title = form.cleaned_data['sc_title']
+                    data.sc_star = form.cleaned_data['sc_star']
+                    data.sc_content = form.cleaned_data['sc_content']
+                    data.sc_series = series
+                    data.sc_member = user
+                    print('저장 전 ㅠ')
+                    data.save()
+                    print('저장 완료~!')
+                    messages.success(request, '리뷰가 등록되었습니다!')
+
+                    return redirect(url)
+
+                else:
+                    print('무효한 폼 ㅜ')
+                    messages.error(request, '오류!')
+
+
 
