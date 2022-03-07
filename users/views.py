@@ -7,7 +7,7 @@ from django.contrib import messages, auth
 # from django.views.decorators.csrf import csrf_exempt
 
 from users.models import Mlike, Slike, Ugenres
-from entmt_info.models import Movies, Series
+from entmt_info.models import Movies, Series, Genres
 from django.db.models import Q
 
 
@@ -39,26 +39,20 @@ def signup(request):
 def mypage(request):
     user_id = request.user.id
     mlike_list = Mlike.objects.filter(ml_member=user_id)
-    mlike_code_list = []
+    slike_list = Slike.objects.filter(sl_member=user_id)
     movie_list = []
-    print(mlike_list)
-    print('-------------------')
+    series_list = []
+
     for mlike in mlike_list:
         # mlike_code_list.append(mlike.ml_movie_id)
         movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
         # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
+    for slike in slike_list:
+        series_list.append(Series.objects.get(series_id=slike.sl_series_id))
 
-    # 객체체
-
-   # -------------안됌
-    # User_a = request.user
-    # movies = User_a.mlike_set.movies_set.all()
-    # print(movies)
-
-    print('-------------------')
-    print(movie_list)
     content = {
-        'movie_list': movie_list
+        'movie_list': movie_list,
+        'series_list': series_list
     }
     return render(request, 'users/mypage.html', content)
 
@@ -104,19 +98,79 @@ def update(request):
     return render(request, 'users/update.html', context)
 
 
+# def genre(request):
+#     if request.method == 'POST':
+#         genre_form = GenreForm(request.POST, instance=request.user)
+#         print('----------------------------------------------------')
+#         # print(genre_form)
+#
+#         if genre_form.is_valid():
+#             print('ㅇ오')
+#             genre_form.save()
+#             messages.success(request, '선호 장르가 업데이트되었습니다!')
+#             return redirect('users:genre')
+#
+#     else:
+#         genre_form = GenreForm(instance=request.user)
+#
+#     context = {
+#         'genre_form': genre_form
+#     }
+#     return render(request, 'users/genre.html', context)
+
+
 def genre(request):
-    if request.method == 'POST':
-        genre_form = GenreForm(request.POST, instance=request.user)
-
-        if genre_form.is_valid():
-            genre_form.save()
-            messages.success(request, '선호 장르가 업데이트되었습니다!')
-            return redirect('users:genre')
-
-    else:
-        genre_form = GenreForm(instance=request.user)
-
+    genres = Genres.objects.all()
+    genre_list = []
+    for genre in genres:
+        if Ugenres.objects.filter(Q(ug_genre=genre) & Q(ug_member=request.user)).exists():
+            genre_list.append({'genre': genre, 'status': True})
+        else: genre_list.append({'genre': genre, 'status': False})
+    print(genre_list)
     context = {
-        'genre_form': genre_form
-    }
+            'genres': genre_list
+        }
     return render(request, 'users/genre.html', context)
+
+def edit_genre(request):
+    if request.method == 'POST':
+        selected = request.POST.getlist('selected')
+        ugenres = Ugenres.objects.filter(ug_member=request.user)
+        selected_ug = [str(ugenre.ug_genre.genre_id) for ugenre in ugenres]
+        code_list = list(set(selected + selected_ug))
+        print(selected)
+        print(selected_ug)
+        print(code_list)
+
+        # selected, selected_ug 둘다있는거 pass
+        # selected 에는 있고, selected_ug에는 없는거 save()
+        # selected 에는 없고, selected_ug에는 있는거 delete()
+
+        for code in code_list:
+            genre = Genres.objects.get(pk=code)
+            if (code in selected) and (code not in selected_ug):
+                # if Ugenres.objects.filter(Q(ug_genre=genre) & Q(ug_member=request.user)).exists():
+                #     pass # 필요는 없지만 혹시나 해서
+                # else:
+                ugenre = Ugenres()
+                ugenre.ug_genre = genre
+                ugenre.ug_member = request.user
+                ugenre.save()
+            elif (code not in selected) and (code in selected_ug):
+                ugenre = Ugenres.objects.get(Q(ug_genre=genre) & Q(ug_member=request.user))
+                ugenre.delete()
+            else : pass
+
+    # for genre_code in selected:
+    #     genre = Genres.objects.get(pk=genre_code)
+    #     if Ugenres.objects.filter(Q(ug_genre=genre) & Q(ug_member=request.user)).exists():
+    #         pass
+    #     else:
+    #         ugenre = Ugenres()
+    #         ugenre.ug_genre = genre
+    #         ugenre.ug_member = request.user
+    #         ugenre.save()
+
+    print('ok')
+
+    return redirect('users:genre')

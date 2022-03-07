@@ -47,33 +47,33 @@
                 찜한 영화
             </td>
         </tr>
-{#        {{ movie_list }}#}
         {% for movie in movie_list %}
-        <tr onclick="location.href='/entmt_info/detail/?res_id={{ res.id }}&media_type={{ res.media_type }}'"
-{#            <tr onclick="location.href='http://www.naver.com'"#}
+        <tr onclick="location.href='/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie'"
             style="cursor:pointer;">
-{#          <td>{{ result }}</td>#}
-{#            <td>{{ movie.movie_id }}</td>#}
-
             <td>
                 <img src="https://image.tmdb.org/t/p/w200{{ movie.m_posterPath }}"
                         style="width:125px; height:175px;">
+                <br>
+                <div>{{ movie.m_title }}</div>
+                <dif>별점</dif>
             </td>
-{#            <td>{{ res.media_type }}</td>#}
-{#            {% if res.original_title %}#}
-{#                <td>{{ res.original_title }}</td>#}
-{#                <td>{{ res.release_date }}</td>#}
-{#            {% else %}#}
-{#                <td>{{ res.name }}</td>#}
-{#                <td>{{ res.first_air_date }}</td>#}
-{#            {% endif %}#}
-{#            <td>#}
-{#                {% for res_id in res.genre_ids %}#}
-{#                {{ res_id }}<br>#}
-{#                {% endfor %}#}
-{#            </td>#}
-{#            <td>{{ res.vote_average }}점 / {{ res.vote_count }}</td>#}
-            <td></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                찜한 시리즈
+            </td>
+        </tr>
+        {% for series in series_list %}
+        <tr onclick="location.href='/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv'"
+            style="cursor:pointer;">
+            <td>
+                <img src="https://image.tmdb.org/t/p/w200{{ series.s_posterPath }}"
+                        style="width:125px; height:175px;">
+                <br>
+                <div>{{ series.s_title }}</div>
+                <dif>별점</dif>
+            </td>
         </tr>
         {% endfor %}
         </tbody>
