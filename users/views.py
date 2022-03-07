@@ -30,7 +30,7 @@ def signup(request):
             login(request, user)
 
             # 회원가입 후 로그인 상태로 메인 페이지 돌아가기
-            return redirect('home')
+            return redirect('users:edit_genre')
     else:
         form = UserForm()
     return render(request, 'users/signup.html', {'form': form})
@@ -156,6 +156,7 @@ def edit_genre(request):
                 ugenre.ug_genre = genre
                 ugenre.ug_member = request.user
                 ugenre.save()
+
             elif (code not in selected) and (code in selected_ug):
                 ugenre = Ugenres.objects.get(Q(ug_genre=genre) & Q(ug_member=request.user))
                 ugenre.delete()
@@ -170,7 +171,8 @@ def edit_genre(request):
     #         ugenre.ug_genre = genre
     #         ugenre.ug_member = request.user
     #         ugenre.save()
-
+    messages.success(request, '선호 장르가 업데이트되었습니다!')
     print('ok')
+
 
     return redirect('users:genre')
