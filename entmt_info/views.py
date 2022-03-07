@@ -175,6 +175,7 @@ def e_detail(request):
         'like_count': like_count,
         'like_status': like_status,
         'media_type': media_type,
+        'number': [10,9,8,7,6,5,4,3,2,1],
     }
     return render(request, 'entmt_info/detail.html', content)
 

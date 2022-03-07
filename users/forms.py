@@ -72,8 +72,10 @@ class GenreForm(forms.ModelForm):
         }
         # widget = forms.Select(choices=CHOICES)
         # genres = forms.MultipleChoiceField(
-        #     queryset=Ugenres.objects.all(),
-        #     widget=forms.CheckboxSelectMultiple,
+        #     # queryset=Ugenres.objects.all(),
+        #     # widget=forms.CheckboxSelectMultiple,
         #
         # )
+
+
 
