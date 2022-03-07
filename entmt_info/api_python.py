@@ -27,7 +27,7 @@ def api_request(request_url):
     return getJson
 
 def api_search(search_word):
-    url = 'https://api.themoviedb.org/3/search/multi?language=ko&page=1&include_adult=false'
+    url = 'https://api.themoviedb.org/3/search/multi?language=en-US&page=1&include_adult=false'
     queryParms = '&api_key=' + USER_API_KEY + '&query=' + quote(search_word)
     request = Request(url + queryParms + '&_type=json')
     request.get_method = lambda: 'GET'

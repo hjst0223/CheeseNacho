@@ -186,8 +186,11 @@ def e_results(request):
 
     # 장르 한글로 변경
     for i in range(len(result)):
-        for j in range(len(result[i]['genre_ids'])):
-            result[i]['genre_ids'][j] = Genres.objects.get(genre_id=result[i]['genre_ids'][j]).g_name
+        try:
+            for j in range(len(result[i]['genre_ids'])):
+                result[i]['genre_ids'][j] = Genres.objects.get(genre_id=result[i]['genre_ids'][j]).g_name
+        except:
+            print('---error---')
 
     content = {
         'results': result,
