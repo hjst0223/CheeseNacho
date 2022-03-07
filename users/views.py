@@ -132,7 +132,9 @@ def genre(request):
         }
     return render(request, 'users/genre.html', context)
 
+
 def edit_genre(request):
+
     if request.method == 'POST':
         selected = request.POST.getlist('selected')
         ugenres = Ugenres.objects.filter(ug_member=request.user)
@@ -162,17 +164,8 @@ def edit_genre(request):
                 ugenre.delete()
             else : pass
 
-    # for genre_code in selected:
-    #     genre = Genres.objects.get(pk=genre_code)
-    #     if Ugenres.objects.filter(Q(ug_genre=genre) & Q(ug_member=request.user)).exists():
-    #         pass
-    #     else:
-    #         ugenre = Ugenres()
-    #         ugenre.ug_genre = genre
-    #         ugenre.ug_member = request.user
-    #         ugenre.save()
-    messages.success(request, '선호 장르가 업데이트되었습니다!')
-    print('ok')
 
+        messages.success(request, '선호 장르가 업데이트되었습니다!')
+        print('ok')
 
     return redirect('users:genre')
