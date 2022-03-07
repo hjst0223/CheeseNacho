@@ -4,16 +4,44 @@
 <br>
 
 <div class="container my-3">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">선호 장르 등록</legend>
-            {{ genre_form|crispy }}
-        </fieldset>
-        <br>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">업데이트</button>
-        </div>
+<!-- 선호장르 변경 완료/오류 메시지 -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == "error"%}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<form action="{% url 'users:edit_genre' %}" method="post">
+{% csrf_token %}
+    <legend class="border-bottom mb-4">선호 장르 등록</legend>
+        {% for obj in genres %}
+{#            {{ obj.genre }}<br>#}
+{#            {{ obj.status }}<br>#}
+        <input id="selected" type="checkbox" name="selected" value="{{ obj.genre.genre_id }}"
+            {% if obj.status %} checked
+            {% endif %}> {{ obj.genre }}<br>
+        {% endfor %}<br>
+        <button type="submit">저장</button>
+</form>
+
+{#    <form method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        <fieldset class="form-group">#}
+{#            <legend class="border-bottom mb-4">선호 장르 등록</legend>#}
+{#            {{ genre_form|crispy }}#}
+{#        </fieldset>#}
+{#        <br>#}
+{#        <div class="form-group">#}
+{#            <button class="btn btn-outline-info" type="submit">업데이트</button>#}
+{#        </div>#}
 
 {#        <fieldset>#}
 {#            <legend>장르 선택</legend>#}
@@ -33,20 +61,6 @@
 
     </form>
 <br>
-<!-- 회원정보 변경 완료/오류 메시지 -->
-{% if messages %}
-    {% for message in messages %}
-        {% if message.tags == "error"%}
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% else %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endif %}
-    {% endfor %}
-{% endif %}
 </div>
 
 {% endblock %}

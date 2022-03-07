@@ -11,7 +11,6 @@
 {#            <span>또는 <a href="{% url 'users:signup' %}">계정을 만드세요.</a></span>#}
 {#        </div>#}
 {#    </div>#}
-
     <form method="post" class="post-form" action="{% url 'users:login' %}">
         {% csrf_token %}
         <fieldset class="form-group">
@@ -33,6 +32,7 @@
         <br>
         <button type="submit" class="btn btn-outline-primary">로그인</button>
     </form>
+
         <div class="col-8 text-right">
             <br>
             <span><a href="{% url 'users:signup' %}" class="btn btn-outline-danger">회원가입</a></span>
@@ -40,4 +40,5 @@
     </div>
 
 </div>
+
 {% endblock %}
