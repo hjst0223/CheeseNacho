@@ -177,7 +177,8 @@ def e_detail(request):
         'media_type': media_type,
     }
     # return render(request, 'entmt_info/detail.html', content)
-    return render(request, 'entmt_info/moviesingle_jy.html', content)
+    # return render(request, 'entmt_info/moviesingle_jy.html', content)
+    return render(request, 'entmt_info/moviesingle.html', content)
 
 # 검색 결과 페이지
 def e_results(request):
