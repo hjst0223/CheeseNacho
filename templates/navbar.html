@@ -1,54 +1,146 @@
-<!-- 네비게이션 바 -->
-{#<nav class="navbar navbar-expand-md navbar-dark bg-steel border-bottom">#}
+<!-- NAVIGATION BAR -->
+<!-- BEGIN | Header -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <div class="container">
+<!--login form popup-->
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <form method="post" action="#">
+        	<div class="row">
+        		 <label for="username">
+                    Username:
+                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+        	</div>
 
-    <!-- 홈피 로고 클릭 시 메인 페이지로 이동 -->
-    <a class="navbar-brand" href="{% url 'home' %}">
-
-    <!-- 메인 페이지 좌측 상단 파비콘 -->
-    <img src="/static/img/logo.png" width="320" height="76"></a>
-    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
-
-    <!-- 세로 버전 -->
-{#        <div class="navbar-nav">#}
-{#            <ul class="nav-item ">#}
-{##}
-{#                <!-- 로그인 시 ~님 우측에 마이페이지/로그아웃 기능 활성화 -->#}
-{#                {% if user.is_authenticated %}#}
-{#                <a class="nav-link" href="{% url 'users:mypage' %}">{{ user.username }}님 마이페이지</a>#}
-{#                <a class="nav-link" href="{% url 'users:logout' %}">로그아웃</a>#}
-{##}
-{#                <!-- 로그아웃 상태일 때 우측에 로그인 기능 활성화 -->#}
-{#                {% else %}#}
-{#                <a class="nav-link" href="{% url 'users:login' %}">로그인</a>#}
-{#                <a class="nav-link" href="{% url 'users:signup' %}">회원가입</a>#}
-{#                {% endif %}#}
-{#            </ul>#}
-{#        </div>#}
-
-        <!-- 가로 버전 -->
-        <div class="collapse navbar-collapse">
-            <div class="navbar-nav">
-                {% if user.is_authenticated %}
-                <a class="nav-link" href="{% url 'users:mypage' %}">{{ user.username }}님 마이페이지</a>
-                <a class="nav-link" href="{% url 'users:logout' %}">로그아웃</a>
-
-                <!-- 로그아웃 상태일 때 우측에 로그인 기능 활성화 -->
-                {% else %}
-                <a class="nav-link" href="{% url 'users:login' %}">로그인</a>
-                <a class="nav-link" href="{% url 'users:signup' %}">회원가입</a>
-                {% endif %}
+            <div class="row">
+            	<label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+            <div class="row">
+            	<div class="remember">
+					<div>
+						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+					</div>
+            		<a href="#">Forget password ?</a>
+            	</div>
+            </div>
+           <div class="row">
+           	 <button type="submit">Login</button>
+           </div>
+        </form>
+        <div class="row">
+        	<p>Or via social</p>
+            <div class="social-btn-2">
+            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
             </div>
         </div>
-
     </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper"  id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>sign up</h3>
+        <form method="post" action="#">
+            <div class="row">
+                 <label for="username-2">
+                    Username:
+                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+            </div>
 
+            <div class="row">
+                <label for="email-2">
+                    your email:
+                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="password-2">
+                    Password:
+                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="repassword-2">
+                    re-type Password:
+                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+           <div class="row">
+             <button type="submit">sign up</button>
+           </div>
+        </form>
     </div>
-</nav>
+</div>
+<!--end of signup form popup-->
+
+<header class="ht-header">
+	<div class="container">
+		<nav class="navbar navbar-default navbar-custom">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header logo">
+				    <div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					    <span class="sr-only">Toggle navigation</span>
+					    <div id="nav-icon1">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+				    </div>
+				    <a href="index-2.html"><img class="logo" src="/static/img/logo.png" width="320" height="200"></a>
+			    </div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav flex-child-menu menu-left">
+						<li class="hidden">
+							<a href="#page-top"></a>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default">
+							Home
+							</a>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+							movies<i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+							<ul class="dropdown-menu level1">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Movie grid<i class="ion-ios-arrow-forward"></i></a>
+									<ul class="dropdown-menu level2">
+										<li><a href="moviegrid.html">Movie grid</a></li>
+										<li><a href="moviegridfw.html">movie grid full width</a></li>
+									</ul>
+								</li>
+								<li><a href="movielist.html">Movie list</a></li>
+								<li><a href="moviesingle.html">Movie single</a></li>
+								<li class="it-last"><a href="seriessingle.html">Series single</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav flex-child-menu menu-right">
+						<li class="loginLink"><a href="#">LOG In</a></li>
+						<li class="btn signupLink"><a href="#">sign up</a></li>
+					</ul>
+				</div>
+			<!-- /.navbar-collapse -->
+	    </nav>
+
+    {# 검색기능 #}
+    {#  submit 하면 view의 e_result 함수로 가서 API 수행  #}
+    {# <input type="text" name="search_word" label="Search Word">#}
+    <form method="GET" action="{% url 'entmt_info:e_results' %}">
+    <div class="top-search">
+        <input type="text" placeholder="Search for a movie or a TV Show..." type="submit">
+    </div>
+    </form>
+	</div>
+</header>
+<!-- END | Header -->
