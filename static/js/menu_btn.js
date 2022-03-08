@@ -18,25 +18,25 @@ function import_tv(){
     // tmdb에서 시리즈 정보 받아오기
 }
 
-function delete_comment() {
-    $.ajax({
-        async: true,
-        url: "/entmt_info/delete_comment/",
-        type: 'GET',
-        data: {
-            comment_id: $('#comment_id').text()
-        },
-        dataType: 'json',
-        timeout: 3000,
-
-        success: function() {
-            // alert('댓글 삭제 성공')
-        },
-        error: function() {
-            // alert('삭제 실패!' + $('#comment_id').text())
-        }
-    })
-}
+// function delete_comment() {
+//     $.ajax({
+//         async: true,
+//         url: "/entmt_info/delete_comment/",
+//         type: 'GET',
+//         data: {
+//             // comment_id: $('#comment_status.id').text()
+//         },
+//         dataType: 'json',
+//         timeout: 3000,
+//
+//         success: function() {
+//             alert('댓글 삭제 성공')
+//         },
+//         error: function() {
+//             alert('삭제 실패!' + $('#comment_status').text())
+//         }
+//     })
+// }
 
 // function update_comment() {
 //     document.location.href = '/entmt_info/update_comment/'

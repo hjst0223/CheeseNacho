@@ -7,11 +7,6 @@ from users.models import Members
 from entmt_manage.models import Mgenres, Sgenres
 from users.models import Mlike, Slike
 
-# from entmt_info.forms import PostSearchForm
-# from django.views.generic import FormView
-# from django import forms
-# from django.http import HttpResponse, HttpResponseRedirect
-
 from entmt_info import api_python   # api 관련 함수 모음
 from django.db.models import Q      # 두개이상의 인자를 사용해 검색할 경우
 import csv
@@ -30,10 +25,6 @@ def ei_genre(request):
     for url in [url_movie_genres, url_series_genres]:
         result = api_python.api_genre(url)
         for value in result:
-            # Primary Key라서 try-except 구문이 필요없음
-            # try:
-            #     Genres.objects.get(genre_id=value['id'])
-            # except:
             genre = Genres()
             genre.genre_id = value['id']
             genre.g_name = value['name']
@@ -139,7 +130,7 @@ def e_detail(request):
         if Movies.objects.filter(movie_id=res_id).exists() == False:
             dbsave_movie(result)
 
-        comments = Mcomment.objects.filter(mc_movie=result['id'])
+        comments = Mcomment.objects.filter(Q(mc_movie=result['id']) & ~Q(mc_member=request.user))
 
         # like_count = Movies.objects.get(movie_id=result['id']).m_likeCount
         like_count = Mlike.objects.filter(ml_movie=result['id']).count()
@@ -147,6 +138,14 @@ def e_detail(request):
         # 로그인되지 않았을 때 생기는 오류 수정
         try: like_status = Mlike.ojects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user)).exists()
         except: like_status = False
+
+        try:
+            comment_status = Mcomment.objects.filter(Q(mc_movie=result['id']) & Q(mc_member=request.user))
+            comment_status = comment_status[0]
+        except: comment_status = False
+        # print(comment_status)
+        # if(Mcomment.objects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user))):
+        #     comment_status = True
 
 
     elif media_type == 'tv':
@@ -156,7 +155,7 @@ def e_detail(request):
         if Series.objects.filter(series_id=res_id).exists() == False:
             dbsave_series(result)
 
-        comments = Scomment.objects.filter(sc_series=result['id'])
+        comments = Scomment.objects.filter(Q(sc_series=result['id']) & ~Q(sc_member=request.user))
 
         # like_count = Series.objects.get(series_id=result['id']).s_likeCount
         like_count = Slike.objects.filter(sl_series=result['id']).count()
@@ -164,6 +163,14 @@ def e_detail(request):
         # 로그인되지 않았을 때 생기는 오류 수정
         try: like_status = Slike.objects.filter(Q(sl_series=result['id']) & Q(sl_member=request.user)).exists()
         except: like_status = False
+
+        try:
+            print('--------------------------')
+            comment_status = Scomment.objects.filter(Q(sc_series=result['id']) & Q(sc_member=request.user))
+            comment_status = comment_status[0]
+            print('--------------------------')
+            print(comment_status)
+        except: comment_status = False
 
     else:
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
@@ -175,10 +182,11 @@ def e_detail(request):
         'like_count': like_count,
         'like_status': like_status,
         'media_type': media_type,
+        'comment_status': comment_status,
     }
-    # return render(request, 'entmt_info/detail.html', content)
+    return render(request, 'entmt_info/detail.html', content)
     # return render(request, 'entmt_info/moviesingle_jy.html', content)
-    return render(request, 'entmt_info/moviesingle.html', content)
+    # return render(request, 'entmt_info/moviesingle.html', content)
 
 # 검색 결과 페이지
 def e_results(request):
@@ -207,13 +215,29 @@ def submit_comment(request, media_id, media_type):
 
     if request.method == 'POST':
         # 기존 리뷰를 업데이트하는 경우
-        if Mcomment.objects.filter(pk=media_id):
+        if Mcomment.objects.filter(Q(mc_movie_id=media_id) & Q(mc_member=request.user)).exists():
             # filter에 객체가 존재하는 경우 업데이트
-            comments = Mcomment.objects.filter(pk=media_id)
-            form = McommentForm(request.POST, instance=comments)
-            form.save()
-            messages.success(request, '리뷰가 업데이트되었습니다!')
-            return redirect(url)
+            comment = Mcomment.objects.filter(Q(mc_movie_id=media_id) & Q(mc_member=request.user))[0]
+            form = McommentForm(request.POST, instance=comment)
+
+            if form.is_valid():
+                form.save()
+                messages.success(request, '리뷰가 업데이트되었습니다!')
+                return redirect(url)
+            else:
+                print('무효무효~!!')
+
+        elif Scomment.objects.filter(Q(sc_series_id=media_id) & Q(sc_member=request.user)).exists():
+            # filter에 객체가 존재하는 경우 업데이트
+            comment = Scomment.objects.filter(Q(sc_series_id=media_id) & Q(sc_member=request.user))[0]
+            form = ScommentForm(request.POST, instance=comment)
+
+            if form.is_valid():
+                form.save()
+                messages.success(request, '리뷰가 업데이트되었습니다!')
+                return redirect(url)
+            else:
+                print('무효무효~!!')
 
         # 새 리뷰를 등록하는 경우
         else:
@@ -254,7 +278,6 @@ def submit_comment(request, media_id, media_type):
                     return redirect(url)
 
                 else:
-
                     # 필터에 객체가 없는 경우 새로 등록
                     form = ScommentForm(request.POST)
                     if form.is_valid():
@@ -279,23 +302,23 @@ def submit_comment(request, media_id, media_type):
 def delete_comment(request, comment_id, media_type):
     # 현재 url
     url = request.META.get('HTTP_REFERER')
-
+    print('삭제 호출 ===')
     if request.user.is_authenticated:
 
         if media_type == 'movie':
             comment = get_object_or_404(Mcomment, pk=comment_id)
-
+            print('---------------------')
             # 로그인한 회원과 댓글 작성자가 같을 때만 삭제
             if comment.mc_member == request.user:
                 comment.delete()
+                print('삭제!!! ')
                 messages.success(request, '댓글이 삭제되었습니다!')
-
+                print('message 이후')
                 return redirect(url)
 
-            else:
-                messages.error(request, '다른 사람의 댓글은 삭제할 수 없습니다!')
-
-                return redirect(url)
+            # else:
+            #     messages.error(request, 'ERROR')
+            #     return redirect(url)
 
         elif media_type == 'tv':
             comment = get_object_or_404(Scomment, pk=comment_id)
@@ -307,93 +330,10 @@ def delete_comment(request, comment_id, media_type):
 
                 return redirect(url)
 
-            else:
-                messages.error(request, '다른 사람의 댓글은 삭제할 수 없습니다!')
-
-                return redirect(url)
-
-    else:
-        return redirect('home')
-
-
-def update_comment(request, comment_id, media_type):
-    pass
-#     post_id = request.GET['movie_id']
-#     post = get_object_or_404(Board, pk=post_id)
-#
-#     # 현재 url
-    url = request.META.get('HTTP_REFERER')
-
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            if media_type == 'movie':
-                comment = get_object_or_404(Mcomment, pk=comment_id)
-
-                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
-                if comment.mc_member == request.user:
-                    form = McommentForm(request.POST, instance=comment)
-                    if form.is_valid():
-                        # comment = form.save(commit=False)
-                        # comment.save()
-                        form.save()
-                        messages.success(request, '댓글이 업데이트되었습니다!')
-
-                        return redirect(url)
-                    else:
-                        print('무효한 수정폼~!!')
-
-                else:
-                    messages.error(request, '다른 사람의 댓글은 수정할 수 없습니다!')
-
-                    return redirect(url)
-
-            elif media_type == 'tv':
-                comment = get_object_or_404(Scomment, pk=comment_id)
-
-                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
-                if comment.sc_member == request.user:
-                    form = McommentForm(request.POST, instance=comment)
-                    if form.is_valid():
-                        # comment = form.save(commit=False)
-                        # comment.save()
-                        form.save()
-                        messages.success(request, '댓글이 업데이트되었습니다!')
-
-                        return redirect(url)
-                    else:
-                        print('무효한 수정폼~!!')
-
-                else:
-                    messages.error(request, '다른 사람의 댓글은 수정할 수 없습니다!')
-
-                    return redirect(url)
-
-        else:
-            if media_type == 'movie':
-                comment = get_object_or_404(Mcomment, pk=comment_id)
-
-                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
-                if comment.mc_member == request.user:
-                    form = McommentForm(request.POST, instance=comment)
-
-                    context = {
-                        "update_form": form
-                    }
-
-                    return render(request, 'entmt_info/update_comment.html', context)
-
-            elif media_type == 'tv':
-                comment = get_object_or_404(Scomment, pk=comment_id)
-
-                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
-                if comment.sc_member == request.user:
-                    form = ScommentForm(request.POST, instance=comment)
-
-                    context = {
-                        "update_form": form
-                    }
-
-                    return render(request, 'entmt_info/update_comment.html', context)
+            # else:
+            #     messages.error(request, 'ERROR')
+            #     return redirect(url)
 
     else:
         return redirect('home')
+

@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from users.forms import UserForm, GenreForm
+from users.forms import UserForm
 from .forms import UpdateForm
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages, auth
@@ -83,6 +83,7 @@ def update(request):
     if request.method == 'POST':
         update_form = UpdateForm(request.POST,
                                  request.FILES, instance=request.user)
+        print(update_form)
 
         if update_form.is_valid():
             update_form.save()
@@ -96,27 +97,6 @@ def update(request):
         'update_form': update_form
     }
     return render(request, 'users/update.html', context)
-
-
-# def genre(request):
-#     if request.method == 'POST':
-#         genre_form = GenreForm(request.POST, instance=request.user)
-#         print('----------------------------------------------------')
-#         # print(genre_form)
-#
-#         if genre_form.is_valid():
-#             print('ㅇ오')
-#             genre_form.save()
-#             messages.success(request, '선호 장르가 업데이트되었습니다!')
-#             return redirect('users:genre')
-#
-#     else:
-#         genre_form = GenreForm(instance=request.user)
-#
-#     context = {
-#         'genre_form': genre_form
-#     }
-#     return render(request, 'users/genre.html', context)
 
 
 def genre(request):
@@ -151,9 +131,6 @@ def edit_genre(request):
         for code in code_list:
             genre = Genres.objects.get(pk=code)
             if (code in selected) and (code not in selected_ug):
-                # if Ugenres.objects.filter(Q(ug_genre=genre) & Q(ug_member=request.user)).exists():
-                #     pass # 필요는 없지만 혹시나 해서
-                # else:
                 ugenre = Ugenres()
                 ugenre.ug_genre = genre
                 ugenre.ug_member = request.user
@@ -162,8 +139,7 @@ def edit_genre(request):
             elif (code not in selected) and (code in selected_ug):
                 ugenre = Ugenres.objects.get(Q(ug_genre=genre) & Q(ug_member=request.user))
                 ugenre.delete()
-            else : pass
-
+            else: pass
 
         messages.success(request, '선호 장르가 업데이트되었습니다!')
         print('ok')
