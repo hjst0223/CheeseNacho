@@ -58,24 +58,5 @@ class UpdateForm(forms.ModelForm):
         }
 
 
-class GenreForm(forms.ModelForm):
-    class Meta:
-        model = Ugenres
-        fields = ['ug_genre']
-
-        labels = {
-            'ug_genre': '선호 장르',
-        }
-        # exclude = ('---------',)
-        widgets = {
-            'ug_genre': forms.CheckboxSelectMultiple(),
-        }
-        # widget = forms.Select(choices=CHOICES)
-        # genres = forms.MultipleChoiceField(
-        #     # queryset=Ugenres.objects.all(),
-        #     # widget=forms.CheckboxSelectMultiple,
-        #
-        # )
-
 
 

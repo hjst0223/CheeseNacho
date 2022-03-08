@@ -14,5 +14,5 @@ urlpatterns = [
     path('results/', views.e_results, name='e_results'),
     path('submit_comment/<int:media_id>/<media_type>/', views.submit_comment, name='submit_comment'),
     path('delete_comment/<int:comment_id>/<media_type>/', views.delete_comment, name='delete_comment'),
-    path('update_comment/<int:comment_id>/<media_type>/', views.update_comment, name='update_comment'),
+    # path('update_comment/<int:comment_id>/<media_type>/', views.update_comment, name='update_comment'),
 ]

@@ -13,6 +13,8 @@ class Mcomment(models.Model):
                               on_delete=models.CASCADE)    # 작성한 영화
     mc_date = models.DateTimeField(auto_now=True)    # 댓글 작성 시간
 
+    def __str__(self):
+        return self.mc_title
 
 class Scomment(models.Model):
     sc_title = models.CharField(max_length=30, blank=False, default='')  # 댓글 제목
