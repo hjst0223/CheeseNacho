@@ -1,0 +1,312 @@
+{#{% extends 'base.html' %}#}
+{#{% load crispy_forms_tags %}#}
+{#{% block html_body %}#}
+{#<br>#}
+{##}
+{#<div class="container my-3">#}
+{#    <form method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        <fieldset class="form-group">#}
+{#            <legend class="border-bottom mb-4">리뷰 수정</legend>#}
+{#            {{ update_form|crispy }}#}
+{#        </fieldset>#}
+{#        <br>#}
+{#        <div class="form-group">#}
+{#            <button class="btn btn-outline-info" type="submit">업데이트</button>#}
+{#        </div>#}
+{#    </form>#}
+{#<br>#}
+{#<!-- 리뷰 업데이트 완료/오류 메시지 -->#}
+{#{% if messages %}#}
+{#    {% for message in messages %}#}
+{#        {% if message.tags == "error"%}#}
+{#            <div class="alert alert-danger">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% else %}#}
+{#            <div class="alert alert-success">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#{% endif %}#}
+{#</div>#}
+{##}
+
+
+{#<!-- 리뷰 등록 -->#}
+{#    <form action="{% url 'entmt_info:update_comment' comment.id media_type %}" method="POST">#}
+{#        {% csrf_token %}#}
+{#        <h4>리뷰</h4>#}
+{#        <div>#}
+{#            <label>평가를 남겨주세요!</label>#}
+{#            <br>#}
+{#            <div class="rate">#}
+{#                <!-- 영화일 때 별점 -->#}
+{#                {% if media_type == 'movie' %}#}
+{#                <input type="radio" name="mc_star" id="rating10" value="5" required />#}
+{#                <label for="rating10" title="5"></label>#}
+{#                <input type="radio" name="mc_star" id="rating9" value="4.5" required />#}
+{#                <label for="rating9" title="4.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating8" value="4" required />#}
+{#                <label for="rating8" title="4"></label>#}
+{#                <input type="radio" name="mc_star" id="rating7" value="3.5" required />#}
+{#                <label for="rating7" title="3.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating6" value="3" required />#}
+{#                <label for="rating6" title="3"></label>#}
+{#                <input type="radio" name="mc_star" id="rating5" value="2.5" required />#}
+{#                <label for="rating5" title="2.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating4" value="2" required />#}
+{#                <label for="rating4" title="2"></label>#}
+{#                <input type="radio" name="mc_star" id="rating3" value="1.5" required />#}
+{#                <label for="rating3" title="1.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating2" value="1" required />#}
+{#                <label for="rating2" title="1"></label>#}
+{#                <input type="radio" name="mc_star" id="rating1" value="0.5" required />#}
+{#                <label for="rating1" title="0.5" class="half"></label>#}
+{##}
+{#                {% elif media_type == 'tv' %}#}
+{#                <input type="radio" name="sc_star" id="rating10" value="5" required />#}
+{#                <label for="rating10" title="5"></label>#}
+{#                <input type="radio" name="sc_star" id="rating9" value="4.5" required />#}
+{#                <label for="rating9" title="4.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating8" value="4" required />#}
+{#                <label for="rating8" title="4"></label>#}
+{#                <input type="radio" name="sc_star" id="rating7" value="3.5" required />#}
+{#                <label for="rating7" title="3.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating6" value="3" required />#}
+{#                <label for="rating6" title="3"></label>#}
+{#                <input type="radio" name="sc_star" id="rating5" value="2.5" required />#}
+{#                <label for="rating5" title="2.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating4" value="2" required />#}
+{#                <label for="rating4" title="2"></label>#}
+{#                <input type="radio" name="sc_star" id="rating3" value="1.5" required />#}
+{#                <label for="rating3" title="1.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating2" value="1" required />#}
+{#                <label for="rating2" title="1"></label>#}
+{#                <input type="radio" name="sc_star" id="rating1" value="0.5" required />#}
+{#                <label for="rating1" title="0.5" class="half"></label>#}
+{#                {% endif %}#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#        <br>#}
+{##}
+{#        <!-- 영화일 때 리뷰 입력 -->#}
+{#        {% if media_type == 'movie' %}#}
+{#        리뷰 제목:#}
+{#        <input type="text" class="form-control" name="mc_title">#}
+{#        <br>#}
+{#        리뷰:#}
+{#        <textarea name="mc_content" rows="4" class="form-control"></textarea>#}
+{##}
+{#        <!-- tv 시리즈일 때 리뷰 입력 -->#}
+{#        {% elif media_type == 'tv' %}#}
+{#        리뷰 제목:#}
+{#        <input type="text" class="form-control" name="sc_title">#}
+{#        <br>#}
+{#        리뷰:#}
+{#        <textarea name="sc_content" rows="4" class="form-control"></textarea>#}
+{##}
+{#        {% endif %}#}
+{##}
+{#        <br>#}
+{#        {% if user.is_authenticated %}#}
+{#        <input type="submit" value="리뷰 등록하기" class="btn btn-outline-info">#}
+{#        <br>#}
+{#        {% else %}#}
+{#        <p>리뷰를 남기기 위해서는 로그인해야 합니다. <span><a href="{% url 'users:login' %}">로그인</a></span></p>#}
+{#        {% endif %}#}
+{##}
+{#        <!-- 리뷰 등록/오류 메시지 -->#}
+{#        {% if messages %}#}
+{#            {% for message in messages %}#}
+{#                {% if message.tags == "error"%}#}
+{#                    <div class="alert alert-danger" style="text-align: center;">#}
+{#                        {{ message }}#}
+{#                    </div>#}
+{#                {% else %}#}
+{#                    <div class="alert alert-success" style="text-align: center;">#}
+{#                        {{ message }}#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{##}
+{#    </form>#}
+{#    <br>#}
+{##}
+{##}
+{##}
+{#{% endblock %}#}
+
+{% extends 'base.html' %}
+
+{% block html_body %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>포스터 이미지</th>
+            <th>찜하기</th>
+            <th>제목</th>
+            <th>개봉일</th>
+            <th>장르</th>
+            <th>상영 시간</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                <img src="https://image.tmdb.org/t/p/w200{{ results.poster_path }}"
+                        style="width:125px; height:175px;">
+                </td>
+
+                {% if results.original_title %}
+                    <td>{{ results.original_title }}</td>
+                    <td>{{ results.release_date }}</td>
+                {% else %}
+                    <td>{{ results.name }}</td>
+                    <td>{{ results.first_air_date }}</td>
+                {% endif %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <!-- 영화 별점 평균 -->
+    {% if media_type == 'movie' %}
+    <script type="text/javascript">
+    var sum = 0
+    var length = 0
+    {% for comment in comments %}
+        length += 1
+        sum += {{ comment.mc_star }}
+    {% endfor %}
+    var avg = sum/length
+    document.write('★ ', avg.toFixed(1))
+    document.write('/5', '<br />')
+    </script><br>
+
+    <!-- tv 시리즈 별점 평균 -->
+    {% elif media_type == 'tv' %}
+    <script type="text/javascript">
+    var sum = 0
+    var length = 0
+    {% for comment in comments %}
+        length += 1
+        sum += {{ comment.sc_star }}
+    {% endfor %}
+    var avg = sum/length
+    document.write('★ ', avg.toFixed(1))
+    document.write('/5', '<br />')
+    </script><br>
+    {% endif %}
+
+    <!-- 리뷰 등록 -->
+    <form action="{% url 'entmt_info:update_comment' results.id media_type %}" method="POST">
+        {% csrf_token %}
+        <h4>리뷰</h4>
+        <div>
+            <label>평가를 남겨주세요!</label>
+            <br>
+            <div class="rate">
+                <!-- 영화일 때 별점 -->
+                {% if media_type == 'movie' %}
+                <input type="radio" name="mc_star" id="rating10" value="5" required />
+                <label for="rating10" title="5"></label>
+                <input type="radio" name="mc_star" id="rating9" value="4.5" required />
+                <label for="rating9" title="4.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating8" value="4" required />
+                <label for="rating8" title="4"></label>
+                <input type="radio" name="mc_star" id="rating7" value="3.5" required />
+                <label for="rating7" title="3.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating6" value="3" required />
+                <label for="rating6" title="3"></label>
+                <input type="radio" name="mc_star" id="rating5" value="2.5" required />
+                <label for="rating5" title="2.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating4" value="2" required />
+                <label for="rating4" title="2"></label>
+                <input type="radio" name="mc_star" id="rating3" value="1.5" required />
+                <label for="rating3" title="1.5" class="half"></label>
+                <input type="radio" name="mc_star" id="rating2" value="1" required />
+                <label for="rating2" title="1"></label>
+                <input type="radio" name="mc_star" id="rating1" value="0.5" required />
+                <label for="rating1" title="0.5" class="half"></label>
+
+                {% elif media_type == 'tv' %}
+                <input type="radio" name="sc_star" id="rating10" value="5" required />
+                <label for="rating10" title="5"></label>
+                <input type="radio" name="sc_star" id="rating9" value="4.5" required />
+                <label for="rating9" title="4.5" class="half"></label>
+                <input type="radio" name="sc_star" id="rating8" value="4" required />
+                <label for="rating8" title="4"></label>
+                <input type="radio" name="sc_star" id="rating7" value="3.5" required />
+                <label for="rating7" title="3.5" class="half"></label>
+                <input type="radio" name="sc_star" id="rating6" value="3" required />
+                <label for="rating6" title="3"></label>
+                <input type="radio" name="sc_star" id="rating5" value="2.5" required />
+                <label for="rating5" title="2.5" class="half"></label>
+                <input type="radio" name="sc_star" id="rating4" value="2" required />
+                <label for="rating4" title="2"></label>
+                <input type="radio" name="sc_star" id="rating3" value="1.5" required />
+                <label for="rating3" title="1.5" class="half"></label>
+                <input type="radio" name="sc_star" id="rating2" value="1" required />
+                <label for="rating2" title="1"></label>
+                <input type="radio" name="sc_star" id="rating1" value="0.5" required />
+                <label for="rating1" title="0.5" class="half"></label>
+                {% endif %}
+
+            </div>
+        </div>
+        <br>
+
+        <!-- 영화일 때 리뷰 입력 -->
+        {% if media_type == 'movie' %}
+        리뷰 제목:
+        <input type="text" class="form-control" name="mc_title">
+        <br>
+        리뷰:
+        <textarea name="mc_content" rows="4" class="form-control"></textarea>
+
+        <!-- tv 시리즈일 때 리뷰 입력 -->
+        {% elif media_type == 'tv' %}
+        리뷰 제목:
+        <input type="text" class="form-control" name="sc_title">
+        <br>
+        리뷰:
+        <textarea name="sc_content" rows="4" class="form-control"></textarea>
+
+        {% endif %}
+
+        <br>
+
+        <input type="submit" value="리뷰 업데이트하기" class="btn btn-outline-info">
+        <br>
+
+
+
+        <!-- 리뷰 등록/오류 메시지 -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "error"%}
+                    <div class="alert alert-danger" style="text-align: center;">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" style="text-align: center;">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    </form>
+    <br>
+
+</div>
+<br><br><br>
+
+{% endblock %}

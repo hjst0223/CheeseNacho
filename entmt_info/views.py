@@ -217,57 +217,183 @@ def submit_comment(request, media_id, media_type):
 
         # 새 리뷰를 등록하는 경우
         else:
-            print('새 리뷰 등록')
-            print(media_type)
             if media_type == 'movie':
-                print('영화 타입 구분===')
-
-                # 필터에 객체가 없는 경우 새로 등록
-                form = McommentForm(request.POST)
-                if form.is_valid():
-                    user = Members.objects.get(pk=request.user.id)
-                    movie = Movies.objects.get(pk=media_id)
-
-                    data = Mcomment()
-                    data.mc_title = form.cleaned_data['mc_title']
-                    data.mc_star = form.cleaned_data['mc_star']
-                    data.mc_content = form.cleaned_data['mc_content']
-                    data.mc_movie = movie
-                    data.mc_member = user
-                    data.save()
-                    messages.success(request, '리뷰가 등록되었습니다!')
+                # 이미 리뷰가 존재하는 경우
+                if (Mcomment.objects.filter(mc_member=request.user)):
+                    messages.error(request, '이미 리뷰를 등록하셨습니다!')
 
                     return redirect(url)
 
                 else:
-                    messages.error(request, '오류!')
+                    # 필터에 객체가 없는 경우 새로 등록
+                    form = McommentForm(request.POST)
+                    if form.is_valid():
+                        user = Members.objects.get(pk=request.user.id)
+                        movie = Movies.objects.get(pk=media_id)
+
+                        data = Mcomment()
+                        data.mc_title = form.cleaned_data['mc_title']
+                        data.mc_star = form.cleaned_data['mc_star']
+                        data.mc_content = form.cleaned_data['mc_content']
+                        data.mc_movie = movie
+                        data.mc_member = user
+                        data.save()
+                        messages.success(request, '리뷰가 등록되었습니다!')
+
+                        return redirect(url)
+
+                    else:
+                        messages.error(request, '오류!')
 
             elif media_type == 'tv':
-
-                print('시리즈 타입 구분===')
-
-                # 필터에 객체가 없는 경우 새로 등록
-                form = ScommentForm(request.POST)
-                print('폼에 입력--')
-                if form.is_valid():
-                    print('유효한 폼!')
-                    user = Members.objects.get(pk=request.user.id)
-                    series = Series.objects.get(pk=media_id)
-
-                    data = Scomment()
-                    data.sc_title = form.cleaned_data['sc_title']
-                    data.sc_star = form.cleaned_data['sc_star']
-                    data.sc_content = form.cleaned_data['sc_content']
-                    data.sc_series = series
-                    data.sc_member = user
-                    print('저장 전 ㅠ')
-                    data.save()
-                    print('저장 완료~!')
-                    messages.success(request, '리뷰가 등록되었습니다!')
+                # 이미 리뷰가 존재하는 경우
+                if (Scomment.objects.filter(sc_member=request.user)):
+                    print('드라마 댓글 존재!!!')
+                    messages.error(request, '이미 리뷰를 등록하셨습니다!')
 
                     return redirect(url)
 
                 else:
-                    print('무효한 폼 ㅜ')
-                    messages.error(request, '오류!')
 
+                    # 필터에 객체가 없는 경우 새로 등록
+                    form = ScommentForm(request.POST)
+                    if form.is_valid():
+                        user = Members.objects.get(pk=request.user.id)
+                        series = Series.objects.get(pk=media_id)
+
+                        data = Scomment()
+                        data.sc_title = form.cleaned_data['sc_title']
+                        data.sc_star = form.cleaned_data['sc_star']
+                        data.sc_content = form.cleaned_data['sc_content']
+                        data.sc_series = series
+                        data.sc_member = user
+                        data.save()
+                        messages.success(request, '리뷰가 등록되었습니다!')
+
+                        return redirect(url)
+
+                    else:
+                        messages.error(request, '오류!')
+
+
+def delete_comment(request, comment_id, media_type):
+    # 현재 url
+    url = request.META.get('HTTP_REFERER')
+
+    if request.user.is_authenticated:
+
+        if media_type == 'movie':
+            comment = get_object_or_404(Mcomment, pk=comment_id)
+
+            # 로그인한 회원과 댓글 작성자가 같을 때만 삭제
+            if comment.mc_member == request.user:
+                comment.delete()
+                messages.success(request, '댓글이 삭제되었습니다!')
+
+                return redirect(url)
+
+            else:
+                messages.error(request, '다른 사람의 댓글은 삭제할 수 없습니다!')
+
+                return redirect(url)
+
+        elif media_type == 'tv':
+            comment = get_object_or_404(Scomment, pk=comment_id)
+
+            # 로그인한 회원과 댓글 작성자가 같을 때만 삭제
+            if comment.sc_member == request.user:
+                comment.delete()
+                messages.success(request, '댓글이 삭제되었습니다!')
+
+                return redirect(url)
+
+            else:
+                messages.error(request, '다른 사람의 댓글은 삭제할 수 없습니다!')
+
+                return redirect(url)
+
+    else:
+        return redirect('home')
+
+
+def update_comment(request, comment_id, media_type):
+    pass
+#     post_id = request.GET['movie_id']
+#     post = get_object_or_404(Board, pk=post_id)
+#
+#     # 현재 url
+    url = request.META.get('HTTP_REFERER')
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            if media_type == 'movie':
+                comment = get_object_or_404(Mcomment, pk=comment_id)
+
+                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
+                if comment.mc_member == request.user:
+                    form = McommentForm(request.POST, instance=comment)
+                    if form.is_valid():
+                        # comment = form.save(commit=False)
+                        # comment.save()
+                        form.save()
+                        messages.success(request, '댓글이 업데이트되었습니다!')
+
+                        return redirect(url)
+                    else:
+                        print('무효한 수정폼~!!')
+
+                else:
+                    messages.error(request, '다른 사람의 댓글은 수정할 수 없습니다!')
+
+                    return redirect(url)
+
+            elif media_type == 'tv':
+                comment = get_object_or_404(Scomment, pk=comment_id)
+
+                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
+                if comment.sc_member == request.user:
+                    form = McommentForm(request.POST, instance=comment)
+                    if form.is_valid():
+                        # comment = form.save(commit=False)
+                        # comment.save()
+                        form.save()
+                        messages.success(request, '댓글이 업데이트되었습니다!')
+
+                        return redirect(url)
+                    else:
+                        print('무효한 수정폼~!!')
+
+                else:
+                    messages.error(request, '다른 사람의 댓글은 수정할 수 없습니다!')
+
+                    return redirect(url)
+
+        else:
+            if media_type == 'movie':
+                comment = get_object_or_404(Mcomment, pk=comment_id)
+
+                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
+                if comment.mc_member == request.user:
+                    form = McommentForm(request.POST, instance=comment)
+
+                    context = {
+                        "update_form": form
+                    }
+
+                    return render(request, 'entmt_info/update_comment.html', context)
+
+            elif media_type == 'tv':
+                comment = get_object_or_404(Scomment, pk=comment_id)
+
+                # 로그인한 회원과 댓글 작성자가 같을 때만 수정
+                if comment.sc_member == request.user:
+                    form = ScommentForm(request.POST, instance=comment)
+
+                    context = {
+                        "update_form": form
+                    }
+
+                    return render(request, 'entmt_info/update_comment.html', context)
+
+    else:
+        return redirect('home')
