@@ -5,19 +5,39 @@
 <div class="login-wrapper" id="login-content">
     <div class="login-content">
         <a href="#" class="close">x</a>
-        <h3>Login</h3>
-        <form method="post" action="#">
+{#            <h3>Login</h3>#}
+{#                <form method="post" class="post-form" action="{% url 'users:login' %}">#}
+{#                {% csrf_token %}#}
+{#                <fieldset class="form-group">#}
+{#                </fieldset>#}
+{##}
+{#                <input type="hidden" name="next" value="{{ next }}">  <!-- 로그인 성공후 이동되는 URL -->#}
+{#                <div class="form-group">#}
+{#                    <label for="username">사용자ID</label>#}
+{#                    <input type="text" class="form-control" name="username" id="username">#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="password">비밀번호</label>#}
+{#                    <input type="password" class="form-control" name="password" id="password">#}
+{#                </div>#}
+{##}
+{#                <button type="submit" class="btn btn-outline-primary">로그인</button>#}
+{#            </form>#}
+        <form method="post" action="{% url 'users:login' %}">
+            {% csrf_token %}
         	<div class="row">
         		 <label for="username">
                     Username:
-                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+{#                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />#}
+                     <input type="text" name="username" id="username" required="required" />
                 </label>
         	</div>
 
             <div class="row">
             	<label for="password">
                     Password:
-                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+{#                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
+                    <input type="password" name="password" id="password" required="required" />
                 </label>
             </div>
             <div class="row">
