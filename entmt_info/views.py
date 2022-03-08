@@ -205,8 +205,8 @@ def e_results(request):
         'results': result,
     }
 
-    return render(request, 'entmt_info/results.html', content)
-
+    # return render(request, 'entmt_info/results.html', content)
+    return render(request, 'entmt_info/moviegrid.html', content)
 
 # 댓글 등록
 def submit_comment(request, media_id, media_type):

@@ -1,11 +1,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<!-- 네비게이션 바 적용하기 -->
-{% include "navbar.html" %}
-{% block html_body %}
-{% endblock %}
-<!-- 기본-->
+
+<!-- BASICS -->
 <head>
     <title>CNDb: Your #1 source for Movies & TV Series</title>
 	<meta charset="UTF-8">
@@ -15,27 +12,25 @@
 	<!-- CSS files -->
 	<link rel="stylesheet" href="/static/css/plugins.css">
 	<link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <!-- FAVICON -->
     <link rel="shortcut icon" href="/static/img/cheesenacho.ico" type="image/x-icon">
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 
 <body>
-<!--preloading-->
-<div id="preloader">
-    <img class="logo" src="/static/img/logo.png" width="320" height="200">
-    <div id="status">
-        <span></span>
-        <span></span>
-    </div>
-</div>
-<!--end of preloading-->
+<!-- 네비게이션 바 적용하기 -->
+{% include "navbar-2.html" %}
 
-<script src="/static/js/jquery.js"></script>
-<script src="/static/js/plugins.js"></script>
-<script src="/static/js/plugins2.js"></script>
-<script src="/static/js/custom.js"></script>
+{% block html_body %}
+{% endblock %}
 
-<!-- 별점 CSS -->
+<!-- jQuery JS -->
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<!-- Bootstrap JS -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- STAR RATING CSS -->
 <link href="{% static 'css/rating.css' %}" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
