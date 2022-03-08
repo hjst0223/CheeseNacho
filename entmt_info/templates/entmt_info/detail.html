@@ -116,55 +116,59 @@
         {% csrf_token %}
         <h4>리뷰</h4>
         <div>
-            <label>평가를 남겨주세요!</label>
-        {{ comment_status.mc_star }}
+{#            {% if comment_status == False %}#}
+                <label>평가를 남겨주세요!</label>
+{#            {% else %}#}
+{#                <label>평가를 수정할 수 있어요!</label>#}
+{#            {% endif %}#}
             <br>
             <div class="rate">
                 <!-- 영화일 때 별점 -->
                 {% if media_type == 'movie' %}
-                <input type="radio" name="mc_star" id="rating10" value="5" {% if comment_status.mc_star == 5 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating10" value="5" required {% if comment_status.mc_star == 5 %} checked {% endif %} />
                 <label for="rating10" title="5"></label>
-                <input type="radio" name="mc_star" id="rating9" value="4.5" {% if comment_status.mc_star == 4.5 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating9" value="4.5" required {% if comment_status.mc_star == 4.5 %} checked {% endif %} />
                 <label for="rating9" title="4.5" class="half"></label>
-                <input type="radio" name="mc_star" id="rating8" value="4" {% if comment_status.mc_star == 4 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating8" value="4" required {% if comment_status.mc_star == 4 %} checked {% endif %} />
                 <label for="rating8" title="4"></label>
-                <input type="radio" name="mc_star" id="rating7" value="3.5" {% if comment_status.mc_star == 3.5 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating7" value="3.5" required {% if comment_status.mc_star == 3.5 %} checked {% endif %} />
                 <label for="rating7" title="3.5" class="half"></label>
-                <input type="radio" name="mc_star" id="rating6" value="3" {% if comment_status.mc_star == 3 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating6" value="3" required {% if comment_status.mc_star == 3 %} checked {% endif %} />
                 <label for="rating6" title="3"></label>
-                <input type="radio" name="mc_star" id="rating5" value="2.5" {% if comment_status.mc_star == 2.5 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating5" value="2.5" required {% if comment_status.mc_star == 2.5 %} checked {% endif %} />
                 <label for="rating5" title="2.5" class="half"></label>
-                <input type="radio" name="mc_star" id="rating4" value="2" {% if comment_status.mc_star == 2 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating4" value="2" required {% if comment_status.mc_star == 2 %} checked {% endif %} />
                 <label for="rating4" title="2"></label>
-                <input type="radio" name="mc_star" id="rating3" value="1.5" {% if comment_status.mc_star == 1.5 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating3" value="1.5" required {% if comment_status.mc_star == 1.5 %} checked {% endif %} />
                 <label for="rating3" title="1.5" class="half"></label>
-                <input type="radio" name="mc_star" id="rating2" value="1" {% if comment_status.mc_star == 1 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating2" value="1" required {% if comment_status.mc_star == 1 %} checked {% endif %} />
                 <label for="rating2" title="1"></label>
-                <input type="radio" name="mc_star" id="rating1" value="0.5" {% if comment_status.mc_star == 0.5 %} checked {% endif %} />
+                <input type="radio" name="mc_star" id="rating1" value="0.5" required {% if comment_status.mc_star == 0.5 %} checked {% endif %} />
                 <label for="rating1" title="0.5" class="half"></label>
 
                 {% elif media_type == 'tv' %}
-                <input type="radio" name="sc_star" id="rating10" value="5" {% if comment_status.sc_star == 5 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating10" value="5" required {% if comment_status.sc_star == 5 %} checked {% endif %} />
                 <label for="rating10" title="5"></label>
-                <input type="radio" name="sc_star" id="rating9" value="4.5" {% if comment_status.sc_star == 4.5 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating9" value="4.5" required {% if comment_status.sc_star == 4.5 %} checked {% endif %} />
                 <label for="rating9" title="4.5" class="half"></label>
-                <input type="radio" name="sc_star" id="rating8" value="4" {% if comment_status.sc_star == 4 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating8" value="4" required {% if comment_status.sc_star == 4 %} checked {% endif %} />
                 <label for="rating8" title="4"></label>
-                <input type="radio" name="sc_star" id="rating7" value="3.5" {% if comment_status.sc_star == 3.5 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating7" value="3.5" required {% if comment_status.sc_star == 3.5 %} checked {% endif %} />
                 <label for="rating7" title="3.5" class="half"></label>
-                <input type="radio" name="sc_star" id="rating6" value="3" {% if comment_status.sc_star == 3 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating6" value="3" required {% if comment_status.sc_star == 3 %} checked {% endif %} />
                 <label for="rating6" title="3"></label>
-                <input type="radio" name="sc_star" id="rating5" value="2.5" {% if comment_status.sc_star == 2.5 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating5" value="2.5" required {% if comment_status.sc_star == 2.5 %} checked {% endif %} />
                 <label for="rating5" title="2.5" class="half"></label>
-                <input type="radio" name="sc_star" id="rating4" value="2" {% if comment_status.sc_star == 2 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating4" value="2" required {% if comment_status.sc_star == 2 %} checked {% endif %} />
                 <label for="rating4" title="2"></label>
-                <input type="radio" name="sc_star" id="rating3" value="1.5" {% if comment_status.sc_star == 1.5 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating3" value="1.5" required {% if comment_status.sc_star == 1.5 %} checked {% endif %} />
                 <label for="rating3" title="1.5" class="half"></label>
-                <input type="radio" name="sc_star" id="rating2" value="1" {% if comment_status.sc_star == 1 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating2" value="1" required {% if comment_status.sc_star == 1 %} checked {% endif %} />
                 <label for="rating2" title="1"></label>
-                <input type="radio" name="sc_star" id="rating1" value="0.5" {% if comment_status.sc_star == 0.5 %} checked {% endif %} />
+                <input type="radio" name="sc_star" id="rating1" value="0.5" required {% if comment_status.sc_star == 0.5 %} checked {% endif %} />
                 <label for="rating1" title="0.5" class="half"></label>
                 {% endif %}
+
 
             </div>
         </div>
@@ -211,11 +215,19 @@
             {% endif %}
             <br>
             <input type="submit" value="리뷰 수정하기" class="btn btn-outline-info">
-            <br>
+            <td><button class="btn btn-danger"
+                        onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'">
+                        삭제</button></td>
+{#            <form action="{% url 'entmt_info:delete_comment' comment_status.id media_type %}">#}
+{#            {% url 'entmt_info:delete_comment' comment_status.id media_type %}#}
+{#                    <td><button class="btn btn-danger"#}
+{#                    onclick="delete_comment()">#}
+{#                    onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'">#}
+{#                    type="submit">#}
+{#                        삭제</button></td>#}
+{#            </form>#}
+
         {% endif %}
-
-
-
 
         <!-- 리뷰 등록/오류 메시지 -->
         {% if messages %}
@@ -233,7 +245,13 @@
         {% endif %}
 
     </form>
+    {{ comment_status.id }}
+{#    <form action="{% url 'entmt_info:delete_comment' comment_status.id media_type %}">#}
+{#            <td><button class="btn btn-danger"#}
+{#            onclick="delete_comment()">삭제</button></td>#}
+{#    </form>#}
     <br>
+
 
     <!-- 댓글 목록 -->
     <table class="table table-hover">
@@ -298,12 +316,12 @@
 {#               </form>#}
 {#            <td>{{ request.user }}</td>#}
 
-                {% if comment.mc_member == request.user %}
-                    <form action="{% url 'entmt_info:delete_comment' comment.id media_type %}">
-                    <td><button class="btn btn-danger"
-                    onclick="delete_comment()">삭제</button></td>
-                   </form>
-                {% endif %}
+{#                {% if comment.mc_member == request.user %}#}
+{#                    <form action="{% url 'entmt_info:delete_comment' comment.id media_type %}">#}
+{#                    <td><button class="btn btn-danger"#}
+{#                    onclick="delete_comment()">삭제</button></td>#}
+{#                   </form>#}
+{#                {% endif %}#}
             </tr>
             {% endfor %}
 

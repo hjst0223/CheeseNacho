@@ -143,7 +143,7 @@ def e_detail(request):
             comment_status = Mcomment.objects.filter(Q(mc_movie=result['id']) & Q(mc_member=request.user))
             comment_status = comment_status[0]
         except: comment_status = False
-        print(comment_status)
+        # print(comment_status)
         # if(Mcomment.objects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user))):
         #     comment_status = True
 
@@ -302,16 +302,18 @@ def submit_comment(request, media_id, media_type):
 def delete_comment(request, comment_id, media_type):
     # 현재 url
     url = request.META.get('HTTP_REFERER')
-
+    print('삭제 호출 ===')
     if request.user.is_authenticated:
 
         if media_type == 'movie':
             comment = get_object_or_404(Mcomment, pk=comment_id)
-
+            print('---------------------')
             # 로그인한 회원과 댓글 작성자가 같을 때만 삭제
             if comment.mc_member == request.user:
                 comment.delete()
+                print('삭제!!! ')
                 messages.success(request, '댓글이 삭제되었습니다!')
+                print('message 이후')
                 return redirect(url)
 
             # else:
