@@ -4,12 +4,6 @@ from users.models import Members, Ugenres
 
 # from django.contrib.auth.models import User // 초기 설정
 
-CHOICES = [
-        ('ME', '1'),
-        ('YOU', '2'),
-        ('WE', '3'),
-    ]
-
 
 class UserForm(UserCreationForm):
     # 입력받을 이메일 필드 추가하기
@@ -30,33 +24,24 @@ class UserForm(UserCreationForm):
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = Members
-        fields = ['username', 'email', 'u_mobile', 'u_image']
+        fields = ['username', 'email', 'first_name', 'last_name', 'u_mobile']
+        # fields = ['username', 'email', 'first_name', 'last_name', 'u_mobile', 'u_image']
 
         labels = {
             'username': '사용자 이름',
             'email': '이메일 주소',
+            'first_name': '이름',
+            'last_name': '성',
             'u_mobile': '전화번호',
+            # 'u_image': '프로필 이미지',
+        }
+
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Members
+        fields = ['u_image']
+
+        labels = {
             'u_image': '프로필 이미지',
         }
-
-        widgets = {
-            'username': forms.TextInput(
-                attrs={
-                    'class': 'form-control w-25',
-                }
-            ),
-            'email': forms.TextInput(
-                attrs={
-                    'class': 'form-control w-25',
-                }
-            ),
-            'u_mobile': forms.TextInput(
-                attrs={
-                    'class': 'form-control w-25',
-                }
-            )
-        }
-
-
-
-
