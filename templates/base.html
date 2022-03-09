@@ -3,11 +3,12 @@
 <html lang="en" class="no-js">
 <!-- 네비게이션 바 적용하기 -->
 {% include "navbar.html" %}
-{% block html_body %}
-{% endblock %}
+
 <!-- 기본-->
 <head>
-    <title>CNDB: Your #1 source for Movies & TV Series</title>
+    {% block html_header %}
+    {% endblock %}
+
 	<meta charset="UTF-8">
     <script src="/static/js/menu_btn.js"></script>
     <!--Google Font-->
@@ -21,6 +22,7 @@
 </head>
 
 <body>
+
 <!--preloading-->
 <div id="preloader">
     <img class="logo" src="/static/img/logo.png" width="320" height="200">
@@ -30,6 +32,9 @@
     </div>
 </div>
 <!--end of preloading-->
+
+{% block html_body %}
+{% endblock %}
 
 <script src="/static/js/jquery.js"></script>
 <script src="/static/js/plugins.js"></script>

@@ -44,26 +44,26 @@ def signup(request):
     return render(request, 'users/signup.html', {'form': form})
 
 
-def mypage(request):
-    user_id = request.user.id
-    mlike_list = Mlike.objects.filter(ml_member=user_id)
-    slike_list = Slike.objects.filter(sl_member=user_id)
-    movie_list = []
-    series_list = []
-
-    for mlike in mlike_list:
-        # mlike_code_list.append(mlike.ml_movie_id)
-        movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
-        # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
-    for slike in slike_list:
-        series_list.append(Series.objects.get(series_id=slike.sl_series_id))
-
-    content = {
-        'movie_list': movie_list,
-        'series_list': series_list
-    }
-    # return render(request, 'users/mypage2.html', content)
-    return render(request, 'users/userprofile.html', content)
+# def mypage(request):
+#     user_id = request.user.id
+#     mlike_list = Mlike.objects.filter(ml_member=user_id)
+#     slike_list = Slike.objects.filter(sl_member=user_id)
+#     movie_list = []
+#     series_list = []
+#
+#     for mlike in mlike_list:
+#         # mlike_code_list.append(mlike.ml_movie_id)
+#         movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
+#         # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
+#     for slike in slike_list:
+#         series_list.append(Series.objects.get(series_id=slike.sl_series_id))
+#
+#     content = {
+#         'movie_list': movie_list,
+#         'series_list': series_list
+#     }
+#     # return render(request, 'users/mypage2.html', content)
+#     return render(request, 'users/userprofile.html', content)
 
 
 def my_favorite(request):
@@ -109,11 +109,11 @@ def change_password(request):
         else:
             messages.error(request, '비밀번호를 잘못 입력하셨습니다.')
         # return render(request, 'users/change_password.html')
-        return render(request, 'users/userprofile.html')
+        return render(request, 'users/change_password.html')
 
     else:
         # return render(request, 'users/change_password.html')
-        return render(request, 'users/userprofile.html')
+        return render(request, 'users/change_password.html')
 
 
 def update(request):
@@ -223,24 +223,7 @@ def change_image(request):
 
 
 def profile(request):
-    # user_id = request.user.id
-    # mlike_list = Mlike.objects.filter(ml_member=user_id)
-    # slike_list = Slike.objects.filter(sl_member=user_id)
-    # movie_list = []
-    # series_list = []
-    #
-    # for mlike in mlike_list:
-    #     # mlike_code_list.append(mlike.ml_movie_id)
-    #     movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
-    #     # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
-    # for slike in slike_list:
-    #     series_list.append(Series.objects.get(series_id=slike.sl_series_id))
-    #
-    # content = {
-    #     'movie_list': movie_list,
-    #     'series_list': series_list
-    # }
-    # # return render(request, 'users/mypage2.html', content)
+
     return render(request, 'users/userprofile.html')
 
 

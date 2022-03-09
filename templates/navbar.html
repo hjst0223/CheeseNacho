@@ -5,66 +5,33 @@
 <div class="login-wrapper" id="login-content">
     <div class="login-content">
         <a href="#" class="close">x</a>
-{#            <h3>Login</h3>#}
-{#                <form method="post" class="post-form" action="{% url 'users:login' %}">#}
-{#                {% csrf_token %}#}
-{#                <fieldset class="form-group">#}
-{#                </fieldset>#}
-{##}
-{#                <input type="hidden" name="next" value="{{ next }}">  <!-- 로그인 성공후 이동되는 URL -->#}
-{#                <div class="form-group">#}
-{#                    <label for="username">사용자ID</label>#}
-{#                    <input type="text" class="form-control" name="username" id="username">#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="password">비밀번호</label>#}
-{#                    <input type="password" class="form-control" name="password" id="password">#}
-{#                </div>#}
-{##}
-{#                <button type="submit" class="btn btn-outline-primary">로그인</button>#}
-{#            </form>#}
+            <h3>Login</h3>
         <form method="post" action="{% url 'users:login' %}">
             {% csrf_token %}
-        	<div class="row">
-        		 <label for="username">
+           <div class="row">
+               <label for="username">
                     Username:
 {#                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />#}
                      <input type="text" name="username" id="username" required="required" />
                 </label>
-        	</div>
+           </div>
 
             <div class="row">
-            	<label for="password">
+               <label for="password">
                     Password:
 {#                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
                     <input type="password" name="password" id="password" required="required" />
                 </label>
             </div>
-            <div class="row">
-            	<div class="remember">
-					<div>
-						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
-					</div>
-            		<a href="#">Forget password ?</a>
-            	</div>
-            </div>
            <div class="row">
-           	 <button type="submit">Login</button>
+               <button type="submit">Login</button>
            </div>
         </form>
-        <div class="row">
-        	<p>Or via social</p>
-            <div class="social-btn-2">
-            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
-            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
-            </div>
-        </div>
     </div>
 </div>
 <!--end of login form popup-->
-<!--signup form popup-->
 
-<!-- 회원가입 수정 -->
+<!--signup form popup-->
 <div class="login-wrapper"  id="signup-content">
     <div class="login-content">
         <a href="#" class="close">x</a>
@@ -89,12 +56,6 @@
                 </label>
             </div>
 
-{#             <div class="row">#}
-{#                <label for="password-2">#}
-{#                    Password:#}
-{#                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
             <div class="row">
                 <label for="password1"><div style="width:90px; height:30px; border:1px; float:left;"><br>
                     Password:</div>
@@ -104,12 +65,6 @@
                 </label>
             </div>
 
-{#             <div class="row">#}
-{#                <label for="repassword-2">#}
-{#                    re-type Password:#}
-{#                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
             <div class="row">
                 <label for="password2"><div style="width:90px; height:30px; border:1px; float:left;"><br>
                     re-type Password:</div>
@@ -118,13 +73,6 @@
                            value="{{ form.password2.value|default_if_none:'' }}"></div>
                 </label>
             </div>
-
-            {#            <div class="row">#}
-{#                <label for="email-2">#}
-{#                    your email:#}
-{#                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
 
             <div class="row">
                 <label for="email"><div style="width:90px; height:30px; border:1px; float:left;"><br>
@@ -150,10 +98,6 @@
         </form>
     </div>
 </div>
-
-
-<!-- 회원가입 수정 끝 -->
-
 <!--end of signup form popup-->
 
 <header class="ht-header">
@@ -170,7 +114,6 @@
 						</div>
 				    </div>
                     <a href="{% url "home" %}"><img class="logo" src="/static/img/logo.png" width="320" height="200"></a>
-{#				    <a href="index-2.html"><img class="logo" src="/static/img/logo.png" width="320" height="200"></a>#}
 			    </div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -179,7 +122,7 @@
 							<a href="#page-top"></a>
 						</li>
 						<li class="dropdown first">
-							<a class="btn btn-default">
+							<a href="{% url "home" %}" class="btn btn-default">
 							Home
 							</a>
 						</li>
@@ -202,9 +145,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
-						<li class="loginLink"><a href="#">LOG In</a></li>
-						<li class="btn signupLink"><a href="#">sign up</a></li>
-					</ul>
+
+                    <!-- 로그인 상태일 때 우측에 마이페이지, 로그아웃 기능 활성화 -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-link"><a href="{% url 'users:profile' %}">{{ user.username }}'s My page</a></li>
+                    <li class=""><a href="{% url 'users:logout' %}">Log Out</a></li>
+
+                    <!-- 로그아웃 상태일 때 우측에 로그인 기능 활성화 -->
+                    {% else %}
+                    <li class="loginLink"><a href="#">LOG In</a></li>
+                    <li class="btn signupLink"><a href="#">sign up</a></li>
+                    {% endif %}
+                    </ul>
 				</div>
 			<!-- /.navbar-collapse -->
 	    </nav>
