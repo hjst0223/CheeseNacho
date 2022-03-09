@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block html_header %}
+<title>CNDB: favorite</title>
+{% endblock %}
+
 {% block html_body %}
 
 <!--찜한 영화 목록-->
@@ -21,43 +25,6 @@
 </div>
 <div class="page-single">
 
-    <!-- 영화 별점 평균 -->
-{#    {% if media_type == 'movie' %}#}
-{#    <script type="text/javascript">#}
-{#    var sum = 0#}
-{#    var length = 0#}
-{#    {% for comment in comments %}#}
-{#        length += 1#}
-{#        sum += {{ comment.mc_star }}#}
-{#    {% endfor %}#}
-{#    {% if comment_status %}#}
-{#        length += 1#}
-{#        sum += {{ comment_status.mc_star }}#}
-{#    {% endif %}#}
-{#    var avg = sum/length#}
-{#    document.write('★ ', avg.toFixed(1))#}
-{#    document.write('/5', '<br />')#}
-{#    </script><br>#}
-{##}
-{#    <!-- tv 시리즈 별점 평균 -->#}
-{#    {% elif media_type == 'tv' %}#}
-{#    <script type="text/javascript">#}
-{#    var sum = 0#}
-{#    var length = 0#}
-{#    {% for comment in comments %}#}
-{#        length += 1#}
-{#        sum += {{ comment.sc_star }}#}
-{#    {% endfor %}#}
-{#    {% if comment_status %}#}
-{#        length += 1#}
-{#        sum += {{ comment_status.sc_star }}#}
-{#    {% endif %}#}
-{#    var avg = sum/length#}
-{#    document.write('★ ', avg.toFixed(1))#}
-{#    document.write('/5', '<br />')#}
-{#    </script><br>#}
-{#    {% endif %}#}
-
 	<div class="container">
 		<div class="row ipad-width2">
 			<div class="col-md-3 col-sm-12 col-xs-12">
@@ -66,33 +33,19 @@
 						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>
 						<a href="#" class="redbtn">Change avatar</a>
 					</div>
-{#					<div class="user-fav">#}
-{#						<p>Account Details</p>#}
-{#						<ul>#}
-{#							<li><a href="userprofile.html">Profile</a></li>#}
-{#							<li class="active"><a href="userfavoritelist.html">Favorite movies</a></li>#}
-{#							<li><a href="userrate.html">Rated movies</a></li>#}
-{#						</ul>#}
-{#					</div>#}
-{#					<div class="user-fav">#}
-{#						<p>Others</p>#}
-{#						<ul>#}
-{#							<li><a href="#">Change password</a></li>#}
-{#							<li><a href="#">Log out</a></li>#}
-{#						</ul>#}
-{#					</div>#}
+
                     <div class="user-fav">
                         <p>My Activity</p>
 						<ul>
-                            <li  class="active"><a href="userfavoritelist.html">Favorite media</a></li>
-                            <li><a href="userrate.html">My ratings</a></li>
+                            <li class="active"><a href={% url 'users:favorite' %}>Favorite media</a></li>
+                            <li><a href={% url 'users:ratings' %}>My ratings</a></li>
 						</ul>
 					</div>
                     <div class="user-fav">
 						<p>Update Profile</p>
 						<ul>
-							<li><a href="userprofile.html">Profile</a></li>
-                            <li><a href="{% url 'users:change_password' %}">My preference</a></li>
+							<li><a href="{% url 'users:profile' %}">Profile</a></li>
+                            <li><a href="{% url 'users:preference' %}">My preference</a></li>
                             <li><a href="{% url 'users:change_password' %}">Change password</a></li>
 						</ul>
 					</div>
@@ -162,53 +115,8 @@
 	</div>
 </div>
 <!-- footer section-->
+
 <footer class="ht-footer">
-	<div class="container">
-		<div class="flex-parent-ft">
-			<div class="flex-child-ft item1">
-				 <a href="index-2.html"><img class="logo" src="/static/images/logo1.png" alt=""></a>
-				 <p>5th Avenue st, manhattan<br>
-				New York, NY 10001</p>
-				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
-			</div>
-			<div class="flex-child-ft item2">
-				<h4>Resources</h4>
-				<ul>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Blockbuster</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Forums</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Help Center</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item3">
-				<h4>Legal</h4>
-				<ul>
-					<li><a href="#">Terms of Use</a></li>
-					<li><a href="#">Privacy Policy</a></li>
-					<li><a href="#">Security</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item4">
-				<h4>Account</h4>
-				<ul>
-					<li><a href="#">My Account</a></li>
-					<li><a href="#">Watchlist</a></li>
-					<li><a href="#">Collections</a></li>
-					<li><a href="#">User Guide</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item5">
-				<h4>Newsletter</h4>
-				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-				<form action="#">
-					<input type="text" placeholder="Enter your email...">
-				</form>
-				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
-			</div>
-		</div>
-	</div>
 	<div class="ft-copyright">
 		<div class="ft-left">
 			<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
@@ -218,6 +126,5 @@
 		</div>
 	</div>
 </footer>
-<!-- end of footer section-->
 
 {% endblock %}
