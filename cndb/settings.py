@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cheese_db',
         'USER': 'root',
-        'PASSWORD': 'Sqlalert1!',
+        'PASSWORD': 'test1234',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }

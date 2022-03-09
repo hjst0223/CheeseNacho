@@ -13,6 +13,7 @@
                     <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
                 </label>
         	</div>
+
             <div class="row">
             	<label for="password">
                     Password:
@@ -44,13 +45,17 @@
 <!--signup form popup-->
 
 <!-- 회원가입 수정 -->
+
 <div class="login-wrapper"  id="signup-content">
     <div class="login-content">
         <a href="#" class="close">x</a>
         <h3>sign up</h3>
-            <form method="post" action="{% url 'users:signup' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-                {% include "users/form_errors.html" %}
+{#        <form method="post" action="#">#}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include "users/form_errors.html" %}
+
+
 
 {#            <div class="row">#}
 {#                 <label for="username-2">#}
@@ -60,11 +65,11 @@
 {#            </div>#}
 
             <div class="row">
-                <label for="username"><div style="width:90px; height:30px; border:1px; float:left;"><br>
-                    Username:</div>
-                    <div style="width:265px; height:30px; border:1px; float:left;">
-                    <input type="text" name="username" id="username"
-                           value="{{ form.username.value|default_if_none:'' }}"></div>
+                 <label for="username-2">
+                    Username:
+                    <input type="text" name="username" id="username-2"
+                           value="{{ form.username.value|default_if_none:'' }}"
+                           placeholder="" required="required" />
                 </label>
             </div>
 
@@ -75,11 +80,11 @@
 {#                </label>#}
 {#            </div>#}
             <div class="row">
-                <label for="password1"><div style="width:90px; height:30px; border:1px; float:left;"><br>
-                    Password:</div>
-                    <div style="width:265px; height:30px; border:1px; float:left;">
-                    <input type="password" name="password1" id="password1"
-                           value="{{ form.password1.value|default_if_none:'' }}"></div>
+                <label for="password-2">
+                    Password:
+                    <input type="password" name="password" id="password-2"
+                           value="{{ form.password1.value|default_if_none:'' }}"
+                           placeholder="" required="required" />
                 </label>
             </div>
 
@@ -90,11 +95,11 @@
 {#                </label>#}
 {#            </div>#}
             <div class="row">
-                <label for="password2"><div style="width:90px; height:30px; border:1px; float:left;"><br>
-                    re-type Password:</div>
-                    <div style="width:265px; height:30px; border:1px; float:left;">
-                    <input type="password" name="password2" id="password2"
-                           value="{{ form.password2.value|default_if_none:'' }}"></div>
+                <label for="repassword-2">
+                    re-type Password:
+                    <input type="password" name="password" id="repassword-2"
+                           value="{{ form.password2.value|default_if_none:'' }}"
+                           placeholder="" required="required" />
                 </label>
             </div>
 
@@ -106,30 +111,30 @@
 {#            </div>#}
 
             <div class="row">
-                <label for="email"><div style="width:90px; height:30px; border:1px; float:left;"><br>
-                    your email:</div>
-                    <div style="width:265px; height:30px; border:1px; float:left;">
-                    <input type="text" name="email" id="email"
-                           value="{{ form.email.value|default_if_none:'' }}"></div>
+                <label for="email-2">
+                    your email:
+                    <input type="text" name="email" id="email-2"
+                           value="{{ form.email.value|default_if_none:'' }}"
+                           placeholder="" required="required" />
                 </label>
             </div>
 
             <!-- 전화번호 추가 -->
             <div class="row">
-                <label for="u_mobile"><div style="width:90px; height:30px; border:1px; float:left;"><br>
-                    mobile:</div>
-                    <div style="width:265px; height:30px; border:1px; float:left;">
+                <label for="mobile">
+                    your phone number:
                     <input type="text" name="u_mobile" id="u_mobile"
-                           value="{{ form.u_mobile.value|default_if_none:'' }}"></div>
+                           value="{{ form.u_mobile.value|default_if_none:'' }}"
+                           placeholder="" required="required" />
                 </label>
-            </div><br>
+            </div>
+
            <div class="row">
              <button type="submit">sign up</button>
            </div>
         </form>
     </div>
 </div>
-
 
 <!-- 회원가입 수정 끝 -->
 
@@ -148,8 +153,7 @@
 							<span></span>
 						</div>
 				    </div>
-                    <a href="{% url "home" %}"><img class="logo" src="/static/img/logo.png" width="320" height="200"></a>
-{#				    <a href="index-2.html"><img class="logo" src="/static/img/logo.png" width="320" height="200"></a>#}
+				    <a href="index-2.html"><img class="logo" src="/static/img/logo.png" width="320" height="200"></a>
 			    </div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -181,7 +185,6 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
-                        <li><a href="users/templates/userprofile.html">My Page</a></li>
 						<li class="loginLink"><a href="#">LOG In</a></li>
 						<li class="btn signupLink"><a href="#">sign up</a></li>
 					</ul>
