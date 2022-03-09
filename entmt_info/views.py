@@ -130,7 +130,8 @@ def e_detail(request):
         if Movies.objects.filter(movie_id=res_id).exists() == False:
             dbsave_movie(result)
 
-        comments = Mcomment.objects.filter(Q(mc_movie=result['id']) & ~Q(mc_member=request.user))
+        try: comments = Mcomment.objects.filter(Q(mc_movie=result['id']) & ~Q(mc_member=request.user))
+        except: comments = Mcomment.objects.filter(mc_movie=result['id'])
 
         # like_count = Movies.objects.get(movie_id=result['id']).m_likeCount
         like_count = Mlike.objects.filter(ml_movie=result['id']).count()
@@ -155,7 +156,8 @@ def e_detail(request):
         if Series.objects.filter(series_id=res_id).exists() == False:
             dbsave_series(result)
 
-        comments = Scomment.objects.filter(Q(sc_series=result['id']) & ~Q(sc_member=request.user))
+        try: comments = Scomment.objects.filter(Q(sc_series=result['id']) & ~Q(sc_member=request.user))
+        except: comments = Scomment.objects.filter(sc_series=result['id'])
 
         # like_count = Series.objects.get(series_id=result['id']).s_likeCount
         like_count = Slike.objects.filter(sl_series=result['id']).count()
@@ -163,6 +165,12 @@ def e_detail(request):
         # 로그인되지 않았을 때 생기는 오류 수정
         try: like_status = Slike.objects.filter(Q(sl_series=result['id']) & Q(sl_member=request.user)).exists()
         except: like_status = False
+
+        # 일단 넣었는데 오류나는지 확인해봐야함
+        try:
+            comment_status = Scomment.objects.filter(Q(sc_movie=result['id']) & Q(sc_member=request.user))
+            comment_status = comment_status[0]
+        except: comment_status = False
 
         try:
             print('--------------------------')
