@@ -184,9 +184,9 @@ def e_detail(request):
         'media_type': media_type,
         'comment_status': comment_status,
     }
-    return render(request, 'entmt_info/detail.html', content)
+    # return render(request, 'entmt_info/detail.html', content)
     # return render(request, 'entmt_info/moviesingle_jy.html', content)
-    # return render(request, 'entmt_info/moviesingle.html', content)
+    return render(request, 'entmt_info/moviesingle.html', content)
 
 # 검색 결과 페이지
 def e_results(request):
@@ -205,8 +205,8 @@ def e_results(request):
         'results': result,
     }
 
-    # return render(request, 'entmt_info/results.html', content)
-    return render(request, 'entmt_info/moviegrid.html', content)
+    return render(request, 'entmt_info/results.html', content)
+    # return render(request, 'entmt_info/moviegrid.html', content)
 
 # 댓글 등록
 def submit_comment(request, media_id, media_type):
