@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<!--[if IE 7]>
-<html class="ie ie7 no-js" lang="en-US">
-<![endif]-->
-<!--[if IE 8]>
-<html class="ie ie8 no-js" lang="en-US">
-<![endif]-->
-<!--[if !(IE 7) | !(IE 8)  ]><!-->
-<html lang="en" class="no-js">
+{% include "navbar.html" %}
 
-<!-- userprofile14:04-->
 <head>
 	<!-- Basic need -->
-	<title>Open Pediatrics</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="author" content="">
-	<link rel="profile" href="#">
+	<title>User Profile</title>
+{#	<meta charset="UTF-8">#}
 
     <!--Google Font-->
     <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
@@ -120,116 +107,116 @@
 <!--end of signup form popup-->
 
 <!-- BEGIN | Header -->
-<header class="ht-header">
-	<div class="container">
-		<nav class="navbar navbar-default navbar-custom">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header logo">
-				    <div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					    <span class="sr-only">Toggle navigation</span>
-					    <div id="nav-icon1">
-							<span></span>
-							<span></span>
-							<span></span>
-						</div>
-				    </div>
-				    <a href="index-2.html"><img class="logo" src="/static/images/logo1.png" alt="" width="119" height="58"></a>
-			    </div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden">
-							<a href="#page-top"></a>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">
-							Home <i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="index-2.html">Home 01</a></li>
-								<li><a href="homev2.html">Home 02</a></li>
-								<li><a href="homev3.html">Home 03</a></li>
-							</ul>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							movies<i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Movie grid<i class="ion-ios-arrow-forward"></i></a>
-									<ul class="dropdown-menu level2">
-										<li><a href="moviegrid.html">Movie grid</a></li>
-										<li><a href="moviegridfw.html">movie grid full width</a></li>
-									</ul>
-								</li>			
-								<li><a href="movielist.html">Movie list</a></li>
-								<li><a href="moviesingle.html">Movie single</a></li>
-								<li class="it-last"><a href="seriessingle.html">Series single</a></li>
-							</ul>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							celebrities <i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="celebritygrid01.html">celebrity grid 01</a></li>
-								<li><a href="celebritygrid02.html">celebrity grid 02 </a></li>
-								<li><a href="celebritylist.html">celebrity list</a></li>
-								<li class="it-last"><a href="celebritysingle.html">celebrity single</a></li>
-							</ul>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							news <i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="bloglist.html">blog List</a></li>
-								<li><a href="bloggrid.html">blog Grid</a></li>
-								<li class="it-last"><a href="blogdetail.html">blog Detail</a></li>
-							</ul>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							community <i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="userfavoritegrid.html">user favorite grid</a></li>
-								<li><a href="userfavoritelist.html">user favorite list</a></li>
-								<li><a href="userprofile.html">user profile</a></li>
-								<li class="it-last"><a href="userrate.html">user rate</a></li>
-							</ul>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav flex-child-menu menu-right">
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							pages <i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="landing.html">Landing</a></li>
-								<li><a href="404.html">404 Page</a></li>
-								<li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
-							</ul>
-						</li>                
-						<li><a href="#">Help</a></li>
-						<li class="loginLink"><a href="#">LOG In</a></li>
-						<li class="btn signupLink"><a href="#">sign up</a></li>
-					</ul>
-				</div>
-			<!-- /.navbar-collapse -->
-	    </nav>
-	    
-	    <!-- top search form -->
-	    <div class="top-search">
-	    	<select>
-				<option value="united">TV show</option>
-				<option value="saab">Others</option>
-			</select>
-			<input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
-	    </div>
-	</div>
-</header>
+{#<header class="ht-header">#}
+{#	<div class="container">#}
+{#		<nav class="navbar navbar-default navbar-custom">#}
+{#				<!-- Brand and toggle get grouped for better mobile display -->#}
+{#				<div class="navbar-header logo">#}
+{#				    <div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">#}
+{#					    <span class="sr-only">Toggle navigation</span>#}
+{#					    <div id="nav-icon1">#}
+{#							<span></span>#}
+{#							<span></span>#}
+{#							<span></span>#}
+{#						</div>#}
+{#				    </div>#}
+{#				    <a href="index-2.html"><img class="logo" src="/static/images/logo1.png" alt="" width="119" height="58"></a>#}
+{#			    </div>#}
+{#				<!-- Collect the nav links, forms, and other content for toggling -->#}
+{#				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">#}
+{#					<ul class="nav navbar-nav flex-child-menu menu-left">#}
+{#						<li class="hidden">#}
+{#							<a href="#page-top"></a>#}
+{#						</li>#}
+{#						<li class="dropdown first">#}
+{#							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">#}
+{#							Home <i class="fa fa-angle-down" aria-hidden="true"></i>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu level1">#}
+{#								<li><a href="index-2.html">Home 01</a></li>#}
+{#								<li><a href="homev2.html">Home 02</a></li>#}
+{#								<li><a href="homev3.html">Home 03</a></li>#}
+{#							</ul>#}
+{#						</li>#}
+{#						<li class="dropdown first">#}
+{#							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">#}
+{#							movies<i class="fa fa-angle-down" aria-hidden="true"></i>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu level1">#}
+{#								<li class="dropdown">#}
+{#									<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Movie grid<i class="ion-ios-arrow-forward"></i></a>#}
+{#									<ul class="dropdown-menu level2">#}
+{#										<li><a href="moviegrid.html">Movie grid</a></li>#}
+{#										<li><a href="moviegridfw.html">movie grid full width</a></li>#}
+{#									</ul>#}
+{#								</li>			#}
+{#								<li><a href="movielist.html">Movie list</a></li>#}
+{#								<li><a href="moviesingle.html">Movie single</a></li>#}
+{#								<li class="it-last"><a href="seriessingle.html">Series single</a></li>#}
+{#							</ul>#}
+{#						</li>#}
+{#						<li class="dropdown first">#}
+{#							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">#}
+{#							celebrities <i class="fa fa-angle-down" aria-hidden="true"></i>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu level1">#}
+{#								<li><a href="celebritygrid01.html">celebrity grid 01</a></li>#}
+{#								<li><a href="celebritygrid02.html">celebrity grid 02 </a></li>#}
+{#								<li><a href="celebritylist.html">celebrity list</a></li>#}
+{#								<li class="it-last"><a href="celebritysingle.html">celebrity single</a></li>#}
+{#							</ul>#}
+{#						</li>#}
+{#						<li class="dropdown first">#}
+{#							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">#}
+{#							news <i class="fa fa-angle-down" aria-hidden="true"></i>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu level1">#}
+{#								<li><a href="bloglist.html">blog List</a></li>#}
+{#								<li><a href="bloggrid.html">blog Grid</a></li>#}
+{#								<li class="it-last"><a href="blogdetail.html">blog Detail</a></li>#}
+{#							</ul>#}
+{#						</li>#}
+{#						<li class="dropdown first">#}
+{#							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">#}
+{#							community <i class="fa fa-angle-down" aria-hidden="true"></i>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu level1">#}
+{#								<li><a href="userfavoritegrid.html">user favorite grid</a></li>#}
+{#								<li><a href="userfavoritelist.html">user favorite list</a></li>#}
+{#								<li><a href="userprofile.html">user profile</a></li>#}
+{#								<li class="it-last"><a href="userrate.html">user rate</a></li>#}
+{#							</ul>#}
+{#						</li>#}
+{#					</ul>#}
+{#					<ul class="nav navbar-nav flex-child-menu menu-right">#}
+{#						<li class="dropdown first">#}
+{#							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">#}
+{#							pages <i class="fa fa-angle-down" aria-hidden="true"></i>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu level1">#}
+{#								<li><a href="landing.html">Landing</a></li>#}
+{#								<li><a href="404.html">404 Page</a></li>#}
+{#								<li class="it-last"><a href="comingsoon.html">Coming soon</a></li>#}
+{#							</ul>#}
+{#						</li>                #}
+{#						<li><a href="#">Help</a></li>#}
+{#						<li class="loginLink"><a href="#">LOG In</a></li>#}
+{#						<li class="btn signupLink"><a href="#">sign up</a></li>#}
+{#					</ul>#}
+{#				</div>#}
+{#			<!-- /.navbar-collapse -->#}
+{#	    </nav>#}
+{#	    #}
+{#	    <!-- top search form -->#}
+{#	    <div class="top-search">#}
+{#	    	<select>#}
+{#				<option value="united">TV show</option>#}
+{#				<option value="saab">Others</option>#}
+{#			</select>#}
+{#			<input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">#}
+{#	    </div>#}
+{#	</div>#}
+{#</header>#}
 <!-- END | Header -->
 
 <div class="hero user-hero">
@@ -237,9 +224,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="hero-ct">
-					<h1>Edward kennedy’s profile</h1>
+					<h1>{{ user.username }}’s profile</h1>
 					<ul class="breadcumb">
-						<li class="active"><a href="#">Home</a></li>
+						<li class="active"><a href="/">Home</a></li>
 						<li> <span class="ion-ios-arrow-right"></span>Profile</li>
 					</ul>
 				</div>
@@ -253,90 +240,133 @@
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
 					<div class="user-img">
-						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>
-						<a href="#" class="redbtn">Change avatar</a>
+{#						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>#}
+                        <img class="rounded-circle account-img" src="{{ user.u_image.url }}" width="160" height="160">
+                        <br>
+
+                        <!-- 프로필 이미지 변경 -->
+{#                        <a href="#" class="redbtn">Change Image</a>#}
+
+                        <form method="post" action="{% url "users:change_image" %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+						<a href="#" class="redbtn">Change Image</a>
+                            <br><br><br>
+{#                            <div class="redbtn" type="submit">#}
+{#                                change</div>#}
+{#                        <a href="#" class="redbtn" type="submit">Change Image</a>#}
+                        <button type="submit" class="redbtn">Upload Image</button>
+
+{#                            <div class="row">#}
+{#							<div class="col-md-2">#}
+{#								<input class="redbtn" type="submit" value="save">#}
+{#							</div>#}
+{#						</div>#}
+
+                        </form>
+
 					</div>
 					<div class="user-fav">
-						<p>Account Details</p>
+                        <p>My Activity</p>
 						<ul>
-							<li  class="active"><a href="userprofile.html">Profile</a></li>
-							<li><a href="userfavoritelist.html">Favorite movies</a></li>
-							<li><a href="userrate.html">Rated movies</a></li>
+                            <li><a href="userfavoritelist.html">Favorite media</a></li>
+                            <li><a href="userrate.html">My ratings</a></li>
 						</ul>
 					</div>
-					<div class="user-fav">
-						<p>Others</p>
+                    <div class="user-fav">
+						<p>Update Profile</p>
 						<ul>
-							<li><a href="#">Change password</a></li>
-							<li><a href="#">Log out</a></li>
+							<li  class="active"><a href="userprofile.html">Profile</a></li>
+                            <li><a href="{% url 'users:change_password' %}">My preference</a></li>
+                            <li><a href="{% url 'users:change_password' %}">Change password</a></li>
+						</ul>
+					</div>
+                    <div class="user-fav">
+						<ul>
+							<li><a href="{% url 'users:logout' %}">Log out</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="form-style-1 user-pro" action="#">
-					<form action="#" class="user">
+                    <form method="post" action="{% url 'users:update' %}">
+{#                    <form method="post" enctype="multipart/form-data">#}
+                        {% csrf_token %}
+{#					<form action="#" class="user">#}
 						<h4>01. Profile details</h4>
 						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>Username</label>
-								<input type="text" placeholder="edwardkennedy">
+{#								<input type="text" placeholder="{{ user.username }}">#}
+                                <input type="text" name="username" value="{{ user.username }}">
+{#                                <input type="text" name="username" value="{{ update_form.username }}">#}
 							</div>
 							<div class="col-md-6 form-it">
 								<label>Email Address</label>
-								<input type="text" placeholder="edward@kennedy.com">
+{#								<input type="text" placeholder="{{ user.email }}">#}
+                                <input type="text" name="email" value="{{ user.email }}">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>First Name</label>
-								<input type="text" placeholder="Edward ">
+{#								<input type="text" placeholder="{{ user.first_name }}">#}
+                                <input type="text" name="first_name" value="{{ user.first_name }}">
 							</div>
 							<div class="col-md-6 form-it">
 								<label>Last Name</label>
-								<input type="text" placeholder="Kennedy">
+{#								<input type="text" placeholder="{{ user.last_name }}">#}
+                                <input type="text" name="last_name" value="{{ user.last_name }}">
 							</div>
 						</div>
-						<div class="row">
+                        <div class="row">
 							<div class="col-md-6 form-it">
-								<label>Country</label>
-								<select>
-								  <option value="united">United States</option>
-								  <option value="saab">Others</option>
-								</select>
-							</div>
-							<div class="col-md-6 form-it">
-								<label>State</label>
-								<select>
-								  <option value="united">New York</option>
-								  <option value="saab">Others</option>
-								</select>
+								<label>Phone Number</label>
+{#								<input type="text" placeholder="{{ user.first_name }}">#}
+                                <input type="text" name="u_mobile" value="{{ user.u_mobile }}">
 							</div>
 						</div>
+{#						<div class="row">#}
+{#							<div class="col-md-6 form-it">#}
+{#								<label>Country</label>#}
+{#								<select>#}
+{#								  <option value="united">United States</option>#}
+{#								  <option value="saab">Others</option>#}
+{#								</select>#}
+{#							</div>#}
+{#							<div class="col-md-6 form-it">#}
+{#								<label>State</label>#}
+{#								<select>#}
+{#								  <option value="united">New York</option>#}
+{#								  <option value="saab">Others</option>#}
+{#								</select>#}
+{#							</div>#}
+{#						</div>#}
 						<div class="row">
 							<div class="col-md-2">
 								<input class="submit" type="submit" value="save">
 							</div>
 						</div>	
 					</form>
-					<form action="#" class="password">
+					<form method="POST" action="{% url 'users:change_password' %}" class="password">
+                        {% csrf_token %}
 						<h4>02. Change password</h4>
 						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>Old Password</label>
-								<input type="text" placeholder="**********">
+								<input type="text" name="origin_password" placeholder="**********">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>New Password</label>
-								<input type="text" placeholder="***************">
+								<input type="text" name="new_password" placeholder="***************">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
 								<label>Confirm New Password</label>
-								<input type="text" placeholder="*************** ">
+								<input type="text" name="confirm_password" placeholder="*************** ">
 							</div>
 						</div>
 						<div class="row">
@@ -354,48 +384,50 @@
 <footer class="ht-footer">
 	<div class="container">
 		<div class="flex-parent-ft">
-			<div class="flex-child-ft item1">
-				 <a href="index-2.html"><img class="logo" src="/static/images/logo1.png" alt=""></a>
-				 <p>5th Avenue st, manhattan<br>
-				New York, NY 10001</p>
-				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
-			</div>
-			<div class="flex-child-ft item2">
-				<h4>Resources</h4>
-				<ul>
-					<li><a href="#">About</a></li> 
-					<li><a href="#">Blockbuster</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Forums</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Help Center</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item3">
-				<h4>Legal</h4>
-				<ul>
-					<li><a href="#">Terms of Use</a></li> 
-					<li><a href="#">Privacy Policy</a></li>	
-					<li><a href="#">Security</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item4">
-				<h4>Account</h4>
-				<ul>
-					<li><a href="#">My Account</a></li> 
-					<li><a href="#">Watchlist</a></li>	
-					<li><a href="#">Collections</a></li>
-					<li><a href="#">User Guide</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item5">
-				<h4>Newsletter</h4>
-				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-				<form action="#">
-					<input type="text" placeholder="Enter your email...">
-				</form>
-				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
-			</div>
+{#			<div class="flex-child-ft item1">#}
+{#                <a href="/"><img class="logo" src="/static/images/logo1.png" alt=""></a>#}
+{##}
+{#				 <a href="index-2.html"><img class="logo" src="/static/images/logo1.png" alt=""></a>#}
+{#				 <p>5th Avenue st, manhattan<br>#}
+{#				New York, NY 10001</p>#}
+{#				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>#}
+{#			</div>#}
+{#			<div class="flex-child-ft item2">#}
+{#				<h4>Resources</h4>#}
+{#				<ul>#}
+{#					<li><a href="#">About</a></li>#}
+{#					<li><a href="#">Blockbuster</a></li>#}
+{#					<li><a href="#">Contact Us</a></li>#}
+{#					<li><a href="#">Forums</a></li>#}
+{#					<li><a href="#">Blog</a></li>#}
+{#					<li><a href="#">Help Center</a></li>#}
+{#				</ul>#}
+{#			</div>#}
+{#			<div class="flex-child-ft item3">#}
+{#				<h4>Legal</h4>#}
+{#				<ul>#}
+{#					<li><a href="#">Terms of Use</a></li>#}
+{#					<li><a href="#">Privacy Policy</a></li>#}
+{#					<li><a href="#">Security</a></li>#}
+{#				</ul>#}
+{#			</div>#}
+{#			<div class="flex-child-ft item4">#}
+{#				<h4>Account</h4>#}
+{#				<ul>#}
+{#					<li><a href="#">My Account</a></li>#}
+{#					<li><a href="#">Watchlist</a></li>#}
+{#					<li><a href="#">Collections</a></li>#}
+{#					<li><a href="#">User Guide</a></li>#}
+{#				</ul>#}
+{#			</div>#}
+{#			<div class="flex-child-ft item5">#}
+{#				<h4>Newsletter</h4>#}
+{#				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>#}
+{#				<form action="#">#}
+{#					<input type="text" placeholder="Enter your email...">#}
+{#				</form>#}
+{#				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>#}
+{#			</div>#}
 		</div>
 	</div>
 	<div class="ft-copyright">
@@ -416,4 +448,4 @@
 </body>
 
 <!-- userprofile14:04-->
-</html>
+{#</html>#}
