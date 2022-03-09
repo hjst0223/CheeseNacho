@@ -66,6 +66,30 @@ def mypage(request):
     return render(request, 'users/userprofile.html', content)
 
 
+def my_favorite(request):
+    print('----------으에에에ㅔ엥------------')
+    user_id = request.user.id
+    mlike_list = Mlike.objects.filter(ml_member=user_id)
+    slike_list = Slike.objects.filter(sl_member=user_id)
+    movie_list = []
+    series_list = []
+
+    for mlike in mlike_list:
+        # mlike_code_list.append(mlike.ml_movie_id)
+        movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
+        # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
+    for slike in slike_list:
+        series_list.append(Series.objects.get(series_id=slike.sl_series_id))
+    # print(f'-----------{len(movie_list) + len(series_list)}')
+    content = {
+        'movie_list': movie_list,
+        'series_list': series_list,
+        # 'list_length': len(movie_list) + len(series_list)
+    }
+    return render(request, 'users/favorite.html', content)
+    # return render(request, 'users/userprofile.html', content)
+
+
 def change_password(request):
     if request.method == "POST":
         user = request.user
