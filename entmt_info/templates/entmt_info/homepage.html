@@ -11,7 +11,7 @@
 		<div class="row">
 	    	<div  class="slick-multiItemSlider">
                 <!-- 맨위 자동슬라이더 기본설정 9개, 3개씩 페이지가 돌아가면서 나온다 -->
-                {% for movie in pop_movie %}
+                {% for movie in pop_movies %}
 	    		<div class="movie-item">
                     <div class="mv-img">
 	    				<a href="/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie">
@@ -33,7 +33,7 @@
                 {% for series in pop_series %}
 	    		<div class="movie-item">
                     <div class="mv-img">
-	    				<a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=movie">
+	    				<a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv">
                             <img src="https://image.tmdb.org/t/p/w200{{ series.s_posterPath }}" alt="" width="285" height="437"></a>
 	    			</div>
 	    			<div class="title-in">
@@ -43,7 +43,7 @@
                             <span class="green"><a href="#">comedy</a></span>
                             <span class="orange"><a href="#">advanture</a></span>
 	    				</div>
-	    				<h6><a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=movie">
+	    				<h6><a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv">
                             {{ series.s_title }}</a></h6>
 	    				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
 	    			</div>
