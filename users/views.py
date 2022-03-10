@@ -102,22 +102,15 @@ def update(request):
 
         if my_form.is_valid():
             my_form.save()
-
             messages.success(request, '회원정보가 변경되었습니다!')
-            # return redirect('users:update')
+
             return redirect(url)
 
         else:
-            print('무효한 폼 ㅜㅜ')
+            print('무효한 폼')
 
-    else:
-        my_form = UpdateForm(instance=member)
+    return render(request, 'users/userprofile.html')
 
-    context = {
-        'update_form': my_form
-    }
-    # return render(request, 'users/update.html', context)
-    return render(request, 'users/userprofile.html', context)
 
 
 def genre(request):
@@ -174,28 +167,13 @@ def change_image(request):
     member = get_object_or_404(Members, pk=request.user.id)
 
     if request.method == 'POST':
-        print('post 방식===')
-        my_form = ImageForm(request.FILES, instance=member)
+        member.u_image = request.FILES['image']
+        member.save()
+        messages.success(request, '프로필 이미지가 변경되었습니다!')
 
-        if my_form.is_valid():
-            my_form.save()
-            print('이미지 변경 완료~~~')
+        return redirect(url)
 
-            messages.success(request, '프로필 이미지가 변경되었습니다!')
-            # return redirect('users:update')
-            return redirect(url)
-
-        else:
-            print('무효한 폼 ㅜㅜ')
-
-    else:
-        my_form = ImageForm(instance=member)
-
-    context = {
-        'update_form': my_form
-    }
-    # return render(request, 'users/update.html', context)
-    return render(request, 'users/userprofile.html', context)
+    return render(request, 'users/userprofile.html')
 
 
 def profile(request):

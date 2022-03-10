@@ -108,26 +108,79 @@
 				<div class="user-information">
 					<div class="user-img">
 {#						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>#}
-                        <img class="rounded-circle account-img" src="{{ user.u_image.url }}" width="160" height="160">
+{#                        <img class="rounded-circle account-img" src="{{ user.u_image.url }}" width="160" height="160">#}
+                        <div class="box" style="background: #BDBDBD;">
+                            <img class="profile" src="{{ user.u_image.url }}">
+                        </div>
+
                         <br>
 
                         <!-- 프로필 이미지 변경 -->
-{#                        <a href="#" class="redbtn">Change Image</a>#}
-
                         <form method="post" action="{% url "users:change_image" %}" enctype="multipart/form-data">
                             {% csrf_token %}
-						<a href="#" class="redbtn">Change Image</a>
-                            <br><br><br>
-{#                            <div class="redbtn" type="submit">#}
-{#                                change</div>#}
-{#                        <a href="#" class="redbtn" type="submit">Change Image</a>#}
-                        <button type="submit" class="redbtn">Upload Image</button>
+{#                        <a href="#" class="redbtn">Change Image</a>#}
 
-{#                            <div class="row">#}
-{#							<div class="col-md-2">#}
-{#								<input class="redbtn" type="submit" value="save">#}
-{#							</div>#}
-{#						</div>#}
+                            <!-- 이미지 파일 경로, 파일 선택 / 업로드 버튼 -->
+
+                            <!-- 다른 줄에 버튼 놓기 -->
+{#                            <div class="filebox">#}
+{#                                <input class="upload-name" value="" placeholder=""#}
+{#                                style="width:150px; height: 20px; font-size:15px;"><p></p>#}
+{#                                <label for="file" class="redbtn">Select Image</label>#}
+{#                                <input type="file" Required name="image" id="file"><p></p>#}
+{##}
+{#                                <button type="submit" class="redbtn">Save</button>#}
+{##}
+{#                                <button type="submit" class="redbtn"#}
+{#                                        style="padding:5px 20px;#}
+                                        {#border-radius: 3em;#}
+{#                                        border-radius: .5em;#}
+{#                                        border: 1px solid #0F2133;#}
+{#                                        padding: 10px 27px;#}
+{#                                        ">Save Image</buton>#}
+{##}
+{##}
+{##}
+{#                                        <label class="redbtn">Save Image</label>#}
+{#                                        <input class="submit" type="submit" value="save">#}
+{##}
+{#                                <div class="form-style-1 user-pro">#}
+{#                                    <div class="col-md-15">#}
+{#                                        <input class="submit" type="submit" value="save">#}
+{#                                    </div>#}
+{#                                </div>#}
+{#<!-- 버튼 끝-->#}
+{#                            </div>#}
+                            <!-- 다른 줄에 버튼 놓기 끝 -->
+
+                            <!-- 같은 줄에 버튼 놓기 -->
+                            <div class="filebox">
+                                <input class="upload-name" value="" placeholder=""
+                                style="width:170px; height: 20px; font-size:15px;"><p></p>
+                                <label for="file" class="redbtn"
+                                style="width:80px;"
+                                >Select</label>
+                                <input type="file" Required name="image" id="file">
+
+                                <button type="submit" class="redbtn"
+                                        style="
+                                        {#border-radius: 3em;#}
+                                        border-radius: .5em;
+                                        border: 1px solid #0F2133;
+                                        padding: 10px 27px;
+                                        vertical-align: middle;
+                                        ">Save</button>
+
+                            </div>
+                            <!-- 같은 줄에 버튼 놓기 끝 -->
+
+
+
+
+
+
+
+
 
                         </form>
 
@@ -188,7 +241,7 @@
 						</div>
                         <div class="row">
 							<div class="col-md-6 form-it">
-								<label>Phone Number</label>
+								<label>Mobile</label>
 {#								<input type="text" placeholder="{{ user.first_name }}">#}
                                 <input type="text" name="u_mobile" value="{{ user.u_mobile }}">
 							</div>
@@ -204,6 +257,7 @@
 		</div>
 	</div>
 </div>
+
 <!-- footer section-->
 <footer class="ht-footer">
 	<div class="ft-copyright">
