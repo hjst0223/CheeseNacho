@@ -11,19 +11,7 @@
             <br>
             <button type="button"
                 class="btn btn-success"
-                onclick="import_genres()">장르목록 download 하기 : import_genres</button>
-            <br>
-            <button type="button"
-                class="btn btn-success"
-                onclick="import_movie()">영화내용 download 하기 : import_movie</button>
-            <br>
-            <button type="button"
-                class="btn btn-success"
-                onclick="import_tv()">시리즈내용 download 하기 : import_tv</button>
-            <br>
-{#            <button type="button"#}
-{#                class="btn btn-success"#}
-{#                onclick="{% url 'entmt_info:homepage' %}">homepage로 가기</button>#}
+                onclick="to_import()()">import 하러가기</button>
             <div>
                 <a href="{% url 'entmt_info:homepage' %}">
                 <button type="button" class="btn btn-outline-primary">homepage로 가기</button></a>

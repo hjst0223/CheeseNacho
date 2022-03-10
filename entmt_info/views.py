@@ -26,7 +26,7 @@ def homepage(request):
     genre_series = []
     print('-----hello-------')
 
-    if request.user.is_authenticated:
+    if request.user.is_authenticated & Ugenres.objects.filter(ug_member=request.user).exists():
         print(f'---user:{request.user}---')
         pop_genres = Ugenres.objects.filter(ug_member=request.user)[:4]
         print(f'pop_genres : {pop_genres}')
@@ -259,9 +259,9 @@ def e_detail(request):
         'media_type': media_type,
         'comment_status': comment_status,
     }
-    # return render(request, 'entmt_info/detail.html', content)
+    return render(request, 'entmt_info/detail.html', content)
     # return render(request, 'entmt_info/moviesingle_jy.html', content)
-    return render(request, 'entmt_info/moviesingle.html', content)
+    # return render(request, 'entmt_info/moviesingle.html', content)
 
 # 검색 결과 페이지
 def e_results(request):
