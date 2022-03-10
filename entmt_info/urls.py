@@ -5,6 +5,7 @@ app_name = 'entmt_info'
 
 urlpatterns = [
     path('import/', views.ei_page, name='ei_page'), # API 데이터 다운로드 페이지
+    path('homepage/', views.homepage, name='homepage'),  # index 말고 homepage
     path('import_genre/', views.ei_genre, name='ei_genre'),
     path('import_movie/', views.ei_movie, name='ei_movie'),
     path('import_tv/', views.ei_tv, name='ei_tv'),

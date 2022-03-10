@@ -35,7 +35,7 @@ def signup(request):
             login(request, user)
 
             # 회원가입 후 로그인 상태로 메인 페이지 돌아가기
-            return redirect('home')
+            return redirect('entmt_info:homepage')
             # 회원가입 후 선호 장르 선택
             # return redirect('users:edit_genre')
 

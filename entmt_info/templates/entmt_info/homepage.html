@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block html_header %}
+<title>CNDB:</title>
+{% endblock %}
+
+{% block html_body %}
+
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row">
+	    	<div  class="slick-multiItemSlider">
+                <!-- 맨위 자동슬라이더 기본설정 9개, 3개씩 페이지가 돌아가면서 나온다 -->
+                {% for movie in pop_movie %}
+	    		<div class="movie-item">
+                    <div class="mv-img">
+	    				<a href="/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie">
+                            <img src="https://image.tmdb.org/t/p/w200{{ movie.m_posterPath }}" alt="" width="285" height="437"></a>
+	    			</div>
+	    			<div class="title-in">
+	    				<div class="cate">
+	    					<span class="blue"><a href="#">Sci-fi</a></span>
+                            <span class="yell"><a href="#">action</a></span>
+                            <span class="green"><a href="#">comedy</a></span>
+                            <span class="orange"><a href="#">advanture</a></span>
+	    				</div>
+	    				<h6><a href="/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie">
+                            {{ movie.m_title }}</a></h6>
+	    				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+	    			</div>
+	    		</div>
+                {% endfor %}
+                {% for series in pop_series %}
+	    		<div class="movie-item">
+                    <div class="mv-img">
+	    				<a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=movie">
+                            <img src="https://image.tmdb.org/t/p/w200{{ series.s_posterPath }}" alt="" width="285" height="437"></a>
+	    			</div>
+	    			<div class="title-in">
+	    				<div class="cate">
+	    					<span class="blue"><a href="#">Sci-fi</a></span>
+                            <span class="yell"><a href="#">action</a></span>
+                            <span class="green"><a href="#">comedy</a></span>
+                            <span class="orange"><a href="#">advanture</a></span>
+	    				</div>
+	    				<h6><a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=movie">
+                            {{ series.s_title }}</a></h6>
+	    				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+	    			</div>
+	    		</div>
+                {% endfor %}
+	    	</div>
+	    </div>
+	</div>
+</div>
+<div class="movie-items">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="title-hd">
+					<h2>장르별로 인기 영화 보기</h2>
+					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
+				</div>
+				<div class="tabs">
+					<ul class="tab-links">
+						<li class="active"><a href="#tab_{{ pop_genres_f }}">#{{ pop_genres_f }}</a></li>
+                        {% for media in genre_media %}
+                        <li><a href="#tab_{{ media.genre }}"> #{{ media.genre }}</a></li>
+                        {% endfor %}
+					</ul>
+				    <div class="tab-content">
+				        <div id="tab_{{ pop_genres_f }}" class="tab active">
+				            <div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for movie in genre_movies_f %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="https://image.tmdb.org/t/p/w200{{ movie.mg_movie.m_posterPath }}" alt="" width="185" height="284">
+                                            </div>
+					            			<div class="hvr-inner">
+					            				<a  href="/entmt_info/detail/?res_id={{ movie.mg_movie.movie_id }}&media_type=movie"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+                                                <div class="cate">
+                                                    <span class="blue"><a href="#">Movie</a></span></div>
+					            				<h6><a href="#">{{ movie.mg_movie.m_title }}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+                                    {% for series in genre_series_f %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="https://image.tmdb.org/t/p/w200{{ series.sg_series.s_posterPath }}" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="/entmt_info/detail/?res_id={{ series.sg_series.series_id }}&media_type=movie"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+                                                <div class="cate">
+                                                    <span class="orange"><a href="#">Series</a></span></div>
+					            				<h6><a href="#">{{ series.sg_series.s_title }}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+				            </div>
+				        </div>
+                        {% for media in genre_media %}
+                        <div id="tab_{{ media.genre }}" class="tab">
+				           <div class="row">
+				            	<div class="slick-multiItem">
+                                    <!--tab2 for문-->
+				            		{% for movie in media.movie %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="https://image.tmdb.org/t/p/w200{{ movie.mg_movie.m_posterPath }}" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="/entmt_info/detail/?res_id={{ movie.mg_movie.movie_id }}&media_type=movie"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+                                                <div class="cate">
+                                                    <span class="blue"><a href="#">Movie</a></span></div>
+					            				<h6><a href="#">{{ movie.mg_movie.m_title }}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+                                    {% for series in media.series %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="https://image.tmdb.org/t/p/w200{{ series.sg_series.s_posterPath }}" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="/entmt_info/detail/?res_id={{ series.sg_series.series_id }}&media_type=movie"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+                                                <div class="cate">
+                                                    <span class="orange"><a href="#">Series</a></span></div>
+					            				<h6><a href="#">{{ series.sg_series.s_title }}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+								</div>
+				            </div>
+				        </div>
+                        {% endfor %}
+				    </div>
+				</div>
+			</div>
+            <div class="col-md-4"></div>
+		</div>
+	</div>
+</div>
+<footer class="ht-footer">
+	<div class="ft-copyright">
+		<div class="ft-left">
+			<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
+		</div>
+		<div class="backtotop">
+			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+		</div>
+	</div>
+</footer>
+{% endblock %}
