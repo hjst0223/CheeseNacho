@@ -1,174 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-
+{#<!DOCTYPE html>#}
+{#<html lang="en" class="no-js">#}
+<!-- NAVBAR APPLICATION -->
+{#{% extends "base.html" %}#}
+{% include "navbar.html" %}
+{% block html_body %}
+{% endblock %}
+<!-- BASICS -->
 <head>
-	<!-- 기본 -->
-	<link rel="shortcut icon" href="/static/img/cheesenacho.ico" type="image/x-icon">
-    <title>{{ movie_id }}</title>
+    <title>CNDB: Your #1 source for Movies & TV Series</title>
 	<meta charset="UTF-8">
+    <script src="/static/js/menu_btn.js"></script>
     <!--Google Font-->
     <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
-	<!-- 모바일 버전 -->
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<meta name="format-detection" content="telephone-no">
-	<!-- CSS 파일 -->
+	<!-- CSS files -->
 	<link rel="stylesheet" href="/static/css/plugins.css">
 	<link rel="stylesheet" href="/static/css/style.css">
-    <script src="/static/js/menu_btn.js"></script>
 
+{#    <!-- FAVICON -->#}
+{#    <link rel="shortcut icon" href="/static/img/cheesenacho.ico" type="image/x-icon">#}
 </head>
 
 <body>
-<!--preloading-->
-<div id="preloader">
-    <img class="logo" src="/static/img/logo.png" alt="" width="119" height="58">
-    <div id="status">
-        <span></span>
-        <span></span>
-    </div>
-</div>
-<!--end of preloading-->
-<!--login form popup-->
-<div class="login-wrapper" id="login-content">
-    <div class="login-content">
-        <a href="#" class="close">x</a>
-        <h3>Login</h3>
-        <form method="post" action="#">
-        	<div class="row">
-        		 <label for="username">
-                    Username:
-                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
-                </label>
-        	</div>
-           
-            <div class="row">
-            	<label for="password">
-                    Password:
-                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
-                </label>
-            </div>
-            <div class="row">
-            	<div class="remember">
-					<div>
-						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
-					</div>
-            		<a href="#">Forget password ?</a>
-            	</div>
-            </div>
-           <div class="row">
-           	 <button type="submit">Login</button>
-           </div>
-        </form>
-        <div class="row">
-        	<p>Or via social</p>
-            <div class="social-btn-2">
-            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
-            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
-            </div>
-        </div>
-    </div>
-</div>
-<!--end of login form popup-->
-<!--signup form popup-->
-<div class="login-wrapper"  id="signup-content">
-    <div class="login-content">
-        <a href="#" class="close">x</a>
-        <h3>sign up</h3>
-        <form method="post" action="#">
-            <div class="row">
-                 <label for="username-2">
-                    Username:
-                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
-                </label>
-            </div>
-
-            <div class="row">
-                <label for="email-2">
-                    your email:
-                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
-                </label>
-            </div>
-             <div class="row">
-                <label for="password-2">
-                    Password:
-                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
-                </label>
-            </div>
-             <div class="row">
-                <label for="repassword-2">
-                    re-type Password:
-                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
-                </label>
-            </div>
-           <div class="row">
-             <button type="submit">sign up</button>
-           </div>
-        </form>
-    </div>
-</div>
-<!--end of signup form popup-->
-
-<!-- BEGIN | Header -->
-<header class="ht-header">
-	<div class="container">
-		<nav class="navbar navbar-default navbar-custom">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header logo">
-				    <div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					    <span class="sr-only">Toggle navigation</span>
-					    <div id="nav-icon1">
-							<span></span>
-							<span></span>
-							<span></span>
-						</div>
-				    </div>
-				    <a href="index-2.html"><img class="logo" src="/static/img/logo.png" width="320" height="200"></a>
-			    </div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden">
-							<a href="#page-top"></a>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default">
-							Home
-							</a>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							movies<i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Movie grid<i class="ion-ios-arrow-forward"></i></a>
-									<ul class="dropdown-menu level2">
-										<li><a href="moviegrid.html">Movie grid</a></li>
-										<li><a href="moviegridfw.html">movie grid full width</a></li>
-									</ul>
-								</li>			
-								<li><a href="movielist.html">Movie list</a></li>
-								<li><a href="moviesingle.html">Movie single</a></li>
-								<li class="it-last"><a href="seriessingle.html">Series single</a></li>
-							</ul>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav flex-child-menu menu-right">
-						<li><a href="#">Help</a></li>
-						<li class="loginLink"><a href="#">LOG In</a></li>
-						<li class="btn signupLink"><a href="#">sign up</a></li>
-					</ul>
-				</div>
-			<!-- /.navbar-collapse -->
-	    </nav>
-	    
-	    <!-- top search form -->
-	    <div class="top-search">
-			<input type="text" placeholder="Search for a movie or a TV Show...">
-	    </div>
-	</div>
-</header>
-<!-- END | Header -->
 
 <div class="hero mv-single-hero">
 	<div class="container">
@@ -182,16 +34,16 @@
 	<div class="container">
 		<div class="row ipad-width2">
 			<div class="col-md-4 col-sm-12 col-xs-12">
-				<div class="movie-img sticky-sb">
+                <div class="movie-img sticky-sb">
                     {# 영화포스터#}
-                    <img src="https://image.tmdb.org/t/p/w300{{ results.poster_path }}" alt="">
+                    <img src="https://image.tmdb.org/t/p/w500{{ results.poster_path }}" alt="">
 				</div>
 			</div>
 			<div class="col-md-8 col-sm-12 col-xs-12">
 				<div class="movie-single-ct main-content">
-                    {# 영화제목, 연도#}
+					{# 영화제목, 연도#}
                     {% if results.original_title %}
-                        <h1 class="bd-hd">{{ results.original_title }}<span>{{ results.release_date }}</span></h1>
+                        <h1 class="bd-hd">{{ results.original_title }}<span> {{ results.release_date }}</span></h1>
                     {% else %}
                         <h1 class="bd-hd">{{ results.name }}<span>{{ results.first_air_date }}</span></h1>
                     {% endif %}
@@ -229,7 +81,7 @@
 						        <div id="overview" class="tab active">
 						            <div class="row">
 						            	<div class="col-md-8 col-sm-12 col-xs-12">
-                                            {# 영화 내용 #}
+						            		{# 영화 내용 #}
                                             <p>{{ results.overview }}</p>
 											<div class="title-hd-sm">
 												<h4>User reviews</h4>
@@ -445,64 +297,6 @@
 		</div>
 	</div>
 </div>
-<!-- footer section-->
-<footer class="ht-footer">
-	<div class="container">
-		<div class="flex-parent-ft">
-			<div class="flex-child-ft item1">
-				 <a href="index-2.html"><img class="logo" src="/static/img/logo.png" alt="" width="320" height="200"></a>
-				 <p>534, Samseong-ro, Gangnam-gu,<br>
-				Seoul, Republic of Korea, 06166</p>
-				<p>Call us: <a href="#">(+82) 02 0000 0000</a></p>
-			</div>
-			<div class="flex-child-ft item2">
-				<h4>Resources</h4>
-				<ul>
-					<li><a href="#">About</a></li> 
-					<li><a href="#">Blockbuster</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Forums</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Help Center</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item3">
-				<h4>Legal</h4>
-				<ul>
-					<li><a href="#">Terms of Use</a></li> 
-					<li><a href="#">Privacy Policy</a></li>	
-					<li><a href="#">Security</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item4">
-				<h4>Account</h4>
-				<ul>
-					<li><a href="#">My Account</a></li> 
-					<li><a href="#">Watchlist</a></li>	
-					<li><a href="#">Collections</a></li>
-					<li><a href="#">User Guide</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item5">
-				<h4>Newsletter</h4>
-				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-				<form action="#">
-					<input type="text" placeholder="Enter your email...">
-				</form>
-				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
-			</div>
-		</div>
-	</div>
-	<div class="ft-copyright">
-		<div class="ft-left">
-			<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
-		</div>
-		<div class="backtotop">
-			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
-		</div>
-	</div>
-</footer>
-<!-- end of footer section-->
 
 <script src="/static/js/jquery.js"></script>
 <script src="/static/js/plugins.js"></script>

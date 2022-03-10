@@ -1,1 +1,173 @@
-내가 별점 매긴 영화 목록!
+{% extends 'base.html' %}
+
+{% block html_header %}
+<title>CNDB: ratings</title>
+{% endblock %}
+
+{% block html_body %}
+
+<!--찜한 영화 목록-->
+
+<div class="hero user-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1>{{ user.username }}'s Ratings</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href={% url 'home' %}>Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span>Favorite movies</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single">
+
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				<div class="user-information">
+					<div class="user-img">
+						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>
+						<a href="#" class="redbtn">Change avatar</a>
+					</div>
+
+                    <div class="user-fav">
+                        <p>My Activity</p>
+						<ul>
+                            <li><a href={% url 'users:favorite' %}>Favorite media</a></li>
+                            <li class="active"><a href={% url 'users:ratings' %}>My ratings</a></li>
+						</ul>
+					</div>
+                    <div class="user-fav">
+						<p>Update Profile</p>
+						<ul>
+							<li><a href="{% url 'users:profile' %}">Profile</a></li>
+                            <li><a href="{% url 'users:preference' %}">My preference</a></li>
+                            <li><a href="{% url 'users:change_password' %}">Change password</a></li>
+						</ul>
+					</div>
+                    <div class="user-fav">
+						<ul>
+							<li><a href="{% url 'users:logout' %}">Log out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="topbar-filter user">
+					<p>Found <span>{{ list_length }} movies</span> in total</p>
+					<label>Sort by:</label>
+					<select>
+						<option value="range">-- Choose option --</option>
+						<option value="saab">-- Choose option 2--</option>
+					</select>
+					<a href="userfavoritelist.html" class="list"><i class="ion-ios-list-outline "></i></a>
+					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>
+				</div>
+				<div class="flex-wrap-movielist user-fav-list">
+                    {% for mcomment in mcomments %}
+                        <div class="movie-item-style-2">
+                            <div class="movie-item-style-2 movie-item-style-1 style-3">
+                                <img src="https://image.tmdb.org/t/p/w200{{ mcomment.mc_movie.m_posterPath }}" alt="">
+                                <div class="title-in">
+                                    <div class="cate">
+                                        <span class="blue"><a href="#">Movie</a></span>
+                                    </div>
+                                </div>
+                            </div>
+{#                            <img src="https://image.tmdb.org/t/p/w200{{ mcomment.mc_movie.m_posterPath }}" alt="">#}
+                            <div class="mv-item-infor">
+                                <h6><a href="/entmt_info/detail/?res_id={{ mcomment.mc_movie.movie_id }}&media_type=movie">{{ mcomment.mc_movie }}<span>  - {{ mcomment.mc_movie.m_releaseDate }}</span></a></h6>
+{#                                <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>#}
+                                <span class="rated">
+                                    <input type="radio" value="5" readonly {% if mcomment.mc_star == 5 %} checked {% endif %}/>
+                                    <label title="5"></label>
+                                    <input type="radio" value="4.5" readonly {% if mcomment.mc_star == 4.5 %} checked {% endif %}/>
+                                    <label title="4.5" class="half"></label>
+                                    <input type="radio" value="4" readonly {% if mcomment.mc_star == 4 %} checked {% endif %}/>
+                                    <label title="4"></label>
+                                    <input type="radio" value="3.5" readonly {% if mcomment.mc_star == 3.5 %} checked {% endif %}/>
+                                    <label title="3.5" class="half"></label>
+                                    <input type="radio" value="3" readonly {% if mcomment.mc_star == 3 %} checked {% endif %}/>
+                                    <label title="3"></label>
+                                    <input type="radio" value="2.5" readonly {% if mcomment.mc_star == 2.5 %} checked {% endif %}/>
+                                    <label title="2.5" class="half"></label>
+                                    <input type="radio" value="2" readonly {% if mcomment.mc_star == 2 %} checked {% endif %}/>
+                                    <label title="2"></label>
+                                    <input type="radio" value="1.5" readonly {% if mcomment.mc_star == 1.5 %} checked {% endif %}/>
+                                    <label title="1.5" class="half"></label>
+                                    <input type="radio" value="1" readonly {% if mcomment.mc_star == 1 %} checked {% endif %}/>
+                                    <label title="1"></label>
+                                    <input type="radio" value="0.5" readonly {% if mcomment.mc_star == 0.5 %} checked {% endif %}/>
+                                    <label title="0.5" class="half"></label>
+                                </span>
+                                <h6>{{ mcomment.mc_title }}</h6>
+                                <p class="describe">{{ mcomment.mc_content }}</p>
+                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
+						    </div>
+						</div>
+                    {% endfor %}
+                    {% for scomment in scomments %}
+                        <div class="movie-item-style-2">
+                            <div class="movie-item-style-2 movie-item-style-1 style-3">
+                                <img src="https://image.tmdb.org/t/p/w200{{ scomment.sc_series.s_posterPath }}" alt="">
+                                <div class="title-in">
+                                    <div class="cate">
+                                        <span class="orange"><a href="#">Series</a></span>
+                                    </div>
+                                </div>
+                            </div>
+{#                            <img src="https://image.tmdb.org/t/p/w200{{ scomment.sc_series.s_posterPath }}" alt="">#}
+                            <div class="mv-item-infor">
+                                <h6><a href="/entmt_info/detail/?res_id={{ scomment.sc_series.series_id }}&media_type=movie">{{ scomment.sc_series }}<span>  - {{ scomment.sc_series.s_firstAirDate }}</span></a></h6>
+{#                                <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>#}
+                                <span class="rated">
+                                    <input type="radio" value="5" readonly {% if scomment.sc_star == 5 %} checked {% endif %}/>
+                                    <label title="5"></label>
+                                    <input type="radio" value="4.5" readonly {% if scomment.sc_star == 4.5 %} checked {% endif %}/>
+                                    <label title="4.5" class="half"></label>
+                                    <input type="radio" value="4" readonly {% if scomment.sc_star == 4 %} checked {% endif %}/>
+                                    <label title="4"></label>
+                                    <input type="radio" value="3.5" readonly {% if scomment.sc_star == 3.5 %} checked {% endif %}/>
+                                    <label title="3.5" class="half"></label>
+                                    <input type="radio" value="3" readonly {% if scomment.sc_star == 3 %} checked {% endif %}/>
+                                    <label title="3"></label>
+                                    <input type="radio" value="2.5" readonly {% if scomment.sc_star == 2.5 %} checked {% endif %}/>
+                                    <label title="2.5" class="half"></label>
+                                    <input type="radio" value="2" readonly {% if scomment.sc_star == 2 %} checked {% endif %}/>
+                                    <label title="2"></label>
+                                    <input type="radio" value="1.5" readonly {% if scomment.sc_star == 1.5 %} checked {% endif %}/>
+                                    <label title="1.5" class="half"></label>
+                                    <input type="radio" value="1" readonly {% if scomment.sc_star == 1 %} checked {% endif %}/>
+                                    <label title="1"></label>
+                                    <input type="radio" value="0.5" readonly {% if scomment.sc_star == 0.5 %} checked {% endif %}/>
+                                    <label title="0.5" class="half"></label>
+                                </span>
+                                <h6>{{ scomment.sc_title }}</h6>
+                                <p class="describe">{{ scomment.sc_content }}</p>
+                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
+						    </div>
+						</div>
+                    {% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- footer section-->
+<footer class="ht-footer">
+	<div class="ft-copyright">
+		<div class="ft-left">
+			<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
+		</div>
+		<div class="backtotop">
+			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+		</div>
+	</div>
+</footer>
+
+{% endblock %}

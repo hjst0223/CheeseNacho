@@ -8,9 +8,10 @@ from django.contrib import messages, auth
 
 from users.models import Mlike, Slike, Ugenres, Members
 from entmt_info.models import Movies, Series, Genres
+from entmt_manage.models import Mcomment, Scomment
 from django.db.models import Q
-from django.contrib.auth.forms import UserCreationForm
-from django.db import IntegrityError
+# from django.contrib.auth.forms import UserCreationForm
+# from django.db import IntegrityError
 
 # csrf token의 다른 방법
 # @csrf_exempt
@@ -24,7 +25,6 @@ def signup(request):
     # POST 방식의 request일 경우
     if request.method == "POST":
         form = UserForm(request.POST)
-
         if form.is_valid():
             form.save()
 
@@ -104,6 +104,7 @@ def update(request):
 
         if my_form.is_valid():
             my_form.save()
+
             messages.success(request, '회원정보가 변경되었습니다!')
 
             return redirect(url)
@@ -160,7 +161,8 @@ def edit_genre(request):
         messages.success(request, '선호 장르가 업데이트되었습니다!')
         print('ok')
 
-    return redirect('users:genre')
+    # return redirect('users:genre')
+    return redirect('users:preference')
 
 
 def change_image(request):
@@ -185,17 +187,54 @@ def profile(request):
 
 # 찜한 영화 목록
 def favorite(request):
-    pass
+    user_id = request.user.id
+    mlike_list = Mlike.objects.filter(ml_member=user_id)
+    slike_list = Slike.objects.filter(sl_member=user_id)
+    movie_list = []
+    series_list = []
+
+    for mlike in mlike_list:
+        movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
+    for slike in slike_list:
+        # print(f'---{slike}')
+        series_list.append(Series.objects.get(series_id=slike.sl_series_id))
+    context = {
+        'movie_list': movie_list,
+        'series_list': series_list,
+        'list_length': len(movie_list) + len(series_list)
+    }
+    # print(slike_list)
+    return render(request, 'users/favorite.html', context)
+    # return render(request, 'users/userprofile.html', content)
 
 
 # 사용자가 별점 매긴 영화 목록
 def ratings(request):
-    pass
+    # user에 해당하는 Scomment, Mcomment 찾아서 context로 보내줌
+    mcomments = Mcomment.objects.filter(mc_member=request.user)
+    scomments = Scomment.objects.filter(sc_member=request.user)
+    context = {
+        'mcomments': mcomments,
+        'scomments': scomments,
+    }
+    # print(f'{mcomments}----------------')
+    return render(request, 'users/ratings.html', context)
 
 
 # 선호 장르 선택
 def preference(request):
-    pass
+    genres = Genres.objects.all()
+    genre_list = []
+    for genre in genres:
+        if Ugenres.objects.filter(Q(ug_genre=genre) & Q(ug_member=request.user)).exists():
+            genre_list.append({'genre': genre, 'status': True})
+        else:
+            genre_list.append({'genre': genre, 'status': False})
+    # print(genre_list)
+    context = {
+        'genres': genre_list
+    }
+    return render(request, 'users/preference.html', context)
 
 
 # 회원가입 - 오류 메시지 도전~~~
