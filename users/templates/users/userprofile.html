@@ -4,87 +4,7 @@
 <title>CNDB: User Profile</title>
 {% endblock %}
 
-<!--login form popup-->
 {% block html_body %}
-
-{#<div class="login-wrapper" id="login-content">#}
-{#    <div class="login-content">#}
-{#        <a href="#" class="close">x</a>#}
-{#        <h3>Login</h3>#}
-{#        <form method="post" action="#">#}
-{#        	<div class="row">#}
-{#        		 <label for="username">#}
-{#                    Username:#}
-{#                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />#}
-{#                </label>#}
-{#        	</div>#}
-{#           #}
-{#            <div class="row">#}
-{#            	<label for="password">#}
-{#                    Password:#}
-{#                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
-{#            <div class="row">#}
-{#            	<div class="remember">#}
-{#					<div>#}
-{#						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>#}
-{#					</div>#}
-{#            		<a href="#">Forget password ?</a>#}
-{#            	</div>#}
-{#            </div>#}
-{#           <div class="row">#}
-{#           	 <button type="submit">Login</button>#}
-{#           </div>#}
-{#        </form>#}
-{#        <div class="row">#}
-{#        	<p>Or via social</p>#}
-{#            <div class="social-btn-2">#}
-{#            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>#}
-{#            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
-{#<!--end of login form popup-->#}
-{#<!--signup form popup-->#}
-{#<div class="login-wrapper"  id="signup-content">#}
-{#    <div class="login-content">#}
-{#        <a href="#" class="close">x</a>#}
-{#        <h3>sign up</h3>#}
-{#        <form method="post" action="#">#}
-{#            <div class="row">#}
-{#                 <label for="username-2">#}
-{#                    Username:#}
-{#                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
-{#           #}
-{#            <div class="row">#}
-{#                <label for="email-2">#}
-{#                    your email:#}
-{#                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
-{#             <div class="row">#}
-{#                <label for="password-2">#}
-{#                    Password:#}
-{#                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
-{#             <div class="row">#}
-{#                <label for="repassword-2">#}
-{#                    re-type Password:#}
-{#                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />#}
-{#                </label>#}
-{#            </div>#}
-{#           <div class="row">#}
-{#             <button type="submit">sign up</button>#}
-{#           </div>#}
-{#        </form>#}
-{#    </div>#}
-{#</div>#}
-{#<!--end of signup form popup-->#}
 
 <div class="hero user-hero">
 	<div class="container">
@@ -101,37 +21,80 @@
 		</div>
 	</div>
 </div>
+
 <div class="page-single">
 	<div class="container">
 		<div class="row ipad-width">
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
+                    <!-- 프로필 이미지 -->
 					<div class="user-img">
 {#						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>#}
-                        <img class="rounded-circle account-img" src="{{ user.u_image.url }}" width="160" height="160">
-                        <br>
+{#                        <img class="rounded-circle account-img" src="{{ user.u_image.url }}" width="160" height="160">#}
+                        <div class="box" style="background: #BDBDBD;">
+                            <img class="profile" src="{{ user.u_image.url }}">
+                        </div><br>
+
+                        <!-- 회원 이름 -->
+                        <h4 style="color: #fff;">{{ user.username }}’s profile</h4><br>
 
                         <!-- 프로필 이미지 변경 -->
-{#                        <a href="#" class="redbtn">Change Image</a>#}
-
                         <form method="post" action="{% url "users:change_image" %}" enctype="multipart/form-data">
                             {% csrf_token %}
-						<a href="#" class="redbtn">Change Image</a>
-                            <br><br><br>
-{#                            <div class="redbtn" type="submit">#}
-{#                                change</div>#}
-{#                        <a href="#" class="redbtn" type="submit">Change Image</a>#}
-                        <button type="submit" class="redbtn">Upload Image</button>
+{#                        <a href="#" class="redbtn">Change Image</a>#}
 
-{#                            <div class="row">#}
-{#							<div class="col-md-2">#}
-{#								<input class="redbtn" type="submit" value="save">#}
-{#							</div>#}
-{#						</div>#}
+                            <!-- 이미지 파일 경로, 파일 선택 / 업로드 버튼 -->
 
+                            <!-- 다른 줄에 버튼 놓기 -->
+{#                            <div class="filebox">#}
+{#                                <input class="upload-name" value="" placeholder=""#}
+{#                                style="width:150px; height: 20px; font-size:15px;"><p></p>#}
+{#                                <label for="file" class="redbtn">Select Image</label>#}
+{#                                <input type="file" Required name="image" id="file"><p></p>#}
+{##}
+{#                                <button type="submit" class="redbtn">Save</button>#}
+{##}
+{#                                <button type="submit" class="redbtn"#}
+{#                                        style="padding:5px 20px;#}
+{#                                        border-radius: 3em;#}
+{#                                        border-radius: .5em;#}
+{#                                        border: 1px solid #0F2133;#}
+{#                                        padding: 10px 27px;#}
+{#                                        ">Save Image</button>#}
+
+{#                                        <label class="redbtn">Save Image</label>#}
+{#                                        <input class="submit" type="submit" value="save">#}
+{##}
+{#                                <div class="form-style-1 user-pro">#}
+{#                                    <div class="col-md-15">#}
+{#                                        <input class="submit" type="submit" value="save">#}
+{#                                    </div>#}
+{#                                </div>#}
+{#<!-- 버튼 끝-->#}
+{#                            </div>#}
+                            <!-- 다른 줄에 버튼 놓기 끝 -->
+
+                            <!-- 같은 줄에 버튼 -->
+                            <div class="filebox">
+                                <input class="upload-name" value="" placeholder=""
+                                style="width:170px; height: 20px; font-size:15px;"><p></p>
+                                <label for="file" class="redbtn"
+                                style="width:80px;"
+                                >Select</label>
+                                <input type="file" Required name="image" id="file">
+                                <button type="submit" class="redbtn"
+                                        style="width:80px;
+                                        border-radius: .5em;
+                                        border: 1px solid #0F2133;
+                                        padding: 10px 10px;
+                                        vertical-align: middle;
+                                        ">Save</button>
+                            </div>
                         </form>
-
+                        <!-- 프로필 이미지 변경 끝 -->
 					</div>
+                    <!-- 프로필 이미지 끝 -->
+
 					<div class="user-fav">
                         <p>My Activity</p>
 						<ul>
@@ -156,10 +119,28 @@
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="form-style-1 user-pro" action="#">
+                    <!-- 회원정보 변경 -->
                     <form method="post" action="{% url 'users:update' %}">
 {#                    <form method="post" enctype="multipart/form-data">#}
                         {% csrf_token %}
 {#					<form action="#" class="user">#}
+
+                        <!-- 회원정보 변경 완료/오류 메시지 -->
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == "error"%}
+                                        <div class="alert alert-danger">
+                                            {{ message }}
+                                        </div>
+                                    {% else %}
+                                        <div class="alert alert-success">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}<br>
+                            <!-- 회원정보 변경 완료/오류 메시지 끝-->
+
 						<h4>Profile details</h4>
 						<div class="row">
 							<div class="col-md-6 form-it">
@@ -188,7 +169,7 @@
 						</div>
                         <div class="row">
 							<div class="col-md-6 form-it">
-								<label>Phone Number</label>
+								<label>Mobile</label>
 {#								<input type="text" placeholder="{{ user.first_name }}">#}
                                 <input type="text" name="u_mobile" value="{{ user.u_mobile }}">
 							</div>
