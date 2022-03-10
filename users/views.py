@@ -8,6 +8,7 @@ from django.contrib import messages, auth
 
 from users.models import Mlike, Slike, Ugenres, Members
 from entmt_info.models import Movies, Series, Genres
+from entmt_manage.models import Mcomment, Scomment
 from django.db.models import Q
 
 
@@ -166,7 +167,8 @@ def edit_genre(request):
         messages.success(request, '선호 장르가 업데이트되었습니다!')
         print('ok')
 
-    return redirect('users:genre')
+    # return redirect('users:genre')
+    return redirect('users:preference')
 
 
 def change_image(request):
@@ -206,7 +208,6 @@ def profile(request):
 
 # 찜한 영화 목록
 def favorite(request):
-    print('----------으에에에ㅔ엥------------')
     user_id = request.user.id
     mlike_list = Mlike.objects.filter(ml_member=user_id)
     slike_list = Slike.objects.filter(sl_member=user_id)
@@ -214,26 +215,44 @@ def favorite(request):
     series_list = []
 
     for mlike in mlike_list:
-        # mlike_code_list.append(mlike.ml_movie_id)
         movie_list.append(Movies.objects.get(movie_id=mlike.ml_movie_id))
-        # print(f'--{mlike}({mlike.ml_movie_id})={movie_list}')
     for slike in slike_list:
+        # print(f'---{slike}')
         series_list.append(Series.objects.get(series_id=slike.sl_series_id))
-    # print(f'-----------{len(movie_list) + len(series_list)}')
-    content = {
+    context = {
         'movie_list': movie_list,
         'series_list': series_list,
-        # 'list_length': len(movie_list) + len(series_list)
+        'list_length': len(movie_list) + len(series_list)
     }
-    return render(request, 'users/favorite.html', content)
+    # print(slike_list)
+    return render(request, 'users/favorite.html', context)
     # return render(request, 'users/userprofile.html', content)
 
 
 # 사용자가 별점 매긴 영화 목록
 def ratings(request):
-    return render(request, 'users/ratings.html')
+    # user에 해당하는 Scomment, Mcomment 찾아서 context로 보내줌
+    mcomments = Mcomment.objects.filter(mc_member=request.user)
+    scomments = Scomment.objects.filter(sc_member=request.user)
+    context = {
+        'mcomments': mcomments,
+        'scomments': scomments,
+    }
+    # print(f'{mcomments}----------------')
+    return render(request, 'users/ratings.html', context)
 
 
 # 선호 장르 선택
 def preference(request):
-    return render(request, 'users/preference.html')
+    genres = Genres.objects.all()
+    genre_list = []
+    for genre in genres:
+        if Ugenres.objects.filter(Q(ug_genre=genre) & Q(ug_member=request.user)).exists():
+            genre_list.append({'genre': genre, 'status': True})
+        else:
+            genre_list.append({'genre': genre, 'status': False})
+    # print(genre_list)
+    context = {
+        'genres': genre_list
+    }
+    return render(request, 'users/preference.html', context)

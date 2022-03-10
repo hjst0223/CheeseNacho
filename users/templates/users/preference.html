@@ -2,6 +2,20 @@
 
 {% block html_header %}
 <title>CNDB: preference</title>
+
+{#    <meta charset="utf-8">#}
+{#    <title>CSS</title>#}
+{#    <style>#}
+{#      input[id="b"] {#}
+{#        position: relative;#}
+{#        top: 1.5px;#}
+{#      }#}
+{#      label[for="c"] {#}
+{#        position: relative;#}
+{#        top: -1.5px;#}
+{#      }#}
+{#    </style>#}
+
 {% endblock %}
 
 {% block html_body %}
@@ -57,30 +71,78 @@
 				</div>
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
-				<div class="topbar-filter user">
-					<p>Found <span>{{ list_length }} movies</span> in total</p>
-					<label>Sort by:</label>
-					<select>
-						<option value="range">-- Choose option --</option>
-						<option value="saab">-- Choose option 2--</option>
-					</select>
-					<a href="userfavoritelist.html" class="list"><i class="ion-ios-list-outline "></i></a>
-					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>
-				</div>
-				<div class="flex-wrap-movielist grid-fav">
-                    {% for movie in movie_list %}
-                        <div class="movie-item-style-2 movie-item-style-1 style-3">
-                            <img src="https://image.tmdb.org/t/p/w200{{ movie.m_posterPath }}" alt="">
-                            <div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-	            			</div>
-                            <div class="mv-item-infor">
-                                <h6><a href="moviesingle.html">{{ movie.m_title }}</a></h6>
-								<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
-							</div>
-						</div>
-                    {% endfor %}
-				</div>
+{#				<div class="topbar-filter user">#}
+{#					<p>Found <span>{{ list_length }} movies</span> in total</p>#}
+{#					<label>Sort by:</label>#}
+{#					<select>#}
+{#						<option value="range">-- Choose option --</option>#}
+{#						<option value="saab">-- Choose option 2--</option>#}
+{#					</select>#}
+{#					<a href="userfavoritelist.html" class="list"><i class="ion-ios-list-outline "></i></a>#}
+{#					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>#}
+{#				</div>#}
+{#				<div class="flex-wrap-movielist grid-fav">#}
+{#                    {% for movie in movie_list %}#}
+{#                        <div class="movie-item-style-2 movie-item-style-1 style-3">#}
+{#                            <img src="https://image.tmdb.org/t/p/w200{{ movie.m_posterPath }}" alt="">#}
+{#                            <div class="hvr-inner">#}
+{#	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>#}
+{#	            			</div>#}
+{#                            <div class="mv-item-infor">#}
+{#                                <h6><a href="moviesingle.html">{{ movie.m_title }}</a></h6>#}
+{#								<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>#}
+{#							</div>#}
+{#						</div>#}
+{#                    {% endfor %}#}
+{#				</div>#}
+                <div class="container my-3">
+                    <!-- 선호장르 변경 완료/오류 메시지 -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "error"%}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="col-md-9 col-sm-12 col-xs-12">
+                        <div class="form-style-1 user-pro" action="#">
+                            <form action="{% url 'users:edit_genre' %}" method="post">
+                            {% csrf_token %}
+                                <legend class="border-bottom mb-4">선호 장르 등록</legend>
+                                {% for obj in genres %}
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                        <input id="selected_{{ obj.genre.genre_id }}" type="checkbox" name="selected" value="{{ obj.genre.genre_id }}"
+                                            {% if obj.status %} checked {% endif %}>
+                                        <label for="selected_{{ obj.genre.genre_id }}"
+                                            background-color="blue">{{ obj.genre }}</label>
+                                    </div>
+                                {% endfor %}<br>
+
+{#                                    {% for obj in genres %}#}
+{#                                        <div class="row">#}
+{#                                            <div class="col-lg-6">#}
+{#                                                <div class="input-group">#}
+{#                                                    <span class="input-group-addon">#}
+{#                                                        <input id="selected" type="checkbox" name="selected" value="{{ obj.genre.genre_id }}"#}
+{#                                                            {% if obj.status %} checked#}
+{#                                                            {% endif %}>#}
+{#                                                        <input type="text" class="form-control" value="{{ obj.genre }}">#}
+{#                                                    </span>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    {% endfor %}<br>#}
+                                    <button type="submit">저장</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>

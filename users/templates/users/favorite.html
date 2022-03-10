@@ -58,7 +58,7 @@
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="topbar-filter user">
-					<p>Found <span>{{ list_length }} movies</span> in total</p>
+					<p>Found <span>{{ list_length }} medias</span> in total</p>
 					<label>Sort by:</label>
 					<select>
 						<option value="range">-- Choose option --</option>
@@ -68,25 +68,40 @@
 					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>
 				</div>
 				<div class="flex-wrap-movielist grid-fav">
-                    <!--Movie List 출력-->
-{#						<div class="movie-item-style-2 movie-item-style-1 style-3">#}
-{#							<img src="/static/images/uploads/mv1.jpg" alt="">#}
-{#							<div class="hvr-inner">#}
-{#	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>#}
-{#	            			</div>#}
-{#							<div class="mv-item-infor">#}
-{#								<h6><a href="moviesingle.html">oblivion</a></h6>#}
-{#								<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>#}
-{#							</div>#}
-{#						</div>#}
                     {% for movie in movie_list %}
                         <div class="movie-item-style-2 movie-item-style-1 style-3">
                             <img src="https://image.tmdb.org/t/p/w200{{ movie.m_posterPath }}" alt="">
+                            <div class="title-in">
+                                <div class="cate">
+                                    <span class="blue"><a href="#">Movie</a></span>
+{#                                    <span class="yell"><a href="#">Action</a></span>#}
+{#                                    <span class="orange"><a href="#">advanture</a></span>#}
+                                </div>
+                            </div>
                             <div class="hvr-inner">
-	            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+	            				<a  href='/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie'> Read more <i class="ion-android-arrow-dropright"></i> </a>
 	            			</div>
                             <div class="mv-item-infor">
-                                <h6><a href="moviesingle.html">{{ movie.m_title }}</a></h6>
+                                <h6><a href='/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie'>{{ movie.m_title }}</a></h6>
+								<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
+							</div>
+						</div>
+                    {% endfor %}
+                    {% for series in series_list %}
+                        <div class="movie-item-style-2 movie-item-style-1 style-3">
+                            <img src="https://image.tmdb.org/t/p/w200{{ series.s_posterPath }}" alt="">
+                            <div class="title-in">
+                                <div class="cate">
+{#                                    <span class="blue"><a href="#">Movie</a></span>#}
+{#                                    <span class="yell"><a href="#">Action</a></span>#}
+                                    <span class="orange"><a href="#">Series</a></span>
+                                </div>
+                            </div>
+                            <div class="hvr-inner">
+	            				<a  href='/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv'> Read more <i class="ion-android-arrow-dropright"></i> </a>
+	            			</div>
+                            <div class="mv-item-infor">
+                                <h6><a href='/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv'>{{ series.s_title }}</a></h6>
 								<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
 							</div>
 						</div>
