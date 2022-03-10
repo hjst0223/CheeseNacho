@@ -9,7 +9,8 @@ from django.contrib import messages, auth
 from users.models import Mlike, Slike, Ugenres, Members
 from entmt_info.models import Movies, Series, Genres
 from django.db.models import Q
-
+from django.contrib.auth.forms import UserCreationForm
+from django.db import IntegrityError
 
 # csrf token의 다른 방법
 # @csrf_exempt
@@ -23,6 +24,7 @@ def signup(request):
     # POST 방식의 request일 경우
     if request.method == "POST":
         form = UserForm(request.POST)
+
         if form.is_valid():
             form.save()
 
@@ -194,3 +196,42 @@ def ratings(request):
 # 선호 장르 선택
 def preference(request):
     pass
+
+
+# 회원가입 - 오류 메시지 도전~~~
+# def signup(request):
+#     # 현재 페이지 url
+#     url = request.META.get('HTTP_REFERER')
+#
+#     # POST 방식의 request일 경우
+#     if request.method == "POST":
+#         form = UserForm(request.POST)
+#
+#         if form.cleaned_data.get('password1') == form.cleaned_data.get('password2'):
+#             try:
+#                 if form.is_valid():
+#                     form.save()
+#
+#                     username = form.cleaned_data.get('username')
+#                     raw_password = form.cleaned_data.get('password1')
+#
+#                     # 입력받은 username, password로 로그인하기
+#                     user = authenticate(username=username, password=raw_password)
+#                     login(request, user)
+#
+#                     # 회원가입 후 로그인 상태로 메인 페이지 돌아가기
+#                     return redirect('home')
+#                     # 회원가입 후 선호 장르 선택
+#                     # return redirect('users:edit_genre')
+#
+#                     # return redirect(url)
+#
+#             except IntegrityError:
+#
+#                 return render(request, url, {"form": UserCreationForm(),
+#                                              "error": "The Passwords are not matching!"})
+#
+#
+#     # else:
+#     #     form = UserForm()
+#     return render(request, 'users/signup.html', {'form': form})
