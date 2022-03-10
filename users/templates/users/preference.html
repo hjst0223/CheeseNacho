@@ -20,7 +20,7 @@
 
 {% block html_body %}
 
-<!--찜한 영화 목록-->
+<!--선호 장르 목록-->
 
 <div class="hero user-hero">
 	<div class="container">
@@ -37,15 +37,20 @@
 		</div>
 	</div>
 </div>
-<div class="page-single">
 
+<div class="page-single">
 	<div class="container">
 		<div class="row ipad-width2">
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
+                    <!-- 프로필 이미지 -->
 					<div class="user-img">
-						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>
-						<a href="#" class="redbtn">Change avatar</a>
+                        <div class="box" style="background: #BDBDBD;">
+                            <img class="profile" src="{{ user.u_image.url }}">
+                        </div><br>
+
+                        <!-- 회원 이름 -->
+                        <h4 style="color: #fff;">{{ user.username }}’s profile</h4><br>
 					</div>
 
                     <div class="user-fav">
@@ -96,33 +101,94 @@
 {#                    {% endfor %}#}
 {#				</div>#}
                 <div class="container my-3">
-                    <!-- 선호장르 변경 완료/오류 메시지 -->
-                    {% if messages %}
-                        {% for message in messages %}
-                            {% if message.tags == "error"%}
-                                <div class="alert alert-danger">
-                                    {{ message }}
-                                </div>
-                            {% else %}
-                                <div class="alert alert-success">
-                                    {{ message }}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
                     <div class="col-md-9 col-sm-12 col-xs-12">
                         <div class="form-style-1 user-pro" action="#">
                             <form action="{% url 'users:edit_genre' %}" method="post">
                             {% csrf_token %}
-                                <legend class="border-bottom mb-4">선호 장르 등록</legend>
-                                {% for obj in genres %}
+
+                            <!-- 선호장르 변경 완료/오류 메시지 -->
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == "error"%}
+                                        <div class="alert alert-danger">
+                                            {{ message }}
+                                        </div>
+                                    {% else %}
+                                        <div class="alert alert-success">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}<br>
+                            <!-- 선호장르 변경 완료/오류 메시지 끝-->
+
+
+{#                                <legend class="border-bottom mb-4">선호 장르 등록</legend>#}
+
+{#                            <div class="col-md-9 col-sm-12 col-xs-12">#}
+                                    <!-- 회원정보 변경 -->
+                                        <h4>Select your preferred genres:</h4>
+
+                               {% for obj in genres %}
                                     <div class="col-md-3 col-sm-3 col-xs-3">
-                                        <input id="selected_{{ obj.genre.genre_id }}" type="checkbox" name="selected" value="{{ obj.genre.genre_id }}"
+
+{#                                    <div class="row">#}
+{#                                        <div class="col-md-2">#}
+
+                                    <!-- 체크박스 변경 -->
+{#                                    <div class="col-md-9">#}
+{#                                    <div class="col-md-9 col-sm-12 col-xs-12">#}
+                                        <div class="form-style-1"
+{#                                             style="position: relative"#}
+{#                                             style="float:left;"#}
+                                        >
+                                        <div
+{#                                                style="float:left;"#}
+                                        >
+                                            <input id="selected_{{ obj.genre.genre_id }}"
+{#                                                   style="top: 1.5px;"#}
+                                                   type="checkbox"
+{#                                                   style="text-align: center"#}
+                                                   name="selected"
+                                                   value="{{ obj.genre.genre_id }}"
                                             {% if obj.status %} checked {% endif %}>
-                                        <label for="selected_{{ obj.genre.genre_id }}"
-                                            background-color="blue">{{ obj.genre }}</label>
+
+                                        </div><p></p>
+
+                                        <div>
+                                        {#float:right; #}
+{#                                        position: relative;"#}
+
+                                            <label for="selected_{{ obj.genre.genre_id }}"
+                                            background-color="blue">
+{#                                            style="top: -1.5px;"#}
+                                            {{ obj.genre }}</label>
+
+                                        </div><p></p><br>
+
+                                        </div>
+
+{#                                    </div>#}
+
+
+                                    <!-- 끝 -->
+
+{##}
+{#                                            <input id="selected_{{ obj.genre.genre_id }}" type="checkbox" name="selected" value="{{ obj.genre.genre_id }}"#}
+{#                                            {% if obj.status %} checked {% endif %}>#}
+{#                                        <label for="selected_{{ obj.genre.genre_id }}"#}
+{#                                            background-color="blue">{{ obj.genre }}</label>#}
+{#                                    #}
+
+{#                                        </div>#}
+{#                                    </div>#}
+
+{#                                        <input id="selected_{{ obj.genre.genre_id }}" type="checkbox" name="selected" value="{{ obj.genre.genre_id }}"#}
+{#                                            {% if obj.status %} checked {% endif %}>#}
+{#                                        <label for="selected_{{ obj.genre.genre_id }}"#}
+{#                                            background-color="blue">{{ obj.genre }}</label>#}
                                     </div>
-                                {% endfor %}<br>
+                               {% endfor %}
 
 {#                                    {% for obj in genres %}#}
 {#                                        <div class="row">#}
@@ -138,8 +204,13 @@
 {#                                            </div>#}
 {#                                        </div>#}
 {#                                    {% endfor %}<br>#}
-                                    <button type="submit">저장</button>
-                            </form>
+{#                                    <button type="submit">저장</button>#}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input class="submit" type="submit" value="save">
+                                        </div>
+                                    </div>
+                            </form><br><br>
                         </div>
                     </div>
                 </div>

@@ -54,3 +54,18 @@
     height: 100%;
     object-fit: cover;
 }
+
+input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    border: 1px solid #999;
+    appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  input[type="checkbox"]:checked {
+    background: #FD9F28;
+    border: none;
+  }

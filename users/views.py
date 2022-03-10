@@ -79,18 +79,16 @@ def change_password(request):
                 user.set_password(new_password)
                 user.save()
                 auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                messages.success(request, '비밀번호가 변경되었습니다!')
+                messages.success(request, 'Your password has been successfully changed!')
                 return redirect('users:change_password')
             else:
                 print('비번 다름!!!')
-                messages.error(request, '비밀번호가 다릅니다!')
+                messages.error(request, "New password doesn't match the confirm password!")
         else:
-            messages.error(request, '비밀번호를 잘못 입력하셨습니다.')
-        # return render(request, 'users/change_password.html')
+            messages.error(request, 'You entered the wrong password!')
         return render(request, 'users/change_password.html')
 
     else:
-        # return render(request, 'users/change_password.html')
         return render(request, 'users/change_password.html')
 
 
@@ -105,7 +103,7 @@ def update(request):
         if my_form.is_valid():
             my_form.save()
 
-            messages.success(request, '회원정보가 변경되었습니다!')
+            messages.success(request, 'Your profile has been successfully updated!')
 
             return redirect(url)
 
@@ -158,7 +156,7 @@ def edit_genre(request):
                 ugenre.delete()
             else: pass
 
-        messages.success(request, '선호 장르가 업데이트되었습니다!')
+        messages.success(request, 'Your preferences have been successfully updated!')
         print('ok')
 
     # return redirect('users:genre')
@@ -173,7 +171,7 @@ def change_image(request):
     if request.method == 'POST':
         member.u_image = request.FILES['image']
         member.save()
-        messages.success(request, '프로필 이미지가 변경되었습니다!')
+        # messages.success(request, '프로필 이미지가 변경되었습니다!')
 
         return redirect(url)
 

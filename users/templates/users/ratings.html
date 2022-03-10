@@ -6,7 +6,7 @@
 
 {% block html_body %}
 
-<!--찜한 영화 목록-->
+<!--별점 매긴 영화 목록-->
 
 <div class="hero user-hero">
 	<div class="container">
@@ -16,7 +16,7 @@
 					<h1>{{ user.username }}'s Ratings</h1>
 					<ul class="breadcumb">
 						<li class="active"><a href={% url 'home' %}>Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span>Favorite movies</li>
+						<li> <span class="ion-ios-arrow-right"></span>My Ratings</li>
 					</ul>
 				</div>
 			</div>
@@ -29,9 +29,14 @@
 		<div class="row ipad-width2">
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
+                    <!-- 프로필 이미지 -->
 					<div class="user-img">
-						<a href="#"><img src="/static/images/uploads/user-img.png" alt=""><br></a>
-						<a href="#" class="redbtn">Change avatar</a>
+                        <div class="box" style="background: #BDBDBD;">
+                            <img class="profile" src="{{ user.u_image.url }}">
+                        </div><br>
+
+                        <!-- 회원 이름 -->
+                        <h4 style="color: #fff;">{{ user.username }}’s profile</h4><br>
 					</div>
 
                     <div class="user-fav">
