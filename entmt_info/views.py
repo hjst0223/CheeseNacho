@@ -22,10 +22,7 @@ def homepage(request):
     pop_movies = Movies.objects.all().order_by('-m_popularity')[:8]
     pop_series = Series.objects.all().order_by('-s_popularity')[:8]
     print('-----hello-------')
-
-    # 인증된 회원이며, 선택한 genre가 있을 시에 실행
-    if request.user.is_authenticated & Ugenres.objects.filter(ug_member=request.user).exists():
-        print(f'---user:{request.user}---')
+    try:
         # autho가 선택한 genre 가져오기
         pop_genres = Ugenres.objects.filter(ug_member=request.user)[:4]
         pop_genres_f = pop_genres[0]
@@ -37,8 +34,9 @@ def homepage(request):
         genre_series = [Sgenres.objects.filter(sg_genre=genre.ug_genre)[:4] for genre in pop_genres]
         genre_media = [{'genre': genre, 'movie': g_movie, 'series': g_series}
                        for genre, g_movie, g_series in zip(pop_genres, genre_movies, genre_series)]
-    else:
-        print('---AnonymousUser---')
+        print(f'---user:{request.user}---')
+
+    except:
         # 현재 저장되어있는 장르 순위 출력,,, 단점 : 지금현재 Mgenre로만 순위가 매겨져 있음
         pop_genres = [[genre.genre_id, genre.g_name, Mgenres.objects.filter(mg_genre=genre).count()] for genre in
                       Genres.objects.all()]
@@ -53,15 +51,8 @@ def homepage(request):
         genre_series = [Sgenres.objects.filter(sg_genre=genre)[:4] for genre in pop_genres]
         genre_media = [{'genre': genre, 'movie': g_movie, 'series': g_series}
                        for genre, g_movie, g_series in zip(pop_genres, genre_movies, genre_series)]
-    # print(genre_movies_f)
-    # print(f'----pop_genres_f : {pop_genres_f}')
-    # print(f'----pop_genres : {pop_genres}')
-    # print(f'----pop_movies : {pop_movies}')
-    # # print(f'----pop_genres_match : {pop_genres_match[:4]}')
-    # print(f'----genre_movies_f : {genre_movies_f}')
-    # print(f'----genre_movies : {genre_movies}')
-    # print(f'----genre_series : {genre_series}')
-    # print(f'----genre_media : {genre_media}')
+        print('---AnonymousUser---')
+
     context = {
         'pop_movies': pop_movies,
         'pop_series': pop_series,
@@ -71,6 +62,18 @@ def homepage(request):
         'genre_media': genre_media,
     }
     return render(request, 'entmt_info/homepage.html', context)
+
+
+    # print(genre_movies_f)
+    # print(f'----pop_genres_f : {pop_genres_f}')
+    # print(f'----pop_genres : {pop_genres}')
+    # print(f'----pop_movies : {pop_movies}')
+    # # print(f'----pop_genres_match : {pop_genres_match[:4]}')
+    # print(f'----genre_movies_f : {genre_movies_f}')
+    # print(f'----genre_movies : {genre_movies}')
+    # print(f'----genre_series : {genre_series}')
+    # print(f'----genre_media : {genre_media}')
+
 
 def ei_page(request):
     # code = 634649
