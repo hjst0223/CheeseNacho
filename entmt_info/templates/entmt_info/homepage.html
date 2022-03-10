@@ -26,7 +26,7 @@
 	    				</div>
 	    				<h6><a href="/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie">
                             {{ movie.m_title }}</a></h6>
-	    				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+	    				<p><i class="ion-android-star"></i><span>{{ movie.print_rate }}</span> /5</p>
 	    			</div>
 	    		</div>
                 {% endfor %}
@@ -45,7 +45,7 @@
 	    				</div>
 	    				<h6><a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv">
                             {{ series.s_title }}</a></h6>
-	    				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+	    				<p><i class="ion-android-star"></i><span>{{ series.print_rate }}</span> /5</p>
 	    			</div>
 	    		</div>
                 {% endfor %}
@@ -85,7 +85,7 @@
                                                 <div class="cate">
                                                     <span class="blue"><a href="#">Movie</a></span></div>
 					            				<h6><a href="#">{{ movie.mg_movie.m_title }}</a></h6>
-					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            				<p><i class="ion-android-star"></i><span>{{ movie.mg_movie.print_rate }}</span> /5</p>
 					            			</div>
 					            		</div>
 				            		</div>
@@ -103,7 +103,7 @@
                                                 <div class="cate">
                                                     <span class="orange"><a href="#">Series</a></span></div>
 					            				<h6><a href="#">{{ series.sg_series.s_title }}</a></h6>
-					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            				<p><i class="ion-android-star"></i><span>{{ series.sg_series.print_rate }}</span> /5</p>
 					            			</div>
 					            		</div>
 				            		</div>
@@ -129,7 +129,7 @@
                                                 <div class="cate">
                                                     <span class="blue"><a href="#">Movie</a></span></div>
 					            				<h6><a href="#">{{ movie.mg_movie.m_title }}</a></h6>
-					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            				<p><i class="ion-android-star"></i><span>{{ movie.mg_movie.print_rate }}</span> /5</p>
 					            			</div>
 					            		</div>
 				            		</div>
@@ -147,7 +147,7 @@
                                                 <div class="cate">
                                                     <span class="orange"><a href="#">Series</a></span></div>
 					            				<h6><a href="#">{{ series.sg_series.s_title }}</a></h6>
-					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            				<p><i class="ion-android-star"></i><span>{{ series.sg_series.print_rate }}</span> /5</p>
 					            			</div>
 					            		</div>
 				            		</div>

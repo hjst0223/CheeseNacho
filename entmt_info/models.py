@@ -13,6 +13,9 @@ class Movies(models.Model):
     def __str__(self):
         return self.m_title
 
+    def print_rate(self):
+        return round(self.m_rateScore, 2)
+
 
 class Series(models.Model):
     series_id = models.IntegerField(primary_key=True)   # 드라마 id
@@ -26,6 +29,9 @@ class Series(models.Model):
 
     def __str__(self):
         return self.s_title
+
+    def print_rate(self):
+        return round(self.s_rateScore, 2)
 
 
 class Genres(models.Model):
