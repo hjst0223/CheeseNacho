@@ -16,27 +16,21 @@ import csv
 
 def homepage(request):
     # 인기영화 8개, 인기시리즈 8개 보여주기
-    # 로그인 인증 되어있을 시, 내 추천장르 : 4개 가져와서 장르별 9개씩 가져오기
-    # 로그인 인증 되어있지 않을 시, 인기 장르 중 4개 가져와서 장르별 9개씩 가져오기
+    # 로그인 인증 되어있을 시, 내 추천장르 : 4개 가져와서 장르별 가져오기
+    # 로그인 인증 되어있지 않을 시, 인기 장르 중 4개 가져와서 장르별 가져오기
 
-    # Board.objects.all().order_by('-id')
     pop_movies = Movies.objects.all().order_by('-m_popularity')[:8]
     pop_series = Series.objects.all().order_by('-s_popularity')[:8]
-    genre_movie = []
-    genre_series = []
     print('-----hello-------')
 
+    # 인증된 회원이며, 선택한 genre가 있을 시에 실행
     if request.user.is_authenticated & Ugenres.objects.filter(ug_member=request.user).exists():
         print(f'---user:{request.user}---')
+        # autho가 선택한 genre 가져오기
         pop_genres = Ugenres.objects.filter(ug_member=request.user)[:4]
-        print(f'pop_genres : {pop_genres}')
-        # 장르에 해당하는 movie 가져오기
-        # for genre in user_genres:
-        # genre_movie.append()
-        # print(Mgenres.objects.filter(mg_genre=pop_genres.ug_genre[0]))
-        print(request.user)
         pop_genres_f = pop_genres[0]
         pop_genres = pop_genres[1:4]
+        # 장르에 해당하는 media 가져오기
         genre_movies_f = Mgenres.objects.filter(mg_genre=pop_genres_f.ug_genre)[:8]
         genre_movies = [Mgenres.objects.filter(mg_genre=genre.ug_genre)[:8] for genre in pop_genres]
         genre_series_f = Sgenres.objects.filter(sg_genre=pop_genres_f.ug_genre)[:4]
@@ -45,38 +39,35 @@ def homepage(request):
                        for genre, g_movie, g_series in zip(pop_genres, genre_movies, genre_series)]
     else:
         print('---AnonymousUser---')
-        # 현재 저장되어있는 장르 순위 출력
+        # 현재 저장되어있는 장르 순위 출력,,, 단점 : 지금현재 Mgenre로만 순위가 매겨져 있음
         pop_genres = [[genre.genre_id, genre.g_name, Mgenres.objects.filter(mg_genre=genre).count()] for genre in
                       Genres.objects.all()]
         pop_genres.sort(key=lambda x: -x[2])
-        # print(pop_genres)
         pop_genres_match = [Genres.objects.get(genre_id=genre[0]) for genre in pop_genres]
         pop_genres_f = pop_genres_match[0]
         pop_genres = pop_genres_match[1:4]
+        # 장르에 해당하는 media 가져오기
         genre_movies_f = Mgenres.objects.filter(mg_genre=pop_genres_f)[:8]
         genre_movies = [Mgenres.objects.filter(mg_genre=genre)[:8] for genre in pop_genres]
         genre_series_f = Sgenres.objects.filter(sg_genre=pop_genres_f)[:4]
         genre_series = [Sgenres.objects.filter(sg_genre=genre)[:4] for genre in pop_genres]
         genre_media = [{'genre': genre, 'movie': g_movie, 'series': g_series}
                        for genre, g_movie, g_series in zip(pop_genres, genre_movies, genre_series)]
-    print(genre_movies_f)
-    print(f'----pop_genres_f : {pop_genres_f}')
-    print(f'----pop_genres : {pop_genres}')
-    print(f'----pop_movies : {pop_movies}')
-    # print(f'----pop_genres_match : {pop_genres_match[:4]}')
-    print(f'----genre_movies_f : {genre_movies_f}')
-    print(f'----genre_movies : {genre_movies}')
-    print(f'----genre_series : {genre_series}')
-    print(f'----genre_media : {genre_media}')
+    # print(genre_movies_f)
+    # print(f'----pop_genres_f : {pop_genres_f}')
+    # print(f'----pop_genres : {pop_genres}')
+    # print(f'----pop_movies : {pop_movies}')
+    # # print(f'----pop_genres_match : {pop_genres_match[:4]}')
+    # print(f'----genre_movies_f : {genre_movies_f}')
+    # print(f'----genre_movies : {genre_movies}')
+    # print(f'----genre_series : {genre_series}')
+    # print(f'----genre_media : {genre_media}')
     context = {
         'pop_movies': pop_movies,
         'pop_series': pop_series,
         'pop_genres_f': pop_genres_f,
-        # 'pop_genres': pop_genres,
         'genre_movies_f': genre_movies_f,
-        # 'genre_movies': genre_movies,
         'genre_series_f': genre_series_f,
-        # 'genre_series': genre_series,
         'genre_media': genre_media,
     }
     return render(request, 'entmt_info/homepage.html', context)
