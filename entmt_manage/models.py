@@ -5,7 +5,7 @@ from entmt_info.models import Movies, Series, Genres
 
 class Mcomment(models.Model):
     mc_title = models.CharField(max_length=30, blank=False, default='')  # 댓글 제목
-    mc_star = models.FloatField()    # 별점
+    mc_star = models.FloatField()    # 사용자가 설정한 별점
     mc_content = models.CharField(max_length=100, blank=True)    # 댓글 내용
     mc_member = models.ForeignKey(Members,
                               on_delete=models.CASCADE)    # 작성자
@@ -18,7 +18,7 @@ class Mcomment(models.Model):
 
 class Scomment(models.Model):
     sc_title = models.CharField(max_length=30, blank=False, default='')  # 댓글 제목
-    sc_star = models.FloatField()  # 별점
+    sc_star = models.FloatField()  # 사용자가 설정한 별점
     sc_content = models.CharField(max_length=255)    # 댓글 내용
     sc_member = models.ForeignKey(Members,
                               on_delete=models.CASCADE)    # 작성자

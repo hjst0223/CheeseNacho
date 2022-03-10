@@ -182,19 +182,19 @@
                 리뷰:
                 <textarea name="mc_content" rows="4" class="form-control"></textarea>
                 <!-- tv 시리즈일 때 리뷰 입력 -->
-                {% elif media_type == 'tv' %}
+            {% elif media_type == 'tv' %}
                 리뷰 제목:
                 <input type="text" class="form-control" name="sc_title">
                 <br>
                 리뷰:
                 <textarea name="sc_content" rows="4" class="form-control"></textarea>
-                {% endif %}
+            {% endif %}
             <br>
             {% if user.is_authenticated %}
-            <input type="submit" value="리뷰 등록하기" class="btn btn-outline-info">
-            <br>
+                <input type="submit" value="리뷰 등록하기" class="btn btn-outline-info">
+                <br>
             {% else %}
-            <p>리뷰를 남기기 위해서는 로그인해야 합니다. <span><a href="{% url 'users:login' %}">로그인</a></span></p>
+                <p>리뷰를 남기기 위해서는 로그인해야 합니다. <span><a href="{% url 'users:login' %}">로그인</a></span></p>
             {% endif %}
 
         {% else %}
@@ -214,7 +214,7 @@
             {% endif %}
             <br>
             <input type="submit" value="리뷰 수정하기" class="btn btn-outline-info">
-            <td><button class="btn btn-danger"
+            <td><button type='button' class="btn btn-danger"
                         onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'">
                         삭제</button></td>
 {#            <form action="{% url 'entmt_info:delete_comment' comment_status.id media_type %}">#}
@@ -244,6 +244,12 @@
         {% endif %}
 
     </form>
+
+{#                <td><button class="btn btn-danger"#}
+{#                        onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'">#}
+{#                        삭제</button></td>#}
+
+
     {{ comment_status.id }}
 {#    <form action="{% url 'entmt_info:delete_comment' comment_status.id media_type %}">#}
 {#            <td><button class="btn btn-danger"#}

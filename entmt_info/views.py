@@ -90,6 +90,7 @@ def ei_genre(request):
             genre.genre_id = value['id']
             genre.g_name = value['name']
             genre.save()
+    print('done - downloading genre')
     return redirect('entmt_info:ei_page')
 
 # db save code for movies
@@ -157,6 +158,8 @@ def ei_movie(request):
             # db에 추가
             dbsave_movie(result)
 
+    print('done - downloading movies')
+
     return redirect('entmt_info:ei_page')
 
 
@@ -172,6 +175,8 @@ def ei_tv(request):
 
             # db에 추가
             dbsave_series(result)
+
+    print('done - downloading series')
 
     return redirect('entmt_info:ei_page')
 
@@ -253,9 +258,9 @@ def e_detail(request):
         'media_type': media_type,
         'comment_status': comment_status,
     }
-    return render(request, 'entmt_info/detail.html', content)
+    # return render(request, 'entmt_info/detail.html', content)
     # return render(request, 'entmt_info/moviesingle_jy.html', content)
-    # return render(request, 'entmt_info/moviesingle.html', content)
+    return render(request, 'entmt_info/moviesingle.html', content)
 
 # 검색 결과 페이지
 def e_results(request):
@@ -282,14 +287,21 @@ def submit_comment(request, media_id, media_type):
     # 현재 페이지 url
     url = request.META.get('HTTP_REFERER')
 
+    # 테스트 프린트
+    if media_type == 'movie':
+        print(f'변경전 starRate : {Movies.objects.get(movie_id=media_id).m_rateScore}')
+    elif media_type == 'tv':
+        print(f'변경전 starRate : {Series.objects.get(series_id=media_id).s_rateScore}')
+
+
     if request.method == 'POST':
         # 기존 리뷰를 업데이트하는 경우
         if Mcomment.objects.filter(Q(mc_movie_id=media_id) & Q(mc_member=request.user)).exists():
             # filter에 객체가 존재하는 경우 업데이트
             comment = Mcomment.objects.filter(Q(mc_movie_id=media_id) & Q(mc_member=request.user))[0]
             form = McommentForm(request.POST, instance=comment)
-
             if form.is_valid():
+                starRate(request.user.id, media_id, media_type, 'update', form.cleaned_data['mc_star'])
                 form.save()
                 messages.success(request, '리뷰가 업데이트되었습니다!')
                 return redirect(url)
@@ -302,6 +314,7 @@ def submit_comment(request, media_id, media_type):
             form = ScommentForm(request.POST, instance=comment)
 
             if form.is_valid():
+                starRate(request.user.id, media_id, media_type, 'update', form.cleaned_data['sc_star'])
                 form.save()
                 messages.success(request, '리뷰가 업데이트되었습니다!')
                 return redirect(url)
@@ -310,62 +323,122 @@ def submit_comment(request, media_id, media_type):
 
         # 새 리뷰를 등록하는 경우
         else:
+            print('왜여기로와~~~')
             if media_type == 'movie':
-                # 이미 리뷰가 존재하는 경우
-                if (Mcomment.objects.filter(mc_member=request.user)):
-                    messages.error(request, '이미 리뷰를 등록하셨습니다!')
+                # 필터에 객체가 없는 경우 새로 등록
+                form = McommentForm(request.POST)
+                if form.is_valid():
+                    user = Members.objects.get(pk=request.user.id)
+                    movie = Movies.objects.get(pk=media_id)
+
+                    data = Mcomment()
+                    data.mc_title = form.cleaned_data['mc_title']
+                    data.mc_star = form.cleaned_data['mc_star']
+                    data.mc_content = form.cleaned_data['mc_content']
+                    data.mc_movie = movie
+                    data.mc_member = user
+                    starRate(request.user.id, media_id, media_type, 'upload', data.mc_star)
+                    data.save()
+                    messages.success(request, '리뷰가 등록되었습니다!')
 
                     return redirect(url)
-
-                else:
-                    # 필터에 객체가 없는 경우 새로 등록
-                    form = McommentForm(request.POST)
-                    if form.is_valid():
-                        user = Members.objects.get(pk=request.user.id)
-                        movie = Movies.objects.get(pk=media_id)
-
-                        data = Mcomment()
-                        data.mc_title = form.cleaned_data['mc_title']
-                        data.mc_star = form.cleaned_data['mc_star']
-                        data.mc_content = form.cleaned_data['mc_content']
-                        data.mc_movie = movie
-                        data.mc_member = user
-                        data.save()
-                        messages.success(request, '리뷰가 등록되었습니다!')
-
-                        return redirect(url)
-
-                    else:
-                        messages.error(request, '오류!')
 
             elif media_type == 'tv':
-                # 이미 리뷰가 존재하는 경우
-                if (Scomment.objects.filter(sc_member=request.user)):
-                    print('드라마 댓글 존재!!!')
-                    messages.error(request, '이미 리뷰를 등록하셨습니다!')
+                # 필터에 객체가 없는 경우 새로 등록
+                form = ScommentForm(request.POST)
+                if form.is_valid():
+                    user = Members.objects.get(pk=request.user.id)
+                    series = Series.objects.get(pk=media_id)
+
+                    data = Scomment()
+                    data.sc_title = form.cleaned_data['sc_title']
+                    data.sc_star = form.cleaned_data['sc_star']
+                    data.sc_content = form.cleaned_data['sc_content']
+                    data.sc_series = series
+                    data.sc_member = user
+                    starRate(request.user.id, media_id, media_type, 'upload', data.sc_star)
+                    data.save()
+                    messages.success(request, '리뷰가 등록되었습니다!')
 
                     return redirect(url)
 
-                else:
-                    # 필터에 객체가 없는 경우 새로 등록
-                    form = ScommentForm(request.POST)
-                    if form.is_valid():
-                        user = Members.objects.get(pk=request.user.id)
-                        series = Series.objects.get(pk=media_id)
+    else:
+        print('get 방식으로 하셨나유? 코드작성 하셔유')
 
-                        data = Scomment()
-                        data.sc_title = form.cleaned_data['sc_title']
-                        data.sc_star = form.cleaned_data['sc_star']
-                        data.sc_content = form.cleaned_data['sc_content']
-                        data.sc_series = series
-                        data.sc_member = user
-                        data.save()
-                        messages.success(request, '리뷰가 등록되었습니다!')
+    # 테스트 프린트
+    if media_type == 'movie':
+        print(f'변경후 starRate : {Movies.objects.get(movie_id=media_id).m_rateScore}')
+    elif media_type == 'tv':
+        print(f'변경후 starRate : {Series.objects.get(series_id=media_id).s_rateScore}')
 
-                        return redirect(url)
 
-                    else:
-                        messages.error(request, '오류!')
+
+
+        # # 새 리뷰를 등록하는 경우
+        # else:
+        #     print('왜여기로와~~~')
+        #     if media_type == 'movie':
+        #         # 이미 리뷰가 존재하는 경우
+        #         # 이거 없어도 될텐데,,,
+        #         # if (Mcomment.objects.filter(mc_member=request.user)):
+        #         if (Mcomment.objects.filter(Q(mc_movie_id=media_id) & Q(mc_member=request.user))):
+        #             messages.error(request, '이미 리뷰를 등록하셨습니다!')
+        #
+        #             return redirect(url)
+        #
+        #         else:
+        #             # 필터에 객체가 없는 경우 새로 등록
+        #             form = McommentForm(request.POST)
+        #             if form.is_valid():
+        #                 user = Members.objects.get(pk=request.user.id)
+        #                 movie = Movies.objects.get(pk=media_id)
+        #
+        #                 data = Mcomment()
+        #                 data.mc_title = form.cleaned_data['mc_title']
+        #                 data.mc_star = form.cleaned_data['mc_star']
+        #                 data.mc_content = form.cleaned_data['mc_content']
+        #                 data.mc_movie = movie
+        #                 data.mc_member = user
+        #                 starRate(request.user.id, media_id, media_type, 'upload', data.mc_star)
+        #                 data.save()
+        #                 messages.success(request, '리뷰가 등록되었습니다!')
+        #
+        #                 return redirect(url)
+        #
+        #             else:
+        #                 messages.error(request, '오류!')
+        #
+        #     elif media_type == 'tv':
+        #         # 이미 리뷰가 존재하는 경우
+        #         if (Scomment.objects.filter(Q(sc_series_id=media_id) & Q(sc_member=request.user))):
+        #             print('드라마 댓글 존재!!!')
+        #             messages.error(request, '이미 리뷰를 등록하셨습니다!')
+        #
+        #             return redirect(url)
+        #
+        #         else:
+        #             # 필터에 객체가 없는 경우 새로 등록
+        #             form = ScommentForm(request.POST)
+        #             if form.is_valid():
+        #                 user = Members.objects.get(pk=request.user.id)
+        #                 series = Series.objects.get(pk=media_id)
+        #
+        #                 data = Scomment()
+        #                 data.sc_title = form.cleaned_data['sc_title']
+        #                 data.sc_star = form.cleaned_data['sc_star']
+        #                 data.sc_content = form.cleaned_data['sc_content']
+        #                 data.sc_series = series
+        #                 data.sc_member = user
+        #                 starRate(request.user.id, media_id, media_type, 'upload', data.sc_star)
+        #                 data.save()
+        #                 messages.success(request, '리뷰가 등록되었습니다!')
+        #
+        #                 return redirect(url)
+        #
+        #             else:
+        #                 messages.error(request, '오류!')
+
+
 
 
 def delete_comment(request, comment_id, media_type):
@@ -376,13 +449,13 @@ def delete_comment(request, comment_id, media_type):
 
         if media_type == 'movie':
             comment = get_object_or_404(Mcomment, pk=comment_id)
-            print('---------------------')
+            media_id = comment.mc_movie_id
             # 로그인한 회원과 댓글 작성자가 같을 때만 삭제
             if comment.mc_member == request.user:
+                starRate(request.user.id, media_id, media_type, 'delete', 0)
                 comment.delete()
                 print('삭제!!! ')
                 messages.success(request, '댓글이 삭제되었습니다!')
-                print('message 이후')
                 return redirect(url)
 
             # else:
@@ -391,9 +464,10 @@ def delete_comment(request, comment_id, media_type):
 
         elif media_type == 'tv':
             comment = get_object_or_404(Scomment, pk=comment_id)
-
+            media_id = comment.sc_series_id
             # 로그인한 회원과 댓글 작성자가 같을 때만 삭제
             if comment.sc_member == request.user:
+                starRate(request.user.id, media_id, media_type, 'delete', 0)
                 comment.delete()
                 messages.success(request, '댓글이 삭제되었습니다!')
 
@@ -405,4 +479,75 @@ def delete_comment(request, comment_id, media_type):
 
     else:
         return redirect('home')
+
+
+def starRate(user_id, media_id, media_type, update_type, score):
+    '''
+    media_id : media_id
+    score : 점수
+    media_type : movie, tv 등 (Movies, Series 어떤거 쓸건지 정함)
+    update_type : 0 - upload, 1 - update, 2 - delete
+
+    comment_count : 현재등록된 comment 수
+    upload 시 : (media.m_starRate*comment_count+score)/(comment_count+1)
+    update 시 : (media.m_starRate*comment_count-원래등록되었던score+score)/comment_count
+                =media.m_starRate + (-원래score+score)/comment_count
+    delete 시 : (media.m_starRate*comment_count-원래score)/(comment_count-1)
+    '''
+    if media_type == 'movie':
+        Media = Movies.objects.get(movie_id=media_id)
+        media_star_rate = Media.m_rateScore
+        try: ori_user_score = Mcomment.objects.get(Q(mc_movie_id=media_id) & Q(mc_member_id=user_id)).mc_star
+        except: print('non_ori_user_score')
+        comment_count = Mcomment.objects.filter(mc_movie_id=media_id).count()
+        print(f'media_star_rate: {media_star_rate}')
+        try: print(f'ori_user_score: {ori_user_score}')
+        except: print('non_ori_user_score')
+        print(f'comment_count: {comment_count}')
+        if update_type == 'upload':
+            update_score = ((media_star_rate * comment_count) + score) / (comment_count + 1)
+            Media.m_rateScore = update_score
+            Media.save()
+        elif update_type == 'update':
+            update_score = media_star_rate + ((score - ori_user_score) / comment_count)
+            Media.m_rateScore = update_score
+            Media.save()
+        elif update_type == 'delete':
+            if comment_count == 1:
+                update_score = 0
+            else:
+                update_score = ((media_star_rate * comment_count) - ori_user_score) / (comment_count - 1)
+            Media.m_rateScore = update_score
+            Media.save()
+        else: print('오류오류~')
+        print(f'update_score: {update_score}')
+    elif media_type == "tv":
+        Media = Series.objects.get(series_id=media_id)
+        media_star_rate = Media.s_rateScore
+        try: ori_user_score = Scomment.objects.get(Q(sc_series_id=media_id) & Q(sc_member_id=user_id)).sc_star
+        except: print('non_ori_user_score')
+        comment_count = Scomment.objects.filter(sc_series_id=media_id).count()
+        print(f'media_star_rate: {media_star_rate}')
+        try: print(f'ori_user_score: {ori_user_score}')
+        except: pass
+        print(f'comment_count: {comment_count}')
+        if update_type == 'upload':
+            update_score = ((media_star_rate * comment_count) + score) / (comment_count + 1)
+            Media.s_rateScore = update_score
+            Media.save()
+        elif update_type == 'update':
+            update_score = media_star_rate + ((score - ori_user_score) / comment_count)
+            Media.s_rateScore = update_score
+            Media.save()
+        elif update_type == 'delete':
+            if comment_count == 1:
+                update_score = 0
+            else:
+                update_score = ((media_star_rate * comment_count) - ori_user_score) / (comment_count - 1)
+            Media.s_rateScore = update_score
+            Media.save()
+        else: print('오류오류~')
+        print(f'update_score: {update_score} = {Series.objects.get(series_id=media_id).s_rateScore}')
+    else: print('오류오류~')
+
 
