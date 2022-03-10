@@ -6,7 +6,7 @@
 
 {% block html_body %}
 
-<!--별점 매긴 영화 목록-->
+<!--찜한 영화 목록-->
 
 <div class="hero user-hero">
 	<div class="container">
@@ -15,8 +15,8 @@
 				<div class="hero-ct">
 					<h1>{{ user.username }}'s Ratings</h1>
 					<ul class="breadcumb">
-						<li class="active"><a href={% url 'home' %}>Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span>My Ratings</li>
+						<li class="active"><a href={% url 'entmt_info:homepage' %}>Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span>Favorite movies</li>
 					</ul>
 				</div>
 			</div>

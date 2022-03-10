@@ -13,6 +13,7 @@ def em_like(request):
         media_type = request.GET.get('media_type', '')
         user_id = request.user.id
         if media_type == 'movie':
+            # user, movie가 일치하는 Mlike가 존재하는지 안하는지 판별
             if Mlike.objects.filter(Q(ml_movie=results_id) & Q(ml_member=user_id)).exists():
                 movie_like = Mlike.objects.get(Q(ml_movie=results_id) & Q(ml_member=user_id))
                 movie_like.delete()
@@ -22,8 +23,8 @@ def em_like(request):
                 movie_like.ml_member = request.user
                 movie_like.ml_movie = Movie
                 movie_like.save()
-
         elif media_type == 'tv':
+            # user, tv가 일치하는 Mlike가 존재하는지 안하는지 판별
             if Slike.objects.filter(Q(sl_series=results_id) & Q(sl_member=user_id)).exists():
                 series_like = Slike.objects.get(Q(sl_series=results_id) & Q(sl_member=user_id))
                 series_like.delete()
@@ -40,7 +41,7 @@ def em_like(request):
         # 로그인 하세요 알림
         # 로그인하고나서 다시 원래있던 페이지로 돌아오게 해주세요!! 예)detail -> login -> detail
         print('와하하하')
-        return redirect('users:login')
+        # return redirect('users:login')
     # 구현해야함 : <tr onclick="location.href='/entmt_info/detail/?res_id={{ res.id }}&media_type={{ res.media_type }}'"
     redirect_url = '/entmt_info/detail/?res_id=' + str(results_id) + '&media_type=' + str(media_type)
     return redirect(redirect_url)

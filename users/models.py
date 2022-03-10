@@ -37,3 +37,5 @@ class Ugenres(models.Model):
                               on_delete=models.CASCADE)
     ug_genre = models.ForeignKey(Genres,
                               on_delete=models.CASCADE)
+    def __str__(self):
+        return self.ug_genre.g_name

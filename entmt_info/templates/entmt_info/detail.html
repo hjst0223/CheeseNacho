@@ -24,7 +24,6 @@
                     <span id="like_count">{{ like_count }}</span><br>
                     <input id="like_count_button"
                            onclick="location.href='/entmt_manage/like/?results_id={{ results.id }}&media_type={{ media_type }}'"
-                           onclick="click_like()"
                            {% if like_status %}
                                style="background-color:hotpink"
                            {% else %}
