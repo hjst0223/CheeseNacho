@@ -48,8 +48,8 @@
 .ani_heart_m {
     display: block;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 100%;
+    left: 100%;
     width: 125px;
     height: 125px;
     margin: -63px 0 0 -63px;

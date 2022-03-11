@@ -6332,7 +6332,7 @@ ul {
 }
 .movie-single .movie-single-ct .mv-user-review-item .no-star {
   color: #f5b50a;
-  font-size: #abb7c4;
+  /*font-size: #abb7c4;*/
 }
 .movie-single .movie-single-ct .mv-user-review-item .no-star i.last {
   color: #abb7c4;

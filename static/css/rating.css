@@ -139,7 +139,8 @@
 /* 별점 나타내기 */
 .myrated > label:before{
     display: inline-block;
-    font-size: 1.1rem;
+    /*font-size: 1.1rem;*/
+    font-size: 2rem;
     font-family: FontAwesome;
     content: "\f005";
     margin: 0;
@@ -158,3 +159,4 @@
 .myrated input:checked ~ label{
     color: #ffb503;
 }
+    /*color: #abb7c4;*/
