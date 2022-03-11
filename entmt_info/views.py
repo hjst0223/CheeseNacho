@@ -246,17 +246,9 @@ def e_detail(request):
 
         # 일단 넣었는데 오류나는지 확인해봐야함
         try:
-            comment_status = Scomment.objects.filter(Q(sc_movie=result['id']) & Q(sc_member=request.user))
+            comment_status = Scomment.objects.filter(Q(sc_series=result['id']) & Q(sc_member=request.user))
             comment_status = comment_status[0]
         except: comment_status = False
-
-        # try:
-        #     print('--------------------------')
-        #     comment_status = Scomment.objects.filter(Q(sc_series=result['id']) & Q(sc_member=request.user))
-        #     comment_status = comment_status[0]
-        #     print('--------------------------')
-        #     print(comment_status)
-        # except: comment_status = False
 
     else:
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
