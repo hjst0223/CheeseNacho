@@ -77,6 +77,8 @@
                         <i class="ion-android-star"></i>
 
                         <p><span>
+                        <!-- 리뷰가 없을 경우 0.0/5으로 표시 -->
+                        {% if comments or comment_status %}
                         {% if media_type == 'movie' %}
                         <script type="text/javascript">
                         var sum = 0
@@ -112,6 +114,10 @@
                         document.write(avg.toFixed(1))
                         document.write('/5', '<br />')
                         </script>
+                        {% endif %}
+
+                        {% else %}
+                        0.0/5<br>
                         {% endif %}
                         </span>
 
