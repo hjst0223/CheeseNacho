@@ -26,6 +26,9 @@ class Scomment(models.Model):
                               on_delete=models.CASCADE)    # 작성한 드라마
     sc_date = models.DateTimeField(auto_now=True)    # 댓글 작성 시간
 
+    def __str__(self):
+        return self.sc_title
+
 
 class Mgenres(models.Model):
     mg_movie = models.ForeignKey(Movies,

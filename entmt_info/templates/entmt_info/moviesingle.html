@@ -27,35 +27,20 @@
 				<div class="movie-single-ct main-content">
 					{# 영화제목, 연도#}
                     {% if results.original_title %}
-                        <h1 class="bd-hd">{{ results.original_title }} <span>{{ results.release_date }}
+                        <h1 class="bd-hd">{{ results.original_title }}<span style="padding: 15px;">
                         <script type="text/javascript">
-                            document.write({{ results.release_date }})
-                            let released_date = new Date({{results.release_date}})
+                            let released_date = new Date("{{results.release_date}}")
                             document.write(released_date.getFullYear())
                         </script>
                         </span></h1>
                     {% else %}
-                        <h1 class="bd-hd">{{ results.name }}<span>{{ results.first_air_date }}</span></h1>
+                        <h1 class="bd-hd">{{ results.name }}<span style="padding: 15px;">
+                        <script type="text/javascript">
+                            let released_date = new Date("{{results.first_air_date}}")
+                            document.write(released_date.getFullYear())
+                        </script>
+                        </span></h1>
                     {% endif %}
-
-                    <!-- 찜하기 -->
-					<div class="social-btn">
-						<a href="#" class="parent-btn"><i class="ion-ios-heart-outline"></i> Add to Favorite</a>
-					</div>
-
-                    <div>
-
-                    <span id="like_count">{{ like_count }}</span><br>
-                    <input id="like_count_button"
-                           onclick="location.href='/entmt_manage/like/?results_id={{ results.id }}&media_type={{ media_type }}'"
-
-                           {% if like_status %}
-{#                               style="background-color:hotpink"#}
-                           style="background-color:darkmagenta"
-                           {% else %}
-                               style="background-color:white"
-                           {% endif %}
-                           type="button" value="찜하기">
 
 {#                    <form method="GET" action="{% url 'entmt_info:e_results' %}">#}
 {#                    <div id="search">#}
@@ -63,22 +48,20 @@
 {#                        <button class="btn btn-primary" type="submit">찜하기</button>#}
 {#                    </div>#}
 {#                    </form>#}
-                    </div><br>
 
                 <!-- 하트 애니메이션 -->
-                <div>
-                <div>
-                    <button type="button" class="btn_like">
-                        <div>
-                            <i class="img_emoti"></i>
-                            <i class="ani_heart_m"></i>
-                        </div>
-                    </button>
-                </div>
-                    <div class="social-btn">
-						<a href="#" class="parent-btn">Add to Favorite</a>
-					</div>
-{#                </div><br>#}
+{#                <div>#}
+{#                    <button type="button" class="btn_like">#}
+{#                        <div>#}
+{#                            <i class="img_emoti"></i>#}
+{#                            <i class="ani_heart_m"></i>#}
+{#                        </div>#}
+{#                    </button>#}
+{#                </div>#}
+{#                    <div class="social-btn">#}
+{#						<a href="#" class="parent-btn">Add to Favorite</a>#}
+{#					</div>#}
+
                     <!-- 별점 평균/매기기 시작 -->
 					<div class="movie-rate">
 
@@ -146,8 +129,42 @@
     {#							<i class="ion-ios-star"></i>#}
     {#							<i class="ion-ios-star-outline"></i>#}
     {#						</div>#}
+                    <!-- 찜하기 -->
+
+                    <div class="social-btn" style="margin: 20px 100px;">
+                        <a href="#" class="parent-btn"
+                        onclick="location.href='/entmt_manage/like/?results_id={{ results.id }}&media_type={{ media_type }}'">
+                            {% if like_status %}
+                                    <i class="ion-ios-heart"></i>
+                            {% else %}
+                                    <i class="ion-ios-heart-outline"></i>
+                            {% endif %}Add to Favorite
+                    </a></div>
+
+{#                    <h4 style="color:white;">{{ like_count }}</h4></span><br>#}
+
 					</div>
-                    <!-- 별점 평균 끝 -->
+                    <!-- 별점 평균/찜하기 끝 -->
+
+{#                    <div class="social-btn">#}
+{#						<a href="#" class="parent-btn"><i class="ion-ios-heart" style=""></i> Add to Favorite</a>#}
+{#					</div>#}
+
+                <!-- 원본 -->
+
+{#                <div class="social-btn">#}
+{#						<a href="#" class="parent-btn"><i class="ion-ios-heart-outline" style=""></i> Add to Favorite</a>#}
+{#                </div>#}
+{#                <span id="like_count"><h4 style="color:white;">{{ like_count }}</h4></span><br>#}
+{#                    <input id="like_count_button"#}
+{#                           onclick="location.href='/entmt_manage/like/?results_id={{ results.id }}&media_type={{ media_type }}'"#}
+{#                           {% if results.like_status %}#}
+{#                               style="background-color:hotpink"#}
+{#                           {% else %}#}
+{#                               style="background-color:white"#}
+{#                           {% endif %}#}
+{#                           type="button" value="찜하기">#}
+                <!-- 원본 끝 -->
 
                     <!-- 로그인 상태에서만 리뷰 입력 폼 보이게 설정 -->
                     {% if user.is_authenticated %}
@@ -232,7 +249,7 @@
                 <!-- 영화일 때 리뷰 입력 -->
                 {% if media_type == 'movie' %}
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Title</label>
                         <input type="text" class="form-control" name="mc_title"
 {#                               style="width: 300px;"#}
@@ -240,7 +257,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Content</label>
                         <textarea name="mc_content" rows="3" cols="10"
                                   style="background-color: #233A50; border-radius: .5em;
@@ -249,13 +266,13 @@
 {#                                  style="width: 5000px; height: 100px;"#}
                                   >{{ comment_status.mc_content }}</textarea>
                     </div>
-                </div>
+                </div><br>
                 <!-- 영화일 때 리뷰 입력 끝 -->
 
                 <!-- 시리즈일 때 리뷰 입력 -->
                 {% elif media_type == 'tv' %}
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Title</label>
                         <input type="text" class="form-control" name="sc_title"
 {#                               style="width: 300px;"#}
@@ -263,16 +280,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Content</label>
                         <textarea name="sc_content" rows="3" cols="10"
                                   style="background-color: #233A50; border-radius: .5em;
-                                  border: 1px solid #0F2133; color: white;"
+                                  border: 1px solid #0F2133;
+                                  color: white;"
                                   class="form-control"
 {#                                  style="width: 5000px; height: 100px;"#}
                                   >{{ comment_status.sc_content }}</textarea>
                     </div>
-                </div>
+                </div><br>
 
                 {% endif %}
                 <!-- 시리즈일 때 리뷰 입력 끝-->
@@ -289,7 +307,7 @@
             {% else %}
             {% if media_type == 'movie' %}
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Title</label>
                         <input type="text" class="form-control" name="mc_title"
 {#                               style="width: 300px;"#}
@@ -297,7 +315,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Content</label>
                         <textarea name="mc_content" rows="5" cols="10"
                                   style="background-color: #233A50; border-radius: .5em;
@@ -306,12 +324,12 @@
 {#                                  style="width: 5000px; height: 100px;"#}
                                   >{{ comment_status.mc_content }}</textarea>
                     </div>
-                </div>
+                </div><br>
 
             <!-- tv 시리즈일 때 리뷰 입력 -->
             {% elif media_type == 'tv' %}
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Title</label>
                         <input type="text" class="form-control" name="sc_title"
 {#                               style="width: 300px;"#}
@@ -319,7 +337,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 form-it">
+                    <div class="col-md-12 form-it">
                         <label>Content</label>
                         <textarea name="sc_content" rows="5" cols="10"
                                   style="background-color: #233A50; border-radius: .5em;
@@ -328,7 +346,7 @@
 {#                                  style="width: 5000px; height: 100px;"#}
                                   >{{ comment_status.sc_content }}</textarea>
                     </div>
-                </div>
+                </div><br>
                 <!-- tv 시리즈 리뷰 입력 끝 -->
             {% endif %}
 

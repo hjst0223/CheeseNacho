@@ -216,7 +216,7 @@ def e_detail(request):
         like_count = Mlike.objects.filter(ml_movie=result['id']).count()
 
         # 로그인되지 않았을 때 생기는 오류 수정
-        try: like_status = Mlike.ojects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user)).exists()
+        try: like_status = Mlike.objects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user)).exists()
         except: like_status = False
 
         try:
@@ -226,7 +226,6 @@ def e_detail(request):
         # print(comment_status)
         # if(Mcomment.objects.filter(Q(ml_movie=result['id']) & Q(ml_member=request.user))):
         #     comment_status = True
-
 
     elif media_type == 'tv':
         result = api_python.api_request(url_tv + res_id)
@@ -251,13 +250,13 @@ def e_detail(request):
             comment_status = comment_status[0]
         except: comment_status = False
 
-        try:
-            print('--------------------------')
-            comment_status = Scomment.objects.filter(Q(sc_series=result['id']) & Q(sc_member=request.user))
-            comment_status = comment_status[0]
-            print('--------------------------')
-            print(comment_status)
-        except: comment_status = False
+        # try:
+        #     print('--------------------------')
+        #     comment_status = Scomment.objects.filter(Q(sc_series=result['id']) & Q(sc_member=request.user))
+        #     comment_status = comment_status[0]
+        #     print('--------------------------')
+        #     print(comment_status)
+        # except: comment_status = False
 
     else:
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
@@ -274,6 +273,7 @@ def e_detail(request):
     # return render(request, 'entmt_info/detail.html', content)
     # return render(request, 'entmt_info/moviesingle_jy.html', content)
     return render(request, 'entmt_info/moviesingle.html', content)
+
 
 # 검색 결과 페이지
 def e_results(request):
