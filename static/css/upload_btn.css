@@ -69,3 +69,68 @@ input[type="checkbox"] {
     background: #FD9F28;
     border: none;
   }
+
+  .cate {
+  margin-bottom: 15px;
+}
+.g_cate span {
+  padding: 3px 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.g_cate span a {
+  font-family: 'Dosis', sans-serif;
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.g_cate .Drama {
+  background-color: #1692bb;
+}
+.g_cate .Fantasy {
+  background-color: #87CEEB;
+}
+.g_cate .Crime {
+  background-color: #40E0D0;
+}
+.g_cate .Family {
+  background-color: #f5b50a;
+}
+.g_cate .Comedy {
+  background-color: #a6bb16;
+}
+.g_cate .Animation {
+  background-color: #00FA9A;
+}
+.g_cate .Action {
+  background-color: #ec5a1a;
+}
+.g_cate .War {
+  background-color: #DC143C;
+}
+.g_cate .Adventure {
+  background-color: #FF1493;
+}
+.g_cate .Thriller {
+  background-color: #9932CC;
+}
+.g_cate .Science_Fiction {
+  background-color: #EE82EE;
+}
+/*.g_cate .Sci-Fi & Fantasy {*/
+/*  background-color: #EE82EE;*/
+/*}*/
+.g_cate .Horror {
+  background-color: #DB7093;
+}
+.g_cate .Mystery {
+  background-color: #778899;
+}
+.g_cate .Soap {
+  background-color: #00BFFF;
+}
+.g_cate .Reality {
+  background-color: #008B8B;
+}
