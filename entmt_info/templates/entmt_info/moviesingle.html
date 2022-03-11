@@ -51,7 +51,7 @@
 
                            {% if like_status %}
 {#                               style="background-color:hotpink"#}
-                           style="background-color:darkmagenta"
+                                style="background-color:darkmagenta"
                            {% else %}
                                style="background-color:white"
                            {% endif %}
@@ -68,12 +68,21 @@
                 <!-- 하트 애니메이션 -->
                 <div>
                 <div>
-                    <button type="button" class="btn_like">
+                    {% if like_status %}
+                    <button type="button" class="btn_unlike">
                         <div>
                             <i class="img_emoti"></i>
                             <i class="ani_heart_m"></i>
                         </div>
                     </button>
+                    {% else %}
+                    <button type="button" class="btn_like2">
+                        <div>
+                            <i class="img_emoti"></i>
+                            <i class="ani_heart_m"></i>
+                        </div>
+                    </button>
+                    {% endif %}
                 </div>
                     <div class="social-btn">
 						<a href="#" class="parent-btn">Add to Favorite</a>
