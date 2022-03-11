@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block html_header %}
-<title>CNDB:</title>
+<title>CNDB: Your #1 source for Movies & TV Series</title>
 {% endblock %}
 
 {% block html_body %}
@@ -14,15 +14,11 @@
 	    		<div class="movie-item">
                 <a href="/entmt_info/detail/?res_id={{ movies_genres.movie.movie_id }}&media_type=movie">
                     <div class="mv-img">
-                            <img src="https://image.tmdb.org/t/p/w200{{ movies_genres.movie.m_posterPath }}" alt="" width="285" height="437">
+                            <img src="https://image.tmdb.org/t/p/w500{{ movies_genres.movie.m_posterPath }}" alt="" width="285" height="437">
 	    			</div>
                 </a>
 	    			<div class="title-in">
 	    				<div class="g_cate">
-{#	    					<span class="blue"><a href="#">Sci-fi</a></span>#}
-{#                            <span class="yell"><a href="#">action</a></span>#}
-{#                            <span class="green"><a href="#">comedy</a></span>#}
-{#                            <span class="orange"><a href="#">advanture</a></span>#}
                             {% for genre in movies_genres.genre %}
                                 {% if genre.mg_genre.g_name == 'Science Fiction' %} <span class="Science_Fiction">
                                 {% elif genre.mg_genre.g_name == 'Action & Adventure'%} <span class="Action">
@@ -38,22 +34,27 @@
 	    			</div>
 	    		</div>
                 {% endfor %}
-                {% for series in pop_series %}
+                {% for series_genres in pop_series_genres %}
 	    		<div class="movie-item">
-                    <div class="mv-img">
-	    				<a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv">
-                            <img src="https://image.tmdb.org/t/p/w200{{ series.s_posterPath }}" alt="" width="285" height="437"></a>
-	    			</div>
+                    <a href="/entmt_info/detail/?res_id={{ series_genres.series.series_id }}&media_type=tv">
+                        <div class="mv-img">
+                                <img src="https://image.tmdb.org/t/p/w500{{ series_genres.series.s_posterPath }}" alt="" width="285" height="437">
+                        </div>
+                    </a>
 	    			<div class="title-in">
-	    				<div class="cate">
-	    					<span class="blue"><a href="#">Sci-fi</a></span>
-                            <span class="yell"><a href="#">action</a></span>
-                            <span class="green"><a href="#">comedy</a></span>
-                            <span class="orange"><a href="#">advanture</a></span>
-	    				</div>
-	    				<h6><a href="/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv">
-                            {{ series.s_title }}</a></h6>
-	    				<p><i class="ion-android-star"></i><span>{{ series.print_rate }}</span> /5</p>
+	    				<div class="g_cate">
+                            {% for genre in series_genres.genre %}
+                                {% if genre.sg_genre.g_name == 'Science Fiction' %} <span class="Science_Fiction">
+                                {% elif genre.sg_genre.g_name == 'Action & Adventure'%} <span class="Action">
+                                {% elif genre.sg_genre.g_name == 'Sci-Fi & Fantasy' %} <span class="Science_Fiction">
+                                {% else %} <span class="{{ genre.sg_genre }}">
+                                {% endif %}
+                                    <a href="#">{{ genre.sg_genre }}</a></span>
+                            {% endfor %}
+	    				</div><br>
+	    				<h6><a href="/entmt_info/detail/?res_id={{ series_genres.series.series_id }}&media_type=tv">
+                            {{ series_genres.series.s_title }}</a></h6>
+	    				<p><i class="ion-android-star"></i><span>{{ series_genres.series.print_rate }}</span> /5</p>
 	    			</div>
 	    		</div>
                 {% endfor %}
@@ -64,9 +65,9 @@
 <div class="movie-items">
 	<div class="container">
 		<div class="row ipad-width">
-            <div class="col-md-10">
+			<div class="col-md-10">
 				<div class="title-hd">
-					<h2>Recommended media</h2>
+					<h2>Recommendations</h2>
 {#					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>#}
 				</div>
 				<div class="tabs">
@@ -149,7 +150,7 @@
 					            				<img src="https://image.tmdb.org/t/p/w200{{ series.sg_series.s_posterPath }}" alt="" width="185" height="284">
 					            			</div>
 					            			<div class="hvr-inner">
-					            				<a href="/entmt_info/detail/?res_id={{ series.sg_series.series_id }}&media_type=tv"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            				<a  href="/entmt_info/detail/?res_id={{ series.sg_series.series_id }}&media_type=tv"> Read more <i class="ion-android-arrow-dropright"></i> </a>
 					            			</div>
 					            			<div class="title-in">
                                                 <div class="cate">
