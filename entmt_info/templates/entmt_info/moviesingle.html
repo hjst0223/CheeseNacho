@@ -121,8 +121,13 @@
                     </script>
                     {% endif %}
                     </span>
-                    <span class="rv">{{ comments.count }} Reviews</span></p>
 
+                    <span class="rv"><script type="text/javascript">
+                            var count = 0
+                            count = {{ comments.count }} + 1
+                            document.write(count)
+                        </script> Reviews</span></p>
+{#                    <span class="rv">{{ comments.count }} Reviews</span></p>#}
                     </div>
                     <!-- 미디어 별점 평균 끝 -->
                         <!-- 별점 매겨야 돼 -->
@@ -313,7 +318,7 @@
                                   border: 1px solid #0F2133; color: white;"
                                   class="form-control"
 {#                                  style="width: 5000px; height: 100px;"#}
-                                  value={{ comment_status.mc_content }}></textarea>
+                                  >{{ comment_status.mc_content }}</textarea>
                     </div>
                 </div>
                 <!-- 영화일 때 리뷰 입력 끝 -->
@@ -336,7 +341,7 @@
                                   border: 1px solid #0F2133; color: white;"
                                   class="form-control"
 {#                                  style="width: 5000px; height: 100px;"#}
-                                  value={{ comment_status.sc_content }}></textarea>
+                                  >{{ comment_status.sc_content }}</textarea>
                     </div>
                 </div>
 
@@ -369,7 +374,7 @@
                                   border: 1px solid #0F2133; color: white;"
                                   class="form-control"
 {#                                  style="width: 5000px; height: 100px;"#}
-                                  value={{ comment_status.mc_content }}></textarea>
+                                  >{{ comment_status.mc_content }}</textarea>
                     </div>
                 </div>
 
@@ -391,7 +396,7 @@
                                   border: 1px solid #0F2133; color: white;"
                                   class="form-control"
 {#                                  style="width: 5000px; height: 100px;"#}
-                                  value={{ comment_status.sc_content }}></textarea>
+                                  >{{ comment_status.sc_content }}</textarea>
                     </div>
                 </div>
                 <!-- tv 시리즈 리뷰 입력 끝 -->
@@ -406,7 +411,7 @@
                     vertical-align: middle;
                     ">Update Review</button>
 
-            <button type="submit" class="redbtn"
+            <button type="button" class="redbtn"
                     onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'"
                     style="width:80px;
                     background-color: orange;
@@ -419,8 +424,6 @@
                         </form>
                     </div>
                 <!-- 리뷰 등록 폼 끝 -->
-
-
 
         <!-- 리뷰입력끝 -->
 
@@ -655,7 +658,13 @@
 {#							            	<a href="#" class="redbtn">Write Review</a>#}
 						            	</div>
 						            	<div class="topbar-filter">
-											<p>Found <span>{{ comments.count }} reviews</span> in total</p>
+
+											<p>Found <span class="rv"><script type="text/javascript">
+                                                var count = 0
+                                                count = {{ comments.count }} + 1
+                                                document.write(count)
+                                            </script> Reviews</span> in total</p>
+{#                                            <p>Found <span>{{ comments.count }} reviews</span> in total</p>#}
 											<label>Filter by:</label>
 											<select>
 												<option value="popularity">Popularity Descending</option>
@@ -804,7 +813,11 @@
                                             <div class="mv-user-review-item">
                                                 <div class="user-infor">
                                                     <!-- 다른 회원의 프로필 이미지 -->
-                                                    <img class="profile" src="{{ comment.mc_member.u_image.url }}">
+{#                                                    <div class="box" style="background: #BDBDBD;">#}
+{#                                                        <img class="profile" src="{{ comment.mc_member.u_image.url }}">#}
+{#                                                    </div><br>#}
+                                                    <img class="profile" style="border-radius: 70%;"
+                                                         src="{{ comment.mc_member.u_image.url }}">
     {#												<img src="/static/images/uploads/userava1.jpg" alt="">#}
                                                     <div>
 
