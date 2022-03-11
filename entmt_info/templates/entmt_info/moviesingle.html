@@ -374,79 +374,30 @@
                                                 <h3>{{ comment_status.mc_title }}</h3>
 
                                                 <!-- 내 별점 -->
-{#                                            <div class="myrate" style="color:#FD9F28">#}
-{#                                            <label></label>#}
-{#                                            </div>#}
-                                            <!-- 도즈언 -->
-
-                                            {% for comment in comments %}
-                                            <div class="myrated">
-                                                <input type="radio" value="5" readonly {% if comment.mc_star == 5 %} checked {% endif %}/>
-                                                <label title="5"></label>
-                                                <input type="radio" value="4.5" readonly {% if comment.mc_star == 4.5 %} checked {% endif %}/>
-                                                <label title="4.5" class="half"></label>
-                                                <input type="radio" value="4" readonly {% if comment.mc_star == 4 %} checked {% endif %}/>
-                                                <label title="4"></label>
-                                                <input type="radio" value="3.5" readonly {% if comment.mc_star == 3.5 %} checked {% endif %}/>
-                                                <label title="3.5" class="half"></label>
-                                                <input type="radio" value="3" readonly {% if comment.mc_star == 3 %} checked {% endif %}/>
-                                                <label title="3"></label>
-                                                <input type="radio" value="2.5" readonly {% if comment.mc_star == 2.5 %} checked {% endif %}/>
-                                                <label title="2.5" class="half"></label>
-                                                <input type="radio" value="2" readonly {% if comment.mc_star == 2 %} checked {% endif %}/>
-                                                <label title="2"></label>
-                                                <input type="radio" value="1.5" readonly {% if comment.mc_star == 1.5 %} checked {% endif %}/>
-                                                <label title="1.5" class="half"></label>
-                                                <input type="radio" value="1" readonly {% if comment.mc_star == 1 %} checked {% endif %}/>
-                                                <label title="1"></label>
-                                                <input type="radio" value="0.5" readonly {% if comment.mc_star == 0.5 %} checked {% endif %}/>
-                                                <label title="0.5" class="half"></label>
-                                            </div>
-                                            {% endfor %}
-
-                                            <!-- 도즈언 -->
-												<div class="no-star">
-                                                    {% if comment_status.mc_star == 0.5 %}
-                                                    <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 1.0 %}
-                                                    <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 1.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 2.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 2.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 3.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 3.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 4.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 4.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                    {% elif comment_status.mc_star == 5.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                    {% endif %}
-{#													<i class="ion-android-star"></i>#}
-{#													<i class="ion-android-star last"></i>#}
-
-												</div>
+                                                <div style="color: #abb7c4;">
+                                                    <div class="myrated">
+                                                        <input type="radio" value="5" readonly {% if comment_status.mc_star == 5 %} checked {% endif %}/>
+                                                        <label title="5"></label>
+                                                        <input type="radio" value="4.5" readonly {% if comment_status.mc_star == 4.5 %} checked {% endif %}/>
+                                                        <label title="4.5" class="half"></label>
+                                                        <input type="radio" value="4" readonly {% if comment_status.mc_star == 4 %} checked {% endif %}/>
+                                                        <label title="4"></label>
+                                                        <input type="radio" value="3.5" readonly {% if comment_status.mc_star == 3.5 %} checked {% endif %}/>
+                                                        <label title="3.5" class="half"></label>
+                                                        <input type="radio" value="3" readonly {% if comment_status.mc_star == 3 %} checked {% endif %}/>
+                                                        <label title="3"></label>
+                                                        <input type="radio" value="2.5" readonly {% if comment_status.mc_star == 2.5 %} checked {% endif %}/>
+                                                        <label title="2.5" class="half"></label>
+                                                        <input type="radio" value="2" readonly {% if comment_status.mc_star == 2 %} checked {% endif %}/>
+                                                        <label title="2"></label>
+                                                        <input type="radio" value="1.5" readonly {% if comment_status.mc_star == 1.5 %} checked {% endif %}/>
+                                                        <label title="1.5" class="half"></label>
+                                                        <input type="radio" value="1" readonly {% if comment_status.mc_star == 1 %} checked {% endif %}/>
+                                                        <label title="1"></label>
+                                                        <input type="radio" value="0.5" readonly {% if comment_status.mc_star == 0.5 %} checked {% endif %}/>
+                                                        <label title="0.5" class="half"></label>
+                                                    </div>
+                                                </div>
                                                 <!-- 내 별점 끝 -->
 
                                                 <!-- 내 리뷰 제목/내용 -->
@@ -468,45 +419,30 @@
                                                 <h3>{{ comment_status.sc_title }}</h3>
 
                                                 <!-- 내 별점 -->
-												<div class="no-star">
-                                                    {% if comment_status.sc_star == 0.5 %}
-                                                    <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 1.0 %}
-                                                    <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 1.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 2.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 2.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 3.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 3.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 4.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 4.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                    {% elif comment_status.sc_star == 5.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                    {% endif %}
-												</div>
+												<div style="color: #abb7c4;">
+                                                    <div class="myrated">
+                                                        <input type="radio" value="5" readonly {% if comment_status.sc_star == 5 %} checked {% endif %}/>
+                                                        <label title="5"></label>
+                                                        <input type="radio" value="4.5" readonly {% if comment_status.sc_star == 4.5 %} checked {% endif %}/>
+                                                        <label title="4.5" class="half"></label>
+                                                        <input type="radio" value="4" readonly {% if comment_status.sc_star == 4 %} checked {% endif %}/>
+                                                        <label title="4"></label>
+                                                        <input type="radio" value="3.5" readonly {% if comment_status.sc_star == 3.5 %} checked {% endif %}/>
+                                                        <label title="3.5" class="half"></label>
+                                                        <input type="radio" value="3" readonly {% if comment_status.sc_star == 3 %} checked {% endif %}/>
+                                                        <label title="3"></label>
+                                                        <input type="radio" value="2.5" readonly {% if comment_status.sc_star == 2.5 %} checked {% endif %}/>
+                                                        <label title="2.5" class="half"></label>
+                                                        <input type="radio" value="2" readonly {% if comment_status.sc_star == 2 %} checked {% endif %}/>
+                                                        <label title="2"></label>
+                                                        <input type="radio" value="1.5" readonly {% if comment_status.sc_star == 1.5 %} checked {% endif %}/>
+                                                        <label title="1.5" class="half"></label>
+                                                        <input type="radio" value="1" readonly {% if comment_status.sc_star == 1 %} checked {% endif %}/>
+                                                        <label title="1"></label>
+                                                        <input type="radio" value="0.5" readonly {% if comment_status.sc_star == 0.5 %} checked {% endif %}/>
+                                                        <label title="0.5" class="half"></label>
+                                                    </div>
+                                                </div>
                                                 <!-- 내 별점 끝 -->
 
                                                 <!-- 내 리뷰 제목/내용 -->
@@ -568,45 +504,30 @@
                                                 <h3>{{ comment_status.mc_title }}</h3>
 
                                                 <!-- 전체 리뷰 중 내 별점 -->
-												<div class="no-star">
-                                                    {% if comment_status.mc_star == 0.5 %}
-                                                    <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 1.0 %}
-                                                    <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 1.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 2.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 2.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 3.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 3.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 4.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.mc_star == 4.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                    {% elif comment_status.mc_star == 5.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                    {% endif %}
-												</div>
+                                                <div style="color: #abb7c4;">
+                                                    <div class="myrated">
+                                                        <input type="radio" value="5" readonly {% if comment_status.mc_star == 5 %} checked {% endif %}/>
+                                                        <label title="5"></label>
+                                                        <input type="radio" value="4.5" readonly {% if comment_status.mc_star == 4.5 %} checked {% endif %}/>
+                                                        <label title="4.5" class="half"></label>
+                                                        <input type="radio" value="4" readonly {% if comment_status.mc_star == 4 %} checked {% endif %}/>
+                                                        <label title="4"></label>
+                                                        <input type="radio" value="3.5" readonly {% if comment_status.mc_star == 3.5 %} checked {% endif %}/>
+                                                        <label title="3.5" class="half"></label>
+                                                        <input type="radio" value="3" readonly {% if comment_status.mc_star == 3 %} checked {% endif %}/>
+                                                        <label title="3"></label>
+                                                        <input type="radio" value="2.5" readonly {% if comment_status.mc_star == 2.5 %} checked {% endif %}/>
+                                                        <label title="2.5" class="half"></label>
+                                                        <input type="radio" value="2" readonly {% if comment_status.mc_star == 2 %} checked {% endif %}/>
+                                                        <label title="2"></label>
+                                                        <input type="radio" value="1.5" readonly {% if comment_status.mc_star == 1.5 %} checked {% endif %}/>
+                                                        <label title="1.5" class="half"></label>
+                                                        <input type="radio" value="1" readonly {% if comment_status.mc_star == 1 %} checked {% endif %}/>
+                                                        <label title="1"></label>
+                                                        <input type="radio" value="0.5" readonly {% if comment_status.mc_star == 0.5 %} checked {% endif %}/>
+                                                        <label title="0.5" class="half"></label>
+                                                    </div>
+                                                </div>
                                                 <!-- 전체 리뷰 중 내 별점 끝 -->
 
                                                 <!-- 전체 리뷰 중 내 리뷰 제목/내용 -->
@@ -702,44 +623,29 @@
                                                     <h3>{{ comment.mc_title }}</h3>
 
                                                     <!-- 다른 회원의 별점 -->
-                                                    <div class="no-star">
-                                                        {% if comment.mc_star == 0.5 %}
-                                                        <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 1.0 %}
-                                                        <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 1.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 2.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 2.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 3.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 3.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 4.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                        {% elif comment.mc_star == 4.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star-half"></i>
-                                                        {% elif comment.mc_star == 5.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                        {% endif %}
+                                                    <div style="color: #abb7c4;">
+                                                        <div class="myrated">
+                                                            <input type="radio" value="5" readonly {% if comment_status.mc_star == 5 %} checked {% endif %}/>
+                                                            <label title="5"></label>
+                                                            <input type="radio" value="4.5" readonly {% if comment_status.mc_star == 4.5 %} checked {% endif %}/>
+                                                            <label title="4.5" class="half"></label>
+                                                            <input type="radio" value="4" readonly {% if comment_status.mc_star == 4 %} checked {% endif %}/>
+                                                            <label title="4"></label>
+                                                            <input type="radio" value="3.5" readonly {% if comment_status.mc_star == 3.5 %} checked {% endif %}/>
+                                                            <label title="3.5" class="half"></label>
+                                                            <input type="radio" value="3" readonly {% if comment_status.mc_star == 3 %} checked {% endif %}/>
+                                                            <label title="3"></label>
+                                                            <input type="radio" value="2.5" readonly {% if comment_status.mc_star == 2.5 %} checked {% endif %}/>
+                                                            <label title="2.5" class="half"></label>
+                                                            <input type="radio" value="2" readonly {% if comment_status.mc_star == 2 %} checked {% endif %}/>
+                                                            <label title="2"></label>
+                                                            <input type="radio" value="1.5" readonly {% if comment_status.mc_star == 1.5 %} checked {% endif %}/>
+                                                            <label title="1.5" class="half"></label>
+                                                            <input type="radio" value="1" readonly {% if comment_status.mc_star == 1 %} checked {% endif %}/>
+                                                            <label title="1"></label>
+                                                            <input type="radio" value="0.5" readonly {% if comment_status.mc_star == 0.5 %} checked {% endif %}/>
+                                                            <label title="0.5" class="half"></label>
+                                                        </div>
                                                     </div>
 
                                                     <p class="time">
@@ -766,44 +672,29 @@
                                                     <h3>{{ comment.sc_title }}</h3>
 
                                                     <!-- 다른 회원의 별점 -->
-                                                    <div class="no-star">
-                                                        {% if comment.sc_star == 0.5 %}
-                                                        <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 1.0 %}
-                                                        <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 1.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 2.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 2.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 3.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 3.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 4.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                        {% elif comment.sc_star == 4.5 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star-half"></i>
-                                                        {% elif comment.sc_star == 5.0 %}
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                        {% endif %}
+                                                    <div style="color: #abb7c4;">
+                                                        <div class="myrated">
+                                                            <input type="radio" value="5" readonly {% if comment_status.sc_star == 5 %} checked {% endif %}/>
+                                                            <label title="5"></label>
+                                                            <input type="radio" value="4.5" readonly {% if comment_status.sc_star == 4.5 %} checked {% endif %}/>
+                                                            <label title="4.5" class="half"></label>
+                                                            <input type="radio" value="4" readonly {% if comment_status.sc_star == 4 %} checked {% endif %}/>
+                                                            <label title="4"></label>
+                                                            <input type="radio" value="3.5" readonly {% if comment_status.sc_star == 3.5 %} checked {% endif %}/>
+                                                            <label title="3.5" class="half"></label>
+                                                            <input type="radio" value="3" readonly {% if comment_status.sc_star == 3 %} checked {% endif %}/>
+                                                            <label title="3"></label>
+                                                            <input type="radio" value="2.5" readonly {% if comment_status.sc_star == 2.5 %} checked {% endif %}/>
+                                                            <label title="2.5" class="half"></label>
+                                                            <input type="radio" value="2" readonly {% if comment_status.sc_star == 2 %} checked {% endif %}/>
+                                                            <label title="2"></label>
+                                                            <input type="radio" value="1.5" readonly {% if comment_status.sc_star == 1.5 %} checked {% endif %}/>
+                                                            <label title="1.5" class="half"></label>
+                                                            <input type="radio" value="1" readonly {% if comment_status.sc_star == 1 %} checked {% endif %}/>
+                                                            <label title="1"></label>
+                                                            <input type="radio" value="0.5" readonly {% if comment_status.sc_star == 0.5 %} checked {% endif %}/>
+                                                            <label title="0.5" class="half"></label>
+                                                        </div>
                                                     </div>
 
                                                     <p class="time">

@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block html_body %}
-
 <div class="slider movie-items">
 	<div class="container">
 		<div class="row">
@@ -13,10 +12,11 @@
                 <!-- 맨위 자동슬라이더 기본설정 9개, 3개씩 페이지가 돌아가면서 나온다 -->
                 {% for movies_genres in pop_movies_genres %}
 	    		<div class="movie-item">
+                <a href="/entmt_info/detail/?res_id={{ movies_genres.movie.movie_id }}&media_type=movie">
                     <div class="mv-img">
-	    				<a href="/entmt_info/detail/?res_id={{ movies_genres.movie.movie_id }}&media_type=movie">
-                            <img src="https://image.tmdb.org/t/p/w200{{ movies_genres.movie.m_posterPath }}" alt="" width="285" height="437"></a>
+                            <img src="https://image.tmdb.org/t/p/w200{{ movies_genres.movie.m_posterPath }}" alt="" width="285" height="437">
 	    			</div>
+                </a>
 	    			<div class="title-in">
 	    				<div class="g_cate">
 {#	    					<span class="blue"><a href="#">Sci-fi</a></span>#}
@@ -31,7 +31,7 @@
                                 {% endif %}
                                     <a href="#">{{ genre.mg_genre }}</a></span>
                             {% endfor %}
-	    				</div>
+	    				</div><br>
 	    				<h6><a href="/entmt_info/detail/?res_id={{ movies_genres.movie.movie_id }}&media_type=movie">
                             {{ movies_genres.movie.m_title }}</a></h6>
 	    				<p><i class="ion-android-star"></i><span>{{ movies_genres.movie.print_rate }}</span> /5</p>
@@ -66,8 +66,8 @@
 		<div class="row ipad-width">
 			<div class="col-md-8">
 				<div class="title-hd">
-					<h2>장르별로 인기 영화 보기</h2>
-					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
+					<h2>Recommended media</h2>
+{#					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>#}
 				</div>
 				<div class="tabs">
 					<ul class="tab-links">
