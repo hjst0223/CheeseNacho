@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block html_header %}
-<title>CNDB: Your #1 source for Movies & TV Series</title>
+<title>{{ results.original_title }} - CNDB</title>
 {% endblock %}
 
 {% block html_body %}
@@ -520,8 +520,47 @@
 											</div>
                                             <!-- 내 시리즈 리뷰 끝 -->
                                             {% endif %}
-
 						            	</div>
+                                    <!-- ENT ADD INFO -->
+                                    <div class="col-md-4 col-xs-12 col-sm-12">
+						            		<div class="sb-it">
+						            			<h6>Genres:</h6>
+                                                <p>
+                                                    {% for genre in results.genres %}
+                                                        <a>{{ genre.name }}  </a>
+                                                    {% endfor %}
+                                                </p>
+{#						            			<p><a href="#">Action, </a> <a href="#"> Sci-Fi,</a> <a href="#">Adventure</a></p>#}
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Release Date:</h6>
+						            			<p>{{ results.release_date }}</p>
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Run Time:</h6>
+						            			<p>{{ results.runtime }} min.</p>
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Spoken Languages:</h6>
+                                                {% for lang in results.spoken_languages %}
+						            			    <p>- {{ lang.english_name }}</p>
+                                                {% endfor %}
+						            		</div>
+                                            <div class="sb-it">
+						            			<h6>Budget:</h6>
+						            			<p>
+                                                    <script type="text/javascript">
+                                                        var budget_re = {{ results.budget }}
+                                                        document.write(budget_re.toLocaleString('ko-KR'))</script> $</p>
+						            		</div>
+                                            <div class="sb-it">
+						            			<h6>Revenue:</h6>
+						            			<p>
+                                                    <script type="text/javascript">
+                                                        var revenue_re = {{ results.revenue }}
+                                                        document.write(revenue_re.toLocaleString('ko-KR'))</script> $</p>
+						            		</div>
+                                        </div>
 						            </div>
 						        </div>
 						        <div id="reviews" class="tab review">

@@ -263,6 +263,7 @@ def e_detail(request):
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
         print(media_type)
 
+    print(result)
     content = {
         'results': result,
         'comments': comments,
