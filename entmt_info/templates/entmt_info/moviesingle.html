@@ -1,26 +1,10 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en" class="no-js">#}
-<!-- NAVBAR APPLICATION -->
-{#{% extends "base.html" %}#}
-{% include "navbar.html" %}
-{% block html_body %}
+{% extends "base.html" %}
+
+{% block html_header %}
+<title>CNDB: Your #1 source for Movies & TV Series</title>
 {% endblock %}
-<!-- BASICS -->
-<head>
-    <title>CNDB: Your #1 source for Movies & TV Series</title>
-	<meta charset="UTF-8">
-    <script src="/static/js/menu_btn.js"></script>
-    <!--Google Font-->
-    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
-	<!-- CSS files -->
-	<link rel="stylesheet" href="/static/css/plugins.css">
-	<link rel="stylesheet" href="/static/css/style.css">
 
-{#    <!-- FAVICON -->#}
-{#    <link rel="shortcut icon" href="/static/img/cheesenacho.ico" type="image/x-icon">#}
-</head>
-
-<body>
+{% block html_body %}
 
 <div class="hero mv-single-hero">
 	<div class="container">
@@ -47,17 +31,101 @@
                     {% else %}
                         <h1 class="bd-hd">{{ results.name }}<span>{{ results.first_air_date }}</span></h1>
                     {% endif %}
+
+                    <!-- 찜하기 -->
 					<div class="social-btn">
 						<a href="#" class="parent-btn"><i class="ion-ios-heart-outline"></i> Add to Favorite</a>
 					</div>
 
+                    <div>
+
+                    <span id="like_count">{{ like_count }}</span><br>
+                    <input id="like_count_button"
+                           onclick="location.href='/entmt_manage/like/?results_id={{ results.id }}&media_type={{ media_type }}'"
+
+                           {% if like_status %}
+{#                               style="background-color:hotpink"#}
+                           style="background-color:darkmagenta"
+                           {% else %}
+                               style="background-color:white"
+                           {% endif %}
+                           type="button" value="찜하기">
+
+{#                    <form method="GET" action="{% url 'entmt_info:e_results' %}">#}
+{#                    <div id="search">#}
+{#                        <input name="search" type="text">#}
+{#                        <button class="btn btn-primary" type="submit">찜하기</button>#}
+{#                    </div>#}
+{#                    </form>#}
+                    </div><br>
+
+                <!-- 하트 애니메이션 -->
+{#                <div>#}
+{#                    <button type="button" class="btn_like">#}
+{#                      <i class="img_emoti"></i>#}
+{#                      <i class="ani_heart_m"></i>#}
+{#                    </button>#}
+{#                    <div class="social-btn">#}
+{#						<a href="#" class="parent-btn">Add to Favorite</a>#}
+{#					</div>#}
+{#                </div><br>#}
+                    <!-- 별점 평균/매기기 시작 -->
 					<div class="movie-rate">
-						<div class="rate">
-							<i class="ion-android-star"></i>
-							<p><span>8.1</span> /10<br>
-								<span class="rv">56 Reviews</span>
-							</p>
-						</div>
+
+{#						<div class="rate">#}
+{#							<i class="ion-android-star"></i>#}
+{#							<p><span>8.1</span> /10<br>#}
+{#								<span class="rv">56 Reviews</span>#}
+{#							</p>#}
+{#						</div>#}
+
+                    <!-- 영화 별점 평균 -->
+                    <div class="rate">
+                    <i class="ion-android-star"></i>
+
+                    <p><span>
+                    {% if media_type == 'movie' %}
+                    <script type="text/javascript">
+                    var sum = 0
+                    var length = 0
+                    {% for comment in comments %}
+                        length += 1
+                        sum += {{ comment.mc_star }}
+                    {% endfor %}
+                    {% if comment_status %}
+                        length += 1
+                        sum += {{ comment_status.mc_star }}
+                    {% endif %}
+                    var avg = sum/length
+                    document.write(avg.toFixed(1))
+                    document.write('/5', '<br />')
+                    </script>
+
+                    <!-- tv 시리즈 별점 평균 -->
+                    {% elif media_type == 'tv' %}
+
+                    <script type="text/javascript">
+                    var sum = 0
+                    var length = 0
+                    {% for comment in comments %}
+                        length += 1
+                        sum += {{ comment.sc_star }}
+                    {% endfor %}
+                    {% if comment_status %}
+                        length += 1
+                        sum += {{ comment_status.sc_star }}
+                    {% endif %}
+                    var avg = sum/length
+                    document.write(avg.toFixed(1))
+                    document.write('/5', '<br />')
+                    </script>
+                    {% endif %}
+                    </span>
+                    <span class="rv">{{ comments.count }} Reviews</span></p>
+
+                    </div>
+                    <!-- 미디어 별점 평균 끝 -->
+                        <!-- 별점 매겨야 돼 -->
 						<div class="rate-star">
 							<p>Rate This Movie:  </p>
 							<i class="ion-ios-star"></i>
@@ -71,11 +139,371 @@
 							<i class="ion-ios-star-outline"></i>
 						</div>
 					</div>
+                    <!-- 별점 평균 끝 -->
+
+{#                {% if user.is_authenticated %}#}
+
+{#                <!-- 리뷰 등록 폼 시작 -->#}
+{#                <form action="{% url 'entmt_info:submit_comment' results.id media_type %}" method="POST">#}
+{#                {% csrf_token %}#}
+{##}
+{#                <!-- 알림 메시지 -->#}
+{#                {% if messages %}#}
+{#                   {% for message in messages %}#}
+{#                        {% if message.tags == "error"%}#}
+{#                            <div class="alert alert-danger">#}
+{#                                {{ message }}#}
+{#                            </div>#}
+{#                        {% else %}#}
+{#                            <div class="alert alert-success">#}
+{#                                {{ message }}#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                {% endif %}#}
+{#                <!-- 메시지 끝-->#}
+
+{#            <div class="myrate">#}
+{#                <!-- 영화일 때 별점 -->#}
+{#                {% if media_type == 'movie' %}#}
+{#                <input type="radio" name="mc_star" id="rating10" value="5" required {% if comment_status.mc_star == 5 %} checked {% endif %} />#}
+{#                <label for="rating10" title="5"></label>#}
+{#                <input type="radio" name="mc_star" id="rating9" value="4.5" required {% if comment_status.mc_star == 4.5 %} checked {% endif %} />#}
+{#                <label for="rating9" title="4.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating8" value="4" required {% if comment_status.mc_star == 4 %} checked {% endif %} />#}
+{#                <label for="rating8" title="4"></label>#}
+{#                <input type="radio" name="mc_star" id="rating7" value="3.5" required {% if comment_status.mc_star == 3.5 %} checked {% endif %} />#}
+{#                <label for="rating7" title="3.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating6" value="3" required {% if comment_status.mc_star == 3 %} checked {% endif %} />#}
+{#                <label for="rating6" title="3"></label>#}
+{#                <input type="radio" name="mc_star" id="rating5" value="2.5" required {% if comment_status.mc_star == 2.5 %} checked {% endif %} />#}
+{#                <label for="rating5" title="2.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating4" value="2" required {% if comment_status.mc_star == 2 %} checked {% endif %} />#}
+{#                <label for="rating4" title="2"></label>#}
+{#                <input type="radio" name="mc_star" id="rating3" value="1.5" required {% if comment_status.mc_star == 1.5 %} checked {% endif %} />#}
+{#                <label for="rating3" title="1.5" class="half"></label>#}
+{#                <input type="radio" name="mc_star" id="rating2" value="1" required {% if comment_status.mc_star == 1 %} checked {% endif %} />#}
+{#                <label for="rating2" title="1"></label>#}
+{#                <input type="radio" name="mc_star" id="rating1" value="0.5" required {% if comment_status.mc_star == 0.5 %} checked {% endif %} />#}
+{#                <label for="rating1" title="0.5" class="half"></label>#}
+{##}
+{#                {% elif media_type == 'tv' %}#}
+{#                <input type="radio" name="sc_star" id="rating10" value="5" required {% if comment_status.sc_star == 5 %} checked {% endif %} />#}
+{#                <label for="rating10" title="5"></label>#}
+{#                <input type="radio" name="sc_star" id="rating9" value="4.5" required {% if comment_status.sc_star == 4.5 %} checked {% endif %} />#}
+{#                <label for="rating9" title="4.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating8" value="4" required {% if comment_status.sc_star == 4 %} checked {% endif %} />#}
+{#                <label for="rating8" title="4"></label>#}
+{#                <input type="radio" name="sc_star" id="rating7" value="3.5" required {% if comment_status.sc_star == 3.5 %} checked {% endif %} />#}
+{#                <label for="rating7" title="3.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating6" value="3" required {% if comment_status.sc_star == 3 %} checked {% endif %} />#}
+{#                <label for="rating6" title="3"></label>#}
+{#                <input type="radio" name="sc_star" id="rating5" value="2.5" required {% if comment_status.sc_star == 2.5 %} checked {% endif %} />#}
+{#                <label for="rating5" title="2.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating4" value="2" required {% if comment_status.sc_star == 2 %} checked {% endif %} />#}
+{#                <label for="rating4" title="2"></label>#}
+{#                <input type="radio" name="sc_star" id="rating3" value="1.5" required {% if comment_status.sc_star == 1.5 %} checked {% endif %} />#}
+{#                <label for="rating3" title="1.5" class="half"></label>#}
+{#                <input type="radio" name="sc_star" id="rating2" value="1" required {% if comment_status.sc_star == 1 %} checked {% endif %} />#}
+{#                <label for="rating2" title="1"></label>#}
+{#                <input type="radio" name="sc_star" id="rating1" value="0.5" required {% if comment_status.sc_star == 0.5 %} checked {% endif %} />#}
+{#                <label for="rating1" title="0.5" class="half"></label>#}
+{#                {% endif %}#}
+{##}
+{##}
+{#            </div>#}
+
+                <!-- 리뷰 입력입력 -->
+                <!-- 리뷰 입력 칸 시작 -->
+{#                {% if user.is_authenticated %}#}
+
+                <!-- 리뷰 등록 폼 시작 -->
+{#                <div class="col-md-9 col-sm-12 col-xs-12">#}
+
+                    <div class="form-style-1 user-pro" action="#" >
+                    <form action="{% url 'entmt_info:submit_comment' results.id media_type %}" method="POST">
+                    {% csrf_token %}
+
+                    <!-- 알림 메시지 -->
+                    {% if messages %}
+                       {% for message in messages %}
+                            {% if message.tags == "error"%}
+                                <div class="alert alert-danger">
+                                    {{ message }}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <!-- 메시지 끝-->
+
+                    <h4>Post Your Review</h4>
+
+                    <!-- 별점 매기기 시작-->
+                    <div class="myrate">
+                        <!-- 영화일 때 별점 -->
+                        {% if media_type == 'movie' %}
+                        <input type="radio" name="mc_star" id="rating10" value="5" required {% if comment_status.mc_star == 5 %} checked {% endif %} />
+                        <label for="rating10" title="5"></label>
+                        <input type="radio" name="mc_star" id="rating9" value="4.5" required {% if comment_status.mc_star == 4.5 %} checked {% endif %} />
+                        <label for="rating9" title="4.5" class="half"></label>
+                        <input type="radio" name="mc_star" id="rating8" value="4" required {% if comment_status.mc_star == 4 %} checked {% endif %} />
+                        <label for="rating8" title="4"></label>
+                        <input type="radio" name="mc_star" id="rating7" value="3.5" required {% if comment_status.mc_star == 3.5 %} checked {% endif %} />
+                        <label for="rating7" title="3.5" class="half"></label>
+                        <input type="radio" name="mc_star" id="rating6" value="3" required {% if comment_status.mc_star == 3 %} checked {% endif %} />
+                        <label for="rating6" title="3"></label>
+                        <input type="radio" name="mc_star" id="rating5" value="2.5" required {% if comment_status.mc_star == 2.5 %} checked {% endif %} />
+                        <label for="rating5" title="2.5" class="half"></label>
+                        <input type="radio" name="mc_star" id="rating4" value="2" required {% if comment_status.mc_star == 2 %} checked {% endif %} />
+                        <label for="rating4" title="2"></label>
+                        <input type="radio" name="mc_star" id="rating3" value="1.5" required {% if comment_status.mc_star == 1.5 %} checked {% endif %} />
+                        <label for="rating3" title="1.5" class="half"></label>
+                        <input type="radio" name="mc_star" id="rating2" value="1" required {% if comment_status.mc_star == 1 %} checked {% endif %} />
+                        <label for="rating2" title="1"></label>
+                        <input type="radio" name="mc_star" id="rating1" value="0.5" required {% if comment_status.mc_star == 0.5 %} checked {% endif %} />
+                        <label for="rating1" title="0.5" class="half"></label>
+
+                        <!-- 시리즈일 때 별점 -->
+                        {% elif media_type == 'tv' %}
+                        <input type="radio" name="sc_star" id="rating10" value="5" required {% if comment_status.sc_star == 5 %} checked {% endif %} />
+                        <label for="rating10" title="5"></label>
+                        <input type="radio" name="sc_star" id="rating9" value="4.5" required {% if comment_status.sc_star == 4.5 %} checked {% endif %} />
+                        <label for="rating9" title="4.5" class="half"></label>
+                        <input type="radio" name="sc_star" id="rating8" value="4" required {% if comment_status.sc_star == 4 %} checked {% endif %} />
+                        <label for="rating8" title="4"></label>
+                        <input type="radio" name="sc_star" id="rating7" value="3.5" required {% if comment_status.sc_star == 3.5 %} checked {% endif %} />
+                        <label for="rating7" title="3.5" class="half"></label>
+                        <input type="radio" name="sc_star" id="rating6" value="3" required {% if comment_status.sc_star == 3 %} checked {% endif %} />
+                        <label for="rating6" title="3"></label>
+                        <input type="radio" name="sc_star" id="rating5" value="2.5" required {% if comment_status.sc_star == 2.5 %} checked {% endif %} />
+                        <label for="rating5" title="2.5" class="half"></label>
+                        <input type="radio" name="sc_star" id="rating4" value="2" required {% if comment_status.sc_star == 2 %} checked {% endif %} />
+                        <label for="rating4" title="2"></label>
+                        <input type="radio" name="sc_star" id="rating3" value="1.5" required {% if comment_status.sc_star == 1.5 %} checked {% endif %} />
+                        <label for="rating3" title="1.5" class="half"></label>
+                        <input type="radio" name="sc_star" id="rating2" value="1" required {% if comment_status.sc_star == 1 %} checked {% endif %} />
+                        <label for="rating2" title="1"></label>
+                        <input type="radio" name="sc_star" id="rating1" value="0.5" required {% if comment_status.sc_star == 0.5 %} checked {% endif %} />
+                        <label for="rating1" title="0.5" class="half"></label>
+                        {% endif %}
+                    </div>
+                    <!-- 별점 매기기 끝 -->
+
+            <!-- 새 리뷰 등록 시 -->
+            {% if comment_status == False %}
+                <!-- 영화일 때 리뷰 입력 -->
+                {% if media_type == 'movie' %}
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="mc_title"
+{#                               style="width: 300px;"#}
+                               value={{ comment_status.mc_title }}>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Content</label>
+                        <textarea name="mc_content" rows="3" cols="10"
+                                  style="background-color: #233A50; border-radius: .5em;
+                                  border: 1px solid #0F2133; color: white;"
+                                  class="form-control"
+{#                                  style="width: 5000px; height: 100px;"#}
+                                  value={{ comment_status.mc_content }}></textarea>
+                    </div>
+                </div>
+                <!-- 영화일 때 리뷰 입력 끝 -->
+
+                <!-- 시리즈일 때 리뷰 입력 -->
+                {% elif media_type == 'tv' %}
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="sc_title"
+{#                               style="width: 300px;"#}
+                               value={{ comment_status.sc_title }}>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Content</label>
+                        <textarea name="sc_content" rows="3" cols="10"
+                                  style="background-color: #233A50; border-radius: .5em;
+                                  border: 1px solid #0F2133; color: white;"
+                                  class="form-control"
+{#                                  style="width: 5000px; height: 100px;"#}
+                                  value={{ comment_status.sc_content }}></textarea>
+                    </div>
+                </div>
+
+                {% endif %}
+                <!-- 시리즈일 때 리뷰 입력 끝-->
+                <button type="submit" class="redbtn"
+                    style="width:130px;
+                    border-radius: .5em;
+                    border: 1px solid #0F2133;
+                    padding: 10px 10px;
+                    vertical-align: middle;
+                    ">Write Review</button>
+
+            <!-- 기존 리뷰 업데이트/삭제 시 -->
+            {% else %}
+            {% if media_type == 'movie' %}
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="mc_title"
+{#                               style="width: 300px;"#}
+                               value={{ comment_status.mc_title }}>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Content</label>
+                        <textarea name="mc_content" rows="5" cols="10"
+                                  style="background-color: #233A50; border-radius: .5em;
+                                  border: 1px solid #0F2133; color: white;"
+                                  class="form-control"
+{#                                  style="width: 5000px; height: 100px;"#}
+                                  value={{ comment_status.mc_content }}></textarea>
+                    </div>
+                </div>
+
+            <!-- tv 시리즈일 때 리뷰 입력 -->
+            {% elif media_type == 'tv' %}
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="sc_title"
+{#                               style="width: 300px;"#}
+                               value={{ comment_status.sc_title }}>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-it">
+                        <label>Content</label>
+                        <textarea name="sc_content" rows="5" cols="10"
+                                  style="background-color: #233A50; border-radius: .5em;
+                                  border: 1px solid #0F2133; color: white;"
+                                  class="form-control"
+{#                                  style="width: 5000px; height: 100px;"#}
+                                  value={{ comment_status.sc_content }}></textarea>
+                    </div>
+                </div>
+                <!-- tv 시리즈 리뷰 입력 끝 -->
+            {% endif %}
+
+            <br>
+                <button type="submit" class="redbtn"
+                    style="width:130px;
+                    border-radius: .5em;
+                    border: 1px solid #0F2133;
+                    padding: 10px 10px;
+                    vertical-align: middle;
+                    ">Update Review</button>
+
+            <button type="submit" class="redbtn"
+                    onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'"
+                    style="width:80px;
+                    background-color: orange;
+                    border-radius: .5em;
+                    border: 1px solid #0F2133;
+                    padding: 10px 10px;
+                    vertical-align: middle;
+                    ">Delete</button>
+        {% endif %}
+                        </form>
+                    </div>
+                <!-- 리뷰 등록 폼 끝 -->
+
+
+
+        <!-- 리뷰입력끝 -->
+
+{#        {% if comment_status == False %}#}
+{#            <!-- 영화일 때 리뷰 입력 -->#}
+{#            {% if media_type == 'movie' %}#}
+{##}
+{#                <!-- 리뷰 입력칸 끝 -->#}
+{#                리뷰 제목:#}
+{#                <input type="text" class="form-control" name="mc_title">#}
+{#                <br>#}
+{#                리뷰:#}
+{#                <textarea name="mc_content" rows="4" class="form-control"></textarea>#}
+{#                <!-- tv 시리즈일 때 리뷰 입력 -->#}
+{#                {% elif media_type == 'tv' %}#}
+{#                리뷰 제목:#}
+{#                <input type="text" class="form-control" name="sc_title">#}
+{#                <br>#}
+{#                리뷰:#}
+{#                <textarea name="sc_content" rows="4" class="form-control"></textarea>#}
+{#            {% endif %}#}
+{#            <br>#}
+{#            {% if user.is_authenticated %}#}
+{#            <button type="submit" class="redbtn"#}
+{#                    style="width:130px;#}
+{#                    border-radius: .5em;#}
+{#                    border: 1px solid #0F2133;#}
+{#                    padding: 10px 10px;#}
+{#                    vertical-align: middle;#}
+{#                    ">Write Review</button>#}
+{#            <input type="submit" value="리뷰 등록하기" class="btn btn-outline-info">#}
+{#            <br>#}
+{#            {% else %}#}
+{#            <p>리뷰를 남기기 위해서는 로그인해야 합니다. <span><a href="{% url 'users:login' %}">로그인</a></span></p>#}
+{#            {% endif %}#}
+{##}
+{#        {% else %}#}
+{#            {% if media_type == 'movie' %}#}
+{#                <div class="mv-user-review-item">#}
+{##}
+{#                리뷰 제목:#}
+{#                <input type="text" class="form-control" name="mc_title" value={{ comment_status.mc_title }}>#}
+{#                리뷰:#}
+{#                <textarea name="mc_content" rows="4" class="form-control" >{{ comment_status.mc_content }}</textarea>#}
+{#                <!-- tv 시리즈일 때 리뷰 입력 -->#}
+{#                {% elif media_type == 'tv' %}#}
+{#                리뷰 제목:#}
+{#                <input type="text" class="form-control" name="sc_title" value={{ comment_status.sc_title }}>#}
+{#                <br>#}
+{#                리뷰:#}
+{#                <textarea name="sc_content" rows="4" class="form-control">{{ comment_status.sc_content }}</textarea>#}
+{#                </div>#}
+{#            {% endif %}#}
+{#            <br>#}
+{#            <input type="submit" value="리뷰 수정하기" class="btn btn-outline-info">#}
+{#            <button type="submit" class="redbtn"#}
+{#                    style="width:130px;#}
+{#                    border-radius: .5em;#}
+{#                    border: 1px solid #0F2133;#}
+{#                    padding: 10px 10px;#}
+{#                    vertical-align: middle;#}
+{#                    ">Update Review</button>#}
+{#            <td><button class="btn btn-danger"#}
+{#                        onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'">#}
+{#                        삭제</button></td>#}
+{##}
+{#            <button type="submit" class="redbtn"#}
+{#                    onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'"#}
+{#                    style="width:80px;#}
+{#                    background-color: orange;#}
+{#                    border-radius: .5em;#}
+{#                    border: 1px solid #0F2133;#}
+{#                    padding: 10px 10px;#}
+{#                    vertical-align: middle;#}
+{#                    ">Delete</button>#}
+{#        {% endif %}#}
+
+
 					<div class="movie-tabs">
 						<div class="tabs">
 							<ul class="tab-links tabs-mv">
 								<li class="active"><a href="#overview">Overview</a></li>
-								<li><a href="#reviews"> Reviews</a></li>
+								<li><a href="#reviews">Reviews</a></li>
 							</ul>
 						    <div class="tab-content">
 						        <div id="overview" class="tab active">
@@ -85,28 +513,135 @@
                                             <p>{{ results.overview }}</p>
 											<div class="title-hd-sm">
 												<h4>User reviews</h4>
-												<a href="#" class="time">See All 56 Reviews <i class="ion-ios-arrow-right"></i></a>
+{#												<a href="#" class="time">See All {{ comments.count }} Reviews <i class="ion-ios-arrow-right"></i></a>#}
 											</div>
+
+                                            <!-- 영화일 때 -->
+                                            {% if media_type == 'movie' %}
+
 											<!-- movie user review -->
 											<div class="mv-user-review-item">
-												<h3>Best Marvel movie in my opinion</h3>
+                                                <!-- 리뷰 제목 -->
+{#												<h3>Best Marvel movie in my opinion</h3>#}
+                                                <h3>{{ comment_status.mc_title }}</h3>
+
+                                                <!-- 내 별점 -->
 												<div class="no-star">
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star last"></i>
+                                                    {% if comment_status.mc_star == 0.5 %}
+                                                    <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 1.0 %}
+                                                    <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 1.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 2.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 2.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 3.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 3.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 4.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 4.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                    {% elif comment_status.mc_star == 5.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                    {% endif %}
+{#													<i class="ion-android-star"></i>#}
+{#													<i class="ion-android-star last"></i>#}
+
 												</div>
+                                                <!-- 내 별점 끝 -->
+
+                                                <!-- 내 리뷰 제목/내용 -->
+                                                {% if comment_status %}
 												<p class="time">
-													17 December 2016 by <a href="#"> hawaiipierson</a>
+                                                    {{ comment_status.mc_date }} by
+                                                    <span style="color: #1F88BE;"> {{ comment_status.mc_member }}</span>
 												</p>
-												<p>This is by far one of my favorite movies from the MCU. The introduction of new Characters both good and bad also makes the movie more exciting. giving the characters more of a back story can also help audiences relate more to different characters better, and it connects a bond between the audience and actors or characters. Having seen the movie three times does not bother me here as it is as thrilling and exciting every time I am watching it. In other words, the movie is by far better than previous movies (and I do love everything Marvel), the plotting is splendid (they really do out do themselves in each film, there are no problems watching it more than once.</p>
+                                                {% endif %}
+												<p>{{ comment_status.mc_content}}</p>
 											</div>
+                                            <!-- 내 영화 리뷰 끝 -->
+
+                                            <!-- 시리즈일 때 -->
+                                            {% elif media_type == 'tv' %}
+                                            <!-- tv series user review -->
+											<div class="mv-user-review-item">
+                                                <!-- 리뷰 제목 -->
+                                                <h3>{{ comment_status.sc_title }}</h3>
+
+                                                <!-- 내 별점 -->
+												<div class="no-star">
+                                                    {% if comment_status.sc_star == 0.5 %}
+                                                    <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 1.0 %}
+                                                    <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 1.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 2.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 2.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 3.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 3.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 4.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 4.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                    {% elif comment_status.sc_star == 5.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                    {% endif %}
+												</div>
+                                                <!-- 내 별점 끝 -->
+
+                                                <!-- 내 리뷰 제목/내용 -->
+                                                {% if comment_status %}
+												<p class="time">
+                                                    {{ comment_status.sc_date }} by
+                                                    <span style="color: #1F88BE;"> {{ comment_status.sc_member }}</span>
+												</p>
+                                                {% endif %}
+												<p>{{ comment_status.sc_content}}</p>
+											</div>
+                                            <!-- 내 시리즈 리뷰 끝 -->
+                                            {% endif %}
+
 						            	</div>
 						            </div>
 						        </div>
@@ -117,10 +652,10 @@
 							            		<h3>Related Movies To</h3>
 						       	 				<h2>Skyfall: Quantum of Spectre</h2>
 							            	</div>
-							            	<a href="#" class="redbtn">Write Review</a>
+{#							            	<a href="#" class="redbtn">Write Review</a>#}
 						            	</div>
 						            	<div class="topbar-filter">
-											<p>Found <span>56 reviews</span> in total</p>
+											<p>Found <span>{{ comments.count }} reviews</span> in total</p>
 											<label>Filter by:</label>
 											<select>
 												<option value="popularity">Popularity Descending</option>
@@ -131,145 +666,270 @@
 												<option value="date">Release date Ascending</option>
 											</select>
 										</div>
+
+                                        {% if comment_status %}
 										<div class="mv-user-review-item">
 											<div class="user-infor">
-												<img src="/static/images/uploads/userava1.jpg" alt="">
+
+                                                <!-- 내 프로필 이미지 -->
+                                                <img class="profile" src="{{ user.u_image.url }}">
+{#												<img src="/static/images/uploads/userava1.jpg" alt="">#}
 												<div>
-													<h3>Best Marvel movie in my opinion</h3>
-													<div class="no-star">
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star last"></i>
-													</div>
-													<p class="time">
-														17 December 2016 by <a href="#"> hawaiipierson</a>
-													</p>
+
+                                                <!-- 영화일 때 내 리뷰 -->
+                                                {% if media_type == 'movie' %}
+                                                <!-- 전체 리뷰 중 나의 리뷰 제목 -->
+{#												<h3>Best Marvel movie in my opinion</h3>#}
+                                                <h3>{{ comment_status.mc_title }}</h3>
+
+                                                <!-- 전체 리뷰 중 내 별점 -->
+												<div class="no-star">
+                                                    {% if comment_status.mc_star == 0.5 %}
+                                                    <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 1.0 %}
+                                                    <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 1.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 2.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 2.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 3.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 3.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 4.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.mc_star == 4.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                    {% elif comment_status.mc_star == 5.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                    {% endif %}
+												</div>
+                                                <!-- 전체 리뷰 중 내 별점 끝 -->
+
+                                                <!-- 전체 리뷰 중 내 리뷰 제목/내용 -->
+												<p class="time">
+                                                    {{ comment_status.mc_date }} by
+                                                    <span style="color: #1F88BE;"> {{ comment_status.mc_member }}</span>
+												</p>
+												<p>{{ comment_status.mc_content}}</p>
+
+                                                <!-- 전체 리뷰 중 내 영화 리뷰 끝 -->
+
+                                                <!-- 시리즈일 때 내 리뷰 -->
+                                                {% elif media_type == 'tv' %}
+                                                <!-- 전체 리뷰 중 나의 리뷰 제목 -->
+{#												<h3>Best Marvel movie in my opinion</h3>#}
+                                                <h3>{{ comment_status.sc_title }}</h3>
+
+                                                <!-- 전체 리뷰 중 내 별점 -->
+												<div class="no-star">
+                                                    {% if comment_status.sc_star == 0.5 %}
+                                                    <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 1.0 %}
+                                                    <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 1.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 2.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 2.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 3.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 3.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 4.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    {% elif comment_status.sc_star == 4.5 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star-half"></i>
+                                                    {% elif comment_status.sc_star == 5.0 %}
+                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                    {% endif %}
+												</div>
+                                                <!-- 전체 리뷰 중 내 별점 끝 -->
+
+                                                <!-- 전체 리뷰 중 내 리뷰 제목/내용 -->
+												<p class="time">
+                                                    {{ comment_status.sc_date }} by
+                                                    <span style="color: #1F88BE;"> {{ comment_status.sc_member }}</span>
+												</p>
+												<p>{{ comment_status.sc_content}}</p>
+                                                {% endif %}
+                                                <!-- 전체 리뷰 중 내 시리즈 리뷰 끝 -->
+
 												</div>
 											</div>
-											<p>This is by far one of my favorite movies from the MCU. The introduction of new Characters both good and bad also makes the movie more exciting. giving the characters more of a back story can also help audiences relate more to different characters better, and it connects a bond between the audience and actors or characters. Having seen the movie three times does not bother me here as it is as thrilling and exciting every time I am watching it. In other words, the movie is by far better than previous movies (and I do love everything Marvel), the plotting is splendid (they really do out do themselves in each film, there are no problems watching it more than once.</p>
 										</div>
-										<div class="mv-user-review-item">
-											<div class="user-infor">
-												<img src="/static/images/uploads/userava2.jpg" alt="">
-												<div>
-													<h3>Just about as good as the first one!</h3>
-													<div class="no-star">
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-													</div>
-													<p class="time">
-														17 December 2016 by <a href="#"> hawaiipierson</a>
-													</p>
-												</div>
-											</div>
-											<p>Avengers Age of Ultron is an excellent sequel and a worthy MCU title! There are a lot of good and one thing that feels off in my opinion. </p>
+                                        {% endif %}
 
-											<p>THE GOOD:</p>
+                                        <!-- 다른 회원들의 리뷰 시작 -->
+                                        <!-- 영화일 때 다른 회원들 리뷰 시작 -->
+                                        {% if media_type == 'movie' %}
+                                            {% for comment in comments %}
 
-											<p>First off the action in this movie is amazing, to buildings crumbling, to evil blue eyed robots tearing stuff up, this movie has the action perfectly handled. And with that action comes visuals. The visuals are really good, even though you can see clearly where they are through the movie, but that doesn't detract from the experience. While all the CGI glory is taking place, there are lovable characters that are in the mix. First off the original characters, Iron Man, Captain America, Thor, Hulk, Black Widow, and Hawkeye, are just as brilliant as they are always. And Joss Whedon fixed my main problem in the first Avengers by putting in more Hawkeye and him more fleshed out. Then there is the new Avengers, Quicksilver, Scarletwich, and Vision, they are pretty cool in my opinion. Vision in particular is pretty amazing in all his scenes.</p>
+{#                                                {% if comment != comment_status %}#}
+                                            <div class="mv-user-review-item">
+                                                <div class="user-infor">
+                                                    <!-- 다른 회원의 프로필 이미지 -->
+                                                    <img class="profile" src="{{ comment.mc_member.u_image.url }}">
+    {#												<img src="/static/images/uploads/userava1.jpg" alt="">#}
+                                                    <div>
 
-											<p>THE BAD:</p>
+                                                    <!-- 다른 회원의 리뷰 제목 -->
+    {#												<h3>Best Marvel movie in my opinion</h3>#}
+                                                    <h3>{{ comment.mc_title }}</h3>
 
-											<p>The beginning of the film it's fine until towards the second act and there is when it starts to feel a little rushed. Also I do feel like there are scenes missing but there was talk of an extended version on Blu-Ray so that's cool.</p>
-										</div>
-										<div class="mv-user-review-item">
-											<div class="user-infor">
-												<img src="/static/images/uploads/userava3.jpg" alt="">
-												<div>
-													<h3>One of the most boring exepirences from watching a movie</h3>
-													<div class="no-star">
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-													</div>
-													<p class="time">
-														 26 March 2017 by<a href="#"> christopherfreeman</a>
-													</p>
-												</div>
-											</div>
-											<p>I can't right much... it's just so forgettable...Okay, from what I remember, I remember just sitting down on my seat and waiting for the movie to begin. 5 minutes into the movie, boring scene of Tony Stark just talking to his "dead" friends saying it's his fault. 10 minutes in: Boring scene of Ultron and Jarvis having robot space battles(I dunno:/). 15 minutes in: I leave the theatre.2nd attempt at watching it: I fall asleep. What woke me up is the next movie on Netflix when the movie was over.</p>
+                                                    <!-- 다른 회원의 별점 -->
+                                                    <div class="no-star">
+                                                        {% if comment.mc_star == 0.5 %}
+                                                        <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 1.0 %}
+                                                        <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 1.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 2.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 2.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 3.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 3.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 4.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i>
+                                                        {% elif comment.mc_star == 4.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star-half"></i>
+                                                        {% elif comment.mc_star == 5.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                        {% endif %}
+                                                    </div>
 
-											<p>Bottemline: It's boring...</p>
+                                                    <p class="time">
+                                                    {{ comment.mc_date }} by
+                                                    <span style="color: #1F88BE;"> {{ comment.mc_member }}</span>
+                                                    </p>
+                                                    <p>{{ comment.mc_content}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+{#                                                {% endif %}#}
+                                            {% endfor %}
 
-											<p>10/10 because I'm a Marvel Fanboy</p>
-										</div>
-										<div class="mv-user-review-item ">
-											<div class="user-infor">
-												<img src="/static/images/uploads/userava4.jpg" alt="">
-												<div>
-													<h3>That spirit of fun</h3>
-													<div class="no-star">
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-													</div>
-													<p class="time">
-														26 March 2017 by <a href="#"> juliawest</a>
-													</p>
-												</div>
-											</div>
-											<p>If there were not an audience for Marvel comic heroes than clearly these films would not be made, to answer one other reviewer although I sympathize with him somewhat. The world is indeed an infinitely more complex place than the world of Marvel comics with clearly identifiable heroes and villains. But I get the feeling that from Robert Downey, Jr. on down the organizer and prime mover as Iron Man behind the Avengers these players do love doing these roles because it's a lot of fun. If they didn't show that spirit of fun to the audience than these films would never be made.</p>
+                                        <!-- 시리즈 일때 다른 회원들 리뷰 시작 -->
+                                        {% elif media_type == 'tv' %}
+                                            {% for comment in comments %}
+                                            <div class="mv-user-review-item">
+                                                <div class="user-infor">
+                                                    <!-- 다른 회원의 프로필 이미지 -->
+                                                    <img class="profile" src="{{ comment.sc_member.u_image.url }}">
+                                                    <div>
 
-											<p>So in that spirit of fun Avengers: Age Of Ultron comes before us and everyone looks like they're having a good time saving the world. A computer program got loose and took form in this dimension named Ultron and James Spader who is completely unrecognizable is running amuck in the earth. No doubt Star Trek fans took notice that this guy's mission is to cleanse the earth much like that old earth probe NOMAD which got its programming mixed up in that classic Star Trek prime story. Wouldst Captain James T. Kirk of the Enterprise had a crew like Downey has at his command.</p>
-											<p>My favorite is always Chris Evans because of the whole cast he best gets into the spirit of being a superhero. Of all of them, he's already played two superheroes, Captain America and Johnny Storm the Human Torch. I'll be before he's done Evans will play a couple of more as long as the money's good and he enjoys it.</p>
+                                                    <!-- 다른 회원의 리뷰 제목 -->
+                                                    <h3>{{ comment.sc_title }}</h3>
 
-											<p>Pretend you're a kid again and enjoy, don't take it so seriously.</p>
-										</div>
-										<div class="mv-user-review-item last">
-											<div class="user-infor">
-												<img src="/static/images/uploads/userava5.jpg" alt="">
-												<div>
-													<h3>Impressive Special Effects and Cast</h3>
-													<div class="no-star">
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star"></i>
-														<i class="ion-android-star last"></i>
-														<i class="ion-android-star last"></i>
-													</div>
-													<p class="time">
-														26 March 2017 by <a href="#"> johnnylee</a>
-													</p>
-												</div>
-											</div>
-											<p>The Avengers raid a Hydra base in Sokovia commanded by Strucker and they retrieve Loki's scepter. They also discover that Strucker had been conducting experiments with the orphan twins Pietro Maximoff (Aaron Taylor-Johnson), who has super speed, and Wanda Maximoff (Elizabeth Olsen), who can control minds and project energy. Tony Stark (Robert Downey Jr.) discovers an Artificial Intelligence in the scepter and convinces Bruce Banner (Mark Ruffalo) to secretly help him to transfer the A.I. to his Ultron defense system. However, the Ultron understands that is necessary to annihilate mankind to save the planet, attacks the Avengers and flees to Sokovia with the scepter. He builds an armature for self-protection and robots for his army and teams up with the twins. The Avengers go to Clinton Barton's house to recover, but out of the blue, Nick Fury (Samuel L. Jackson) arrives and convinces them to fight against Ultron. Will they succeed? </p>
+                                                    <!-- 다른 회원의 별점 -->
+                                                    <div class="no-star">
+                                                        {% if comment.sc_star == 0.5 %}
+                                                        <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 1.0 %}
+                                                        <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 1.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 2.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 2.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 3.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 3.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
+                                                            <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 4.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i>
+                                                        {% elif comment.sc_star == 4.5 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star-half"></i>
+                                                        {% elif comment.sc_star == 5.0 %}
+                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i> <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                        {% endif %}
+                                                    </div>
 
-											<p>"Avengers: Age of Ultron" is an entertaining adventure with impressive special effects and cast. The storyline might be better, since most of the characters do not show any chemistry. However, it is worthwhile watching this film since the amazing special effects are not possible to be described in words. Why Pietro has to die is also not possible to be explained. My vote is eight.</p>
-										</div>
+                                                    <p class="time">
+                                                    {{ comment.mc_date }} by
+                                                    <span style="color: #1F88BE;"> {{ comment.sc_member }}</span>
+                                                    </p>
+                                                    <p>{{ comment.sc_content}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        <!-- 시리즈 일때 다른 회원들 리뷰 끝 -->
+                                        {% endif %}
+                                        <!-- 다른 회원들 리뷰 끝 -->
+
 										<div class="topbar-filter">
 											<label>Reviews per page:</label>
 											<select>
@@ -292,17 +952,12 @@
 						    </div>
 						</div>
 					</div>
+                    <!-- 다른 회원들의 리뷰 끝 -->
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<script src="/static/js/jquery.js"></script>
-<script src="/static/js/plugins.js"></script>
-<script src="/static/js/plugins2.js"></script>
-<script src="/static/js/custom.js"></script>
-</body>
-
-<!-- moviesingle11:03-->
-</html>
+{% endblock %}

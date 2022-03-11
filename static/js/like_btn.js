@@ -1,0 +1,12 @@
+$('button').click(function(){
+  if($(this).hasClass('btn_unlike')){
+    $(this).removeClass('btn_unlike');
+    $('.ani_heart_m').removeClass('hi');
+    $('.ani_heart_m').addClass('bye');
+  }
+  else{
+    $(this).addClass('btn_unlike');
+    $('.ani_heart_m').addClass('hi');
+    $('.ani_heart_m').removeClass('bye');
+  }
+});

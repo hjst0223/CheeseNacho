@@ -253,9 +253,9 @@ def e_detail(request):
         'media_type': media_type,
         'comment_status': comment_status,
     }
-    return render(request, 'entmt_info/detail.html', content)
+    # return render(request, 'entmt_info/detail.html', content)
     # return render(request, 'entmt_info/moviesingle_jy.html', content)
-    # return render(request, 'entmt_info/moviesingle.html', content)
+    return render(request, 'entmt_info/moviesingle.html', content)
 
 # 검색 결과 페이지
 def e_results(request):
@@ -291,7 +291,7 @@ def submit_comment(request, media_id, media_type):
 
             if form.is_valid():
                 form.save()
-                messages.success(request, '리뷰가 업데이트되었습니다!')
+                messages.success(request, 'Your review has been updated!')
                 return redirect(url)
             else:
                 print('무효무효~!!')
@@ -303,7 +303,7 @@ def submit_comment(request, media_id, media_type):
 
             if form.is_valid():
                 form.save()
-                messages.success(request, '리뷰가 업데이트되었습니다!')
+                messages.success(request, 'Your review has been updated!')
                 return redirect(url)
             else:
                 print('무효무효~!!')
@@ -313,7 +313,7 @@ def submit_comment(request, media_id, media_type):
             if media_type == 'movie':
                 # 이미 리뷰가 존재하는 경우
                 if (Mcomment.objects.filter(mc_member=request.user)):
-                    messages.error(request, '이미 리뷰를 등록하셨습니다!')
+                    messages.error(request, 'You have already posted a review!')
 
                     return redirect(url)
 
@@ -331,18 +331,18 @@ def submit_comment(request, media_id, media_type):
                         data.mc_movie = movie
                         data.mc_member = user
                         data.save()
-                        messages.success(request, '리뷰가 등록되었습니다!')
+                        messages.success(request, 'Your review has been posted!')
 
                         return redirect(url)
 
                     else:
-                        messages.error(request, '오류!')
+                        messages.error(request, 'Error!')
 
             elif media_type == 'tv':
                 # 이미 리뷰가 존재하는 경우
                 if (Scomment.objects.filter(sc_member=request.user)):
                     print('드라마 댓글 존재!!!')
-                    messages.error(request, '이미 리뷰를 등록하셨습니다!')
+                    messages.error(request, 'You have already posted a review!')
 
                     return redirect(url)
 
@@ -360,12 +360,12 @@ def submit_comment(request, media_id, media_type):
                         data.sc_series = series
                         data.sc_member = user
                         data.save()
-                        messages.success(request, '리뷰가 등록되었습니다!')
+                        messages.success(request, 'Your review has been posted!')
 
                         return redirect(url)
 
                     else:
-                        messages.error(request, '오류!')
+                        messages.error(request, 'Error!')
 
 
 def delete_comment(request, comment_id, media_type):
@@ -381,7 +381,7 @@ def delete_comment(request, comment_id, media_type):
             if comment.mc_member == request.user:
                 comment.delete()
                 print('삭제!!! ')
-                messages.success(request, '댓글이 삭제되었습니다!')
+                messages.success(request, 'Your review has been deleted!')
                 print('message 이후')
                 return redirect(url)
 
@@ -395,7 +395,7 @@ def delete_comment(request, comment_id, media_type):
             # 로그인한 회원과 댓글 작성자가 같을 때만 삭제
             if comment.sc_member == request.user:
                 comment.delete()
-                messages.success(request, '댓글이 삭제되었습니다!')
+                messages.success(request, 'Your review has been deleted!')
 
                 return redirect(url)
 
