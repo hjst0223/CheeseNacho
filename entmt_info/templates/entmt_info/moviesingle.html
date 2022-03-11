@@ -27,7 +27,13 @@
 				<div class="movie-single-ct main-content">
 					{# 영화제목, 연도#}
                     {% if results.original_title %}
-                        <h1 class="bd-hd">{{ results.original_title }}<span> {{ results.release_date }}</span></h1>
+                        <h1 class="bd-hd">{{ results.original_title }} <span>{{ results.release_date }}
+                        <script type="text/javascript">
+                            document.write({{ results.release_date }})
+                            let released_date = new Date({{results.release_date}})
+                            document.write(released_date.getFullYear())
+                        </script>
+                        </span></h1>
                     {% else %}
                         <h1 class="bd-hd">{{ results.name }}<span>{{ results.first_air_date }}</span></h1>
                     {% endif %}
@@ -60,14 +66,18 @@
                     </div><br>
 
                 <!-- 하트 애니메이션 -->
-{#                <div>#}
-{#                    <button type="button" class="btn_like">#}
-{#                      <i class="img_emoti"></i>#}
-{#                      <i class="ani_heart_m"></i>#}
-{#                    </button>#}
-{#                    <div class="social-btn">#}
-{#						<a href="#" class="parent-btn">Add to Favorite</a>#}
-{#					</div>#}
+                <div>
+                <div>
+                    <button type="button" class="btn_like">
+                        <div>
+                            <i class="img_emoti"></i>
+                            <i class="ani_heart_m"></i>
+                        </div>
+                    </button>
+                </div>
+                    <div class="social-btn">
+						<a href="#" class="parent-btn">Add to Favorite</a>
+					</div>
 {#                </div><br>#}
                     <!-- 별점 평균/매기기 시작 -->
 					<div class="movie-rate">
