@@ -289,6 +289,32 @@ def e_results(request):
         except:
             print('---error---')
 
+    result_comp = [{'res_id': res['id'], 'res_media_type': res['media_type']} for res in result]
+    # res_rate = [Movies.objects.get(movie_id=int(res_id)).m_rateScore for res_id in result_id]
+    result_rate = []
+    for res_comp in result_comp:
+        # if res_comp['res_media_type'] == 'movie':
+        #     result_rate.append(Movies.objects.get(movie_id=int(res_comp['res_id'])).m_rateScore)
+        # elif res_comp['res_media_type'] == 'tv':
+        #     result_rate.append(Series.objects.get(series_id=int(res_comp['res_id'])).s_rateScore)
+        # else: result_rate.append(0)
+        if res_comp['res_media_type'] not in ['movie', 'tv']:
+            result_rate.append(None)
+        else:
+            if res_comp['res_media_type'] == 'movie':
+                try: result_rate.append(Movies.objects.get(movie_id=int(res_comp['res_id'])).m_rateScore)
+                except: result_rate.append(0.0)
+            else:
+                try: result_rate.append(Series.objects.get(series_id=int(res_comp['res_id'])).s_rateScore)
+                except: result_rate.append(0.0)
+
+    print(f'result_rate={result_rate}')
+    # print(result)
+    for res, res_rate in zip(result, result_rate):
+        res['rate'] = res_rate
+
+    print(result)
+
     content = {
         'results': result,
     }
