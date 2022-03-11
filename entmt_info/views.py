@@ -18,9 +18,15 @@ def homepage(request):
     # 인기영화 8개, 인기시리즈 8개 보여주기
     # 로그인 인증 되어있을 시, 내 추천장르 : 4개 가져와서 장르별 가져오기
     # 로그인 인증 되어있지 않을 시, 인기 장르 중 4개 가져와서 장르별 가져오기
-
     pop_movies = Movies.objects.all().order_by('-m_popularity')[:8]
+    movies_genres = [Mgenres.objects.filter(mg_movie=movie) for movie in pop_movies]
     pop_series = Series.objects.all().order_by('-s_popularity')[:8]
+    series_genres = [Sgenres.objects.filter(sg_series=series) for series in pop_series]
+    pop_movies_genres = [{'movie': movie, 'genre': genre}
+                         for movie, genre in zip(pop_movies, movies_genres)]
+    pop_series_genres = [{'series': series, 'genre': genre}
+                         for series, genre in zip(pop_series, series_genres)]
+    print(pop_movies_genres)
     print('-----hello-------')
     try:
         # autho가 선택한 genre 가져오기
@@ -41,6 +47,11 @@ def homepage(request):
         pop_genres = [[genre.genre_id, genre.g_name, Mgenres.objects.filter(mg_genre=genre).count()] for genre in
                       Genres.objects.all()]
         pop_genres.sort(key=lambda x: -x[2])
+        # print(pop_genres)
+        # pop_genres2 = [[genre.genre_id, genre.g_name, Sgenres.objects.filter(sg_genre=genre).count()] for genre in
+        #               Genres.objects.all()]
+        # pop_genres2.sort(key=lambda x: -x[2])
+        # print(pop_genres2)
         pop_genres_match = [Genres.objects.get(genre_id=genre[0]) for genre in pop_genres]
         pop_genres_f = pop_genres_match[0]
         pop_genres = pop_genres_match[1:4]
@@ -54,8 +65,10 @@ def homepage(request):
         print('---AnonymousUser---')
 
     context = {
-        'pop_movies': pop_movies,
-        'pop_series': pop_series,
+        # 'pop_movies': pop_movies,
+        # 'pop_series': pop_series,
+        'pop_movies_genres': pop_movies_genres,
+        'pop_series_genres': pop_series_genres,
         'pop_genres_f': pop_genres_f,
         'genre_movies_f': genre_movies_f,
         'genre_series_f': genre_series_f,

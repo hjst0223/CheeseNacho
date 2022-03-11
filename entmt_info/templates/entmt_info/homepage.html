@@ -11,22 +11,30 @@
 		<div class="row">
 	    	<div  class="slick-multiItemSlider">
                 <!-- 맨위 자동슬라이더 기본설정 9개, 3개씩 페이지가 돌아가면서 나온다 -->
-                {% for movie in pop_movies %}
+                {% for movies_genres in pop_movies_genres %}
 	    		<div class="movie-item">
                     <div class="mv-img">
-	    				<a href="/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie">
-                            <img src="https://image.tmdb.org/t/p/w200{{ movie.m_posterPath }}" alt="" width="285" height="437"></a>
+	    				<a href="/entmt_info/detail/?res_id={{ movies_genres.movie.movie_id }}&media_type=movie">
+                            <img src="https://image.tmdb.org/t/p/w200{{ movies_genres.movie.m_posterPath }}" alt="" width="285" height="437"></a>
 	    			</div>
 	    			<div class="title-in">
-	    				<div class="cate">
-	    					<span class="blue"><a href="#">Sci-fi</a></span>
-                            <span class="yell"><a href="#">action</a></span>
-                            <span class="green"><a href="#">comedy</a></span>
-                            <span class="orange"><a href="#">advanture</a></span>
+	    				<div class="g_cate">
+{#	    					<span class="blue"><a href="#">Sci-fi</a></span>#}
+{#                            <span class="yell"><a href="#">action</a></span>#}
+{#                            <span class="green"><a href="#">comedy</a></span>#}
+{#                            <span class="orange"><a href="#">advanture</a></span>#}
+                            {% for genre in movies_genres.genre %}
+                                {% if genre.mg_genre.g_name == 'Science Fiction' %} <span class="Science_Fiction">
+                                {% elif genre.mg_genre.g_name == 'Action & Adventure'%} <span class="Action">
+                                {% elif genre.mg_genre.g_name == 'Sci-Fi & Fantasy' %} <span class="Science_Fiction">
+                                {% else %} <span class="{{ genre.mg_genre }}">
+                                {% endif %}
+                                    <a href="#">{{ genre.mg_genre }}</a></span>
+                            {% endfor %}
 	    				</div>
-	    				<h6><a href="/entmt_info/detail/?res_id={{ movie.movie_id }}&media_type=movie">
-                            {{ movie.m_title }}</a></h6>
-	    				<p><i class="ion-android-star"></i><span>{{ movie.print_rate }}</span> /5</p>
+	    				<h6><a href="/entmt_info/detail/?res_id={{ movies_genres.movie.movie_id }}&media_type=movie">
+                            {{ movies_genres.movie.m_title }}</a></h6>
+	    				<p><i class="ion-android-star"></i><span>{{ movies_genres.movie.print_rate }}</span> /5</p>
 	    			</div>
 	    		</div>
                 {% endfor %}
