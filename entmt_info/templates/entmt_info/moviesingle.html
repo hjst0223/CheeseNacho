@@ -372,7 +372,6 @@
 {#												<a href="#" class="time">See All {{ comments.count }} Reviews <i class="ion-ios-arrow-right"></i></a>#}
 											</div>
 
-                                        {% if user.is_authenticated %}
                                             <!-- 영화일 때 -->
                                             {% if media_type == 'movie' %}
 
@@ -383,6 +382,7 @@
                                                 <h3>{{ comment_status.mc_title }}</h3>
 
                                                 <!-- 내 별점 -->
+                                                {% if comment_status.mc_star %}
                                                 <div style="color: #abb7c4;">
                                                     <div class="myrated">
                                                         <input type="radio" value="5" readonly {% if comment_status.mc_star == 5 %} checked {% endif %}/>
@@ -407,6 +407,7 @@
                                                         <label title="0.5" class="half"></label>
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 <!-- 내 별점 끝 -->
 
                                                 <!-- 내 리뷰 제목/내용 -->
@@ -428,6 +429,7 @@
                                                 <h3>{{ comment_status.sc_title }}</h3>
 
                                                 <!-- 내 별점 -->
+                                                {% if comment_status.sc_star %}
 												<div style="color: #abb7c4;">
                                                     <div class="myrated">
                                                         <input type="radio" value="5" readonly {% if comment_status.sc_star == 5 %} checked {% endif %}/>
@@ -452,7 +454,7 @@
                                                         <label title="0.5" class="half"></label>
                                                     </div>
                                                 </div>
-                                            {% endif %}
+                                                {% endif %}
                                                 <!-- 내 별점 끝 -->
 
                                                 <!-- 내 리뷰 제목/내용 -->
