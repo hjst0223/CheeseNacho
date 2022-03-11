@@ -476,20 +476,30 @@
                                                 </p>
 {#						            			<p><a href="#">Action, </a> <a href="#"> Sci-Fi,</a> <a href="#">Adventure</a></p>#}
 						            		</div>
-						            		<div class="sb-it">
-						            			<h6>Release Date:</h6>
-						            			<p>{{ results.release_date }}</p>
-						            		</div>
-						            		<div class="sb-it">
-						            			<h6>Run Time:</h6>
-						            			<p>{{ results.runtime }} min.</p>
-						            		</div>
+                                            {% if results.release_date %}
+                                                <div class="sb-it">
+                                                    <h6>Release Date:</h6>
+                                                    <p>{{ results.release_date }}</p>
+                                                </div>
+                                            {% elif results.first_air_date %}
+                                                <div class="sb-it">
+                                                    <h6>First Air Date:</h6>
+                                                    <p>{{ results.first_air_date }}</p>
+                                                </div>
+                                            {% else %}{% endif %}
+                                            {% if results.runtime %}
+                                                <div class="sb-it">
+                                                    <h6>Run Time:</h6>
+                                                    <p>{{ results.runtime }} min.</p>
+                                                </div>
+                                            {% else %}{% endif %}
 						            		<div class="sb-it">
 						            			<h6>Spoken Languages:</h6>
                                                 {% for lang in results.spoken_languages %}
 						            			    <p>- {{ lang.english_name }}</p>
                                                 {% endfor %}
 						            		</div>
+                                            {% if results.buget %}
                                             <div class="sb-it">
 						            			<h6>Budget:</h6>
 						            			<p>
@@ -497,6 +507,8 @@
                                                         var budget_re = {{ results.budget }}
                                                         document.write(budget_re.toLocaleString('ko-KR'))</script> $</p>
 						            		</div>
+                                            {% else %}{% endif %}
+                                            {% if results.revenue %}
                                             <div class="sb-it">
 						            			<h6>Revenue:</h6>
 						            			<p>
@@ -504,6 +516,7 @@
                                                         var revenue_re = {{ results.revenue }}
                                                         document.write(revenue_re.toLocaleString('ko-KR'))</script> $</p>
 						            		</div>
+                                            {% else %}{% endif %}
                                         </div>
 						            </div>
 						        </div>
