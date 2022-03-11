@@ -140,7 +140,7 @@
 .myrated > label:before{
     display: inline-block;
     /*font-size: 1.1rem;*/
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-family: FontAwesome;
     content: "\f005";
     margin: 0;
@@ -158,5 +158,12 @@
 /*!* Click and hover *!*/
 .myrated input:checked ~ label{
     color: #ffb503;
+    /*text-shadow: #abb7c4;*/
 }
     /*color: #abb7c4;*/
+/*.myrated .half:after{*/
+/*    content: "\f089";*/
+/*    position: absolute;*/
+/*    padding-left: 0;*/
+/*    color: #abb7c4;*/
+/*}*/

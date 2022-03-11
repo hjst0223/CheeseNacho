@@ -1,6 +1,6 @@
 .btn_like {
   position: relative;
-  margin: 100px auto;
+  /*margin: 100px auto;*/
   display: block;
   width: 44px;
   height: 44px;
@@ -48,8 +48,8 @@
 .ani_heart_m {
     display: block;
     position: absolute;
-    top: 100%;
-    left: 100%;
+    top: 50%;
+    left: 50%;
     width: 125px;
     height: 125px;
     margin: -63px 0 0 -63px;

@@ -85,33 +85,35 @@
                             </div>
 {#                            <img src="https://image.tmdb.org/t/p/w200{{ mcomment.mc_movie.m_posterPath }}" alt="">#}
                             <div class="mv-item-infor">
-                                <h6><a href="/entmt_info/detail/?res_id={{ mcomment.mc_movie.movie_id }}&media_type=movie">{{ mcomment.mc_movie }}<span>  - {{ mcomment.mc_movie.m_releaseDate }}</span></a></h6>
+                                <h6><a href="/entmt_info/detail/?res_id={{ mcomment.mc_movie.movie_id }}&media_type=movie">{{ mcomment.mc_movie }}<span>  - {{ mcomment.mc_movie.m_releaseDate.year }}</span></a></h6>
 {#                                <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>#}
-                                <span class="rated">
-                                    <input type="radio" value="5" readonly {% if mcomment.mc_star == 5 %} checked {% endif %}/>
-                                    <label title="5"></label>
-                                    <input type="radio" value="4.5" readonly {% if mcomment.mc_star == 4.5 %} checked {% endif %}/>
-                                    <label title="4.5" class="half"></label>
-                                    <input type="radio" value="4" readonly {% if mcomment.mc_star == 4 %} checked {% endif %}/>
-                                    <label title="4"></label>
-                                    <input type="radio" value="3.5" readonly {% if mcomment.mc_star == 3.5 %} checked {% endif %}/>
-                                    <label title="3.5" class="half"></label>
-                                    <input type="radio" value="3" readonly {% if mcomment.mc_star == 3 %} checked {% endif %}/>
-                                    <label title="3"></label>
-                                    <input type="radio" value="2.5" readonly {% if mcomment.mc_star == 2.5 %} checked {% endif %}/>
-                                    <label title="2.5" class="half"></label>
-                                    <input type="radio" value="2" readonly {% if mcomment.mc_star == 2 %} checked {% endif %}/>
-                                    <label title="2"></label>
-                                    <input type="radio" value="1.5" readonly {% if mcomment.mc_star == 1.5 %} checked {% endif %}/>
-                                    <label title="1.5" class="half"></label>
-                                    <input type="radio" value="1" readonly {% if mcomment.mc_star == 1 %} checked {% endif %}/>
-                                    <label title="1"></label>
-                                    <input type="radio" value="0.5" readonly {% if mcomment.mc_star == 0.5 %} checked {% endif %}/>
-                                    <label title="0.5" class="half"></label>
-                                </span><br><br>
+                                <div style="color: #abb7c4;">
+                                    <div class="myrated">
+                                        <input type="radio" value="5" readonly {% if mcomment.mc_star == 5 %} checked {% endif %}/>
+                                        <label title="5"></label>
+                                        <input type="radio" value="4.5" readonly {% if mcomment.mc_star == 4.5 %} checked {% endif %}/>
+                                        <label title="4.5" class="half"></label>
+                                        <input type="radio" value="4" readonly {% if mcomment.mc_star == 4 %} checked {% endif %}/>
+                                        <label title="4"></label>
+                                        <input type="radio" value="3.5" readonly {% if mcomment.mc_star == 3.5 %} checked {% endif %}/>
+                                        <label title="3.5" class="half"></label>
+                                        <input type="radio" value="3" readonly {% if mcomment.mc_star == 3 %} checked {% endif %}/>
+                                        <label title="3"></label>
+                                        <input type="radio" value="2.5" readonly {% if mcomment.mc_star == 2.5 %} checked {% endif %}/>
+                                        <label title="2.5" class="half"></label>
+                                        <input type="radio" value="2" readonly {% if mcomment.mc_star == 2 %} checked {% endif %}/>
+                                        <label title="2"></label>
+                                        <input type="radio" value="1.5" readonly {% if mcomment.mc_star == 1.5 %} checked {% endif %}/>
+                                        <label title="1.5" class="half"></label>
+                                        <input type="radio" value="1" readonly {% if mcomment.mc_star == 1 %} checked {% endif %}/>
+                                        <label title="1"></label>
+                                        <input type="radio" value="0.5" readonly {% if mcomment.mc_star == 0.5 %} checked {% endif %}/>
+                                        <label title="0.5" class="half"></label>
+                                    </div>
+                                </div>
                                 <h6 style="color:white;">{{ mcomment.mc_title }}</h6>
                                 <p class="describe">{{ mcomment.mc_content }}</p>
-                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
+                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Post date: {{ mcomment.mc_date }}</span></p>
 						    </div>
 						</div>
                     {% endfor %}
@@ -127,33 +129,35 @@
                             </div>
 {#                            <img src="https://image.tmdb.org/t/p/w200{{ scomment.sc_series.s_posterPath }}" alt="">#}
                             <div class="mv-item-infor">
-                                <h6><a href="/entmt_info/detail/?res_id={{ scomment.sc_series.series_id }}&media_type=movie">{{ scomment.sc_series }}<span>  - {{ scomment.sc_series.s_firstAirDate }}</span></a></h6>
+                                <h6><a href="/entmt_info/detail/?res_id={{ scomment.sc_series.series_id }}&media_type=movie">{{ scomment.sc_series }}<span>  - {{ scomment.sc_series.s_firstAirDate.year }}</span></a></h6>
 {#                                <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>#}
-                                <span class="rated">
-                                    <input type="radio" value="5" readonly {% if scomment.sc_star == 5 %} checked {% endif %}/>
-                                    <label title="5"></label>
-                                    <input type="radio" value="4.5" readonly {% if scomment.sc_star == 4.5 %} checked {% endif %}/>
-                                    <label title="4.5" class="half"></label>
-                                    <input type="radio" value="4" readonly {% if scomment.sc_star == 4 %} checked {% endif %}/>
-                                    <label title="4"></label>
-                                    <input type="radio" value="3.5" readonly {% if scomment.sc_star == 3.5 %} checked {% endif %}/>
-                                    <label title="3.5" class="half"></label>
-                                    <input type="radio" value="3" readonly {% if scomment.sc_star == 3 %} checked {% endif %}/>
-                                    <label title="3"></label>
-                                    <input type="radio" value="2.5" readonly {% if scomment.sc_star == 2.5 %} checked {% endif %}/>
-                                    <label title="2.5" class="half"></label>
-                                    <input type="radio" value="2" readonly {% if scomment.sc_star == 2 %} checked {% endif %}/>
-                                    <label title="2"></label>
-                                    <input type="radio" value="1.5" readonly {% if scomment.sc_star == 1.5 %} checked {% endif %}/>
-                                    <label title="1.5" class="half"></label>
-                                    <input type="radio" value="1" readonly {% if scomment.sc_star == 1 %} checked {% endif %}/>
-                                    <label title="1"></label>
-                                    <input type="radio" value="0.5" readonly {% if scomment.sc_star == 0.5 %} checked {% endif %}/>
-                                    <label title="0.5" class="half"></label>
-                                </span>
-                                <h6>{{ scomment.sc_title }}</h6>
+                                <div style="color: #abb7c4;">
+                                    <div class="myrated">
+                                        <input type="radio" value="5" readonly {% if scomment.sc_star == 5 %} checked {% endif %}/>
+                                        <label title="5"></label>
+                                        <input type="radio" value="4.5" readonly {% if scomment.sc_star == 4.5 %} checked {% endif %}/>
+                                        <label title="4.5" class="half"></label>
+                                        <input type="radio" value="4" readonly {% if scomment.sc_star == 4 %} checked {% endif %}/>
+                                        <label title="4"></label>
+                                        <input type="radio" value="3.5" readonly {% if scomment.sc_star == 3.5 %} checked {% endif %}/>
+                                        <label title="3.5" class="half"></label>
+                                        <input type="radio" value="3" readonly {% if scomment.sc_star == 3 %} checked {% endif %}/>
+                                        <label title="3"></label>
+                                        <input type="radio" value="2.5" readonly {% if scomment.sc_star == 2.5 %} checked {% endif %}/>
+                                        <label title="2.5" class="half"></label>
+                                        <input type="radio" value="2" readonly {% if scomment.sc_star == 2 %} checked {% endif %}/>
+                                        <label title="2"></label>
+                                        <input type="radio" value="1.5" readonly {% if scomment.sc_star == 1.5 %} checked {% endif %}/>
+                                        <label title="1.5" class="half"></label>
+                                        <input type="radio" value="1" readonly {% if scomment.sc_star == 1 %} checked {% endif %}/>
+                                        <label title="1"></label>
+                                        <input type="radio" value="0.5" readonly {% if scomment.sc_star == 0.5 %} checked {% endif %}/>
+                                        <label title="0.5" class="half"></label>
+                                    </div>
+                                </div>
+                                <h6 style="color:white;">{{ scomment.sc_title }}</h6>
                                 <p class="describe">{{ scomment.sc_content }}</p>
-                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
+                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Post date: {{ mcomment.mc_date }}</span></p>
 						    </div>
 						</div>
                     {% endfor %}
