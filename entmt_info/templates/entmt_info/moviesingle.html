@@ -27,7 +27,13 @@
 				<div class="movie-single-ct main-content">
 					{# 영화제목, 연도#}
                     {% if results.original_title %}
-                        <h1 class="bd-hd">{{ results.original_title }}<span> {{ results.release_date }}</span></h1>
+                        <h1 class="bd-hd">{{ results.original_title }} <span>{{ results.release_date }}
+                        <script type="text/javascript">
+                            document.write({{ results.release_date }})
+                            let released_date = new Date({{results.release_date}})
+                            document.write(released_date.getFullYear())
+                        </script>
+                        </span></h1>
                     {% else %}
                         <h1 class="bd-hd">{{ results.name }}<span>{{ results.first_air_date }}</span></h1>
                     {% endif %}
@@ -406,7 +412,7 @@
                     vertical-align: middle;
                     ">Update Review</button>
 
-            <button type="submit" class="redbtn"
+            <button type="button" class="redbtn"
                     onclick="location.href='/entmt_info/delete_comment/{{ comment_status.id }}/{{ media_type }}/'"
                     style="width:80px;
                     background-color: orange;
