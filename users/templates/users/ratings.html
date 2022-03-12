@@ -16,7 +16,7 @@
 					<h1>{{ user.username }}'s Ratings</h1>
 					<ul class="breadcumb">
 						<li class="active"><a href={% url 'entmt_info:homepage' %}>Home</a></li>
-						<li> <span class="ion-ios-arrow-right"></span>Favorite movies</li>
+						<li> <span class="ion-ios-arrow-right"></span>Favorite media</li>
 					</ul>
 				</div>
 			</div>
@@ -63,20 +63,21 @@
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="topbar-filter user">
-					<p>Found <span>{{ list_length }} movies</span> in total</p>
-					<label>Sort by:</label>
-					<select>
-						<option value="range">-- Choose option --</option>
-						<option value="saab">-- Choose option 2--</option>
-					</select>
-					<a href="userfavoritelist.html" class="list"><i class="ion-ios-list-outline "></i></a>
-					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>
+					<p>Found <span>{{ list_length }} media</span> in total</p>
+{#					<label>Sort by:</label>#}
+{#					<select>#}
+{#						<option value="range">-- Choose option --</option>#}
+{#						<option value="saab">-- Choose option 2--</option>#}
+{#					</select>#}
+{#					<a href="userfavoritelist.html" class="list"><i class="ion-ios-list-outline "></i></a>#}
+{#					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>#}
 				</div>
 				<div class="flex-wrap-movielist user-fav-list">
                     {% for mcomment in mcomments %}
                         <div class="movie-item-style-2">
                             <div class="movie-item-style-2 movie-item-style-1 style-3">
-                                <img src="https://image.tmdb.org/t/p/w200{{ mcomment.mc_movie.m_posterPath }}" alt="">
+                                <a href="/entmt_info/detail/?res_id={{ mcomment.mc_movie.movie_id }}&media_type=movie">
+                                    <img src="https://image.tmdb.org/t/p/w200{{ mcomment.mc_movie.m_posterPath }}" alt=""></a>
                                 <div class="title-in">
                                     <div class="cate">
                                         <span class="blue"><a href="#">Movie</a></span>
@@ -113,14 +114,15 @@
                                 </div>
                                 <h6 style="color:white;">{{ mcomment.mc_title }}</h6>
                                 <p class="describe">{{ mcomment.mc_content }}</p>
-                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Post date: {{ mcomment.mc_date }}</span></p>
+                                <p class="run-time"><span>Post date: {{ mcomment.mc_date }}</span></p>
 						    </div>
 						</div>
                     {% endfor %}
                     {% for scomment in scomments %}
                         <div class="movie-item-style-2">
                             <div class="movie-item-style-2 movie-item-style-1 style-3">
-                                <img src="https://image.tmdb.org/t/p/w200{{ scomment.sc_series.s_posterPath }}" alt="">
+                                <a href="/entmt_info/detail/?res_id={{ scomment.sc_series.series_id }}&media_type=tv">
+                                    <img src="https://image.tmdb.org/t/p/w200{{ scomment.sc_series.s_posterPath }}" alt=""></a>
                                 <div class="title-in">
                                     <div class="cate">
                                         <span class="orange"><a href="#">Series</a></span>

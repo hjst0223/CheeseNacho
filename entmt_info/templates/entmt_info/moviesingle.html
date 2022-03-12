@@ -77,6 +77,8 @@
                         <i class="ion-android-star"></i>
 
                         <p><span>
+                        <!-- 리뷰가 없을 경우 0.0/5으로 표시 -->
+                        {% if comments or comment_status %}
                         {% if media_type == 'movie' %}
                         <script type="text/javascript">
                         var sum = 0
@@ -113,14 +115,27 @@
                         document.write('/5', '<br />')
                         </script>
                         {% endif %}
+
+                        {% else %}
+                        0.0/5<br>
+                        {% endif %}
                         </span>
 
+                        {% if comment_status %}
                         <span class="rv"><script type="text/javascript">
-                                var count = 0
-                                count = {{ comments.count }} + 1
-                                document.write(count)
-                            </script> Reviews</span></p>
-    {#                    <span class="rv">{{ comments.count }} Reviews</span></p>#}
+                        var count = 0
+                        count = {{ comments.count }} + 1
+                        document.write(count)
+                        </script> Reviews</span></p>
+                        {% else %}
+                        <span class="rv">{{ comments.count }} Reviews</span></p>
+                        {% endif %}
+
+{#                        <span class="rv"><script type="text/javascript">#}
+{#                                var count = 0#}
+{#                                count = {{ comments.count }} + 1#}
+{#                                document.write(count)#}
+{#                            </script> Reviews</span></p>#}
                         </div>
                         <!-- 미디어 별점 평균 끝 -->
                             <!-- 별점 -->
@@ -129,8 +144,8 @@
     {#							<i class="ion-ios-star"></i>#}
     {#							<i class="ion-ios-star-outline"></i>#}
     {#						</div>#}
-                    <!-- 찜하기 -->
 
+                    <!-- 찜하기 -->
                     <div class="social-btn" style="margin: 20px 100px;">
                         <a href="#" class="parent-btn"
                         onclick="location.href='/entmt_manage/like/?results_id={{ results.id }}&media_type={{ media_type }}'">
@@ -140,7 +155,6 @@
                                     <i class="ion-ios-heart-outline"></i>
                             {% endif %}Add to Favorite
                     </a></div>
-
 {#                    <h4 style="color:white;">{{ like_count }}</h4></span><br>#}
 
 					</div>
@@ -470,8 +484,6 @@
                                             {% endif %}
 						            	</div>
 
-
-
                                     <!-- ENT ADD INFO -->
                                     <div class="col-md-4 col-xs-12 col-sm-12">
 						            		<div class="sb-it">
@@ -529,30 +541,33 @@
 						        </div>
 						        <div id="reviews" class="tab review">
 						           <div class="row">
-						            	<div class="rv-hd">
-						            		<div class="div">
-							            		<h3>Related Movies To</h3>
-						       	 				<h2>Skyfall: Quantum of Spectre</h2>
-							            	</div>
+{#						            	<div class="rv-hd">#}
+{#						            		<div class="div">#}
+{#							            		<h3>Related Movies To</h3>#}
+{#						       	 				<h2>Skyfall: Quantum of Spectre</h2>#}
+{#							            	</div>#}
 {#							            	<a href="#" class="redbtn">Write Review</a>#}
-						            	</div>
+{#						            	</div>#}
 						            	<div class="topbar-filter">
-
-											<p>Found <span class="rv"><script type="text/javascript">
-                                                var count = 0
-                                                count = {{ comments.count }} + 1
-                                                document.write(count)
+                                            {% if comment_status %}
+                                            <p>Found <span class="rv"><script type="text/javascript">
+                                            var count = 0
+                                            count = {{ comments.count }} + 1
+                                            document.write(count)
                                             </script> Reviews</span> in total</p>
-{#                                            <p>Found <span>{{ comments.count }} reviews</span> in total</p>#}
-											<label>Filter by:</label>
-											<select>
-												<option value="popularity">Popularity Descending</option>
-												<option value="popularity">Popularity Ascending</option>
-												<option value="rating">Rating Descending</option>
-												<option value="rating">Rating Ascending</option>
-												<option value="date">Release date Descending</option>
-												<option value="date">Release date Ascending</option>
-											</select>
+                                            {% else %}
+											<p>Found <span class="rv">{{ comments.count }} Reviews</span> in total</p>
+                                            {% endif %}
+
+{#											<label>Filter by:</label>#}
+{#											<select>#}
+{#												<option value="popularity">Popularity Descending</option>#}
+{#												<option value="popularity">Popularity Ascending</option>#}
+{#												<option value="rating">Rating Descending</option>#}
+{#												<option value="rating">Rating Ascending</option>#}
+{#												<option value="date">Release date Descending</option>#}
+{#												<option value="date">Release date Ascending</option>#}
+{#											</select>#}
 										</div>
 
                                         {% if comment_status %}
@@ -560,7 +575,7 @@
 											<div class="user-infor">
 
                                                 <!-- 내 프로필 이미지 -->
-                                                <img class="profile" src="{{ user.u_image.url }}">
+                                                <img class="profile" style="border-radius: 70%;" src="{{ user.u_image.url }}">
 {#												<img src="/static/images/uploads/userava1.jpg" alt="">#}
 												<div>
 
@@ -613,45 +628,30 @@
                                                 <h3>{{ comment_status.sc_title }}</h3>
 
                                                 <!-- 전체 리뷰 중 내 별점 -->
-												<div class="no-star">
-                                                    {% if comment_status.sc_star == 0.5 %}
-                                                    <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 1.0 %}
-                                                    <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 1.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 2.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 2.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 3.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i> <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 3.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star-half"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 4.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    {% elif comment_status.sc_star == 4.5 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star-half"></i>
-                                                    {% elif comment_status.sc_star == 5.0 %}
-                                                    <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i> <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                    {% endif %}
-												</div>
+												<div style="color: #abb7c4;">
+                                                    <div class="myrated">
+                                                        <input type="radio" value="5" readonly {% if comment_status.sc_star == 5 %} checked {% endif %}/>
+                                                        <label title="5"></label>
+                                                        <input type="radio" value="4.5" readonly {% if comment_status.sc_star == 4.5 %} checked {% endif %}/>
+                                                        <label title="4.5" class="half"></label>
+                                                        <input type="radio" value="4" readonly {% if comment_status.sc_star == 4 %} checked {% endif %}/>
+                                                        <label title="4"></label>
+                                                        <input type="radio" value="3.5" readonly {% if comment_status.sc_star == 3.5 %} checked {% endif %}/>
+                                                        <label title="3.5" class="half"></label>
+                                                        <input type="radio" value="3" readonly {% if comment_status.sc_star == 3 %} checked {% endif %}/>
+                                                        <label title="3"></label>
+                                                        <input type="radio" value="2.5" readonly {% if comment_status.sc_star == 2.5 %} checked {% endif %}/>
+                                                        <label title="2.5" class="half"></label>
+                                                        <input type="radio" value="2" readonly {% if comment_status.sc_star == 2 %} checked {% endif %}/>
+                                                        <label title="2"></label>
+                                                        <input type="radio" value="1.5" readonly {% if comment_status.sc_star == 1.5 %} checked {% endif %}/>
+                                                        <label title="1.5" class="half"></label>
+                                                        <input type="radio" value="1" readonly {% if comment_status.sc_star == 1 %} checked {% endif %}/>
+                                                        <label title="1"></label>
+                                                        <input type="radio" value="0.5" readonly {% if comment_status.sc_star == 0.5 %} checked {% endif %}/>
+                                                        <label title="0.5" class="half"></label>
+                                                    </div>
+                                                </div>
                                                 <!-- 전체 리뷰 중 내 별점 끝 -->
 
                                                 <!-- 전체 리뷰 중 내 리뷰 제목/내용 -->
@@ -732,7 +732,8 @@
                                             <div class="mv-user-review-item">
                                                 <div class="user-infor">
                                                     <!-- 다른 회원의 프로필 이미지 -->
-                                                    <img class="profile" src="{{ comment.sc_member.u_image.url }}">
+                                                    <img class="profile" style="border-radius: 70%;"
+                                                         src="{{ comment.sc_member.u_image.url }}">
                                                     <div>
 
                                                     <!-- 다른 회원의 리뷰 제목 -->

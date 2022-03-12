@@ -8,152 +8,43 @@
 <div class="slider movie-items">
 	<div class="container">
 		<div class="row">
-            <br>
+            <div style="color: #FD9F28;"><br><h1>Welcome to CNDB</h1></div><br><br>
+            <div>
             <button type="button"
-                class="btn btn-success"
-                onclick="to_import()()">import 하러가기</button>
+                class="redbtn"
+                    style="color: #FD9F28; background-color: #233A50;
+                           border-radius: .5em; border-color: #233A50;
+                           border: 1px solid #0F2133;"
+                    onclick="to_import()()">import 하러 가기</button><p></p>
             <div>
                 <a href="{% url 'entmt_info:homepage' %}">
-                <button type="button" class="btn btn-outline-primary">homepage로 가기</button></a>
-            <div>
+                <button type="button" class="redbtn"
+                style="color: #FD9F28; background-color: #233A50;
+                       border-radius: .5em; border-color: #233A50;
+                       border: 1px solid #0F2133;"
+                >homepage로 가기</button></a>
+            </div>
+            </div>
             <br>
+
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row">
+	    	<div  class="slick-multiItemSlider">
+	    	</div>
 	    </div>
 	</div>
 </div>
-
-
-{% endblock %}
-{#<div class="slider movie-items">#}
-{#	<div class="container">#}
-{#		<div class="row">#}
-{#	    	<div  class="slick-multiItemSlider">#}
-{#                <!-- 맨위 자동슬라이더 기본설정 9개, 3개씩 페이지가 돌아가면서 나온다 -->#}
-{#	    		<div class="movie-item">#}
-{#	    			<div class="mv-img">#}
-{#	    				<a href="#"><img src="/static/images/uploads/slider1.jpg" alt="" width="285" height="437"></a>#}
-{#	    			</div>#}
-{#	    			<div class="title-in">#}
-{#	    				<div class="cate">#}
-{#	    					<span class="blue"><a href="#">Sci-fi</a></span>#}
-{#                            <span class="yell"><a href="#">action</a></span>#}
-{#                            <span class="green"><a href="#">comedy</a></span>#}
-{#                            <span class="orange"><a href="#">advanture</a></span>#}
-{#	    				</div>#}
-{#	    				<h6><a href="#">Interstellar</a></h6>#}
-{#	    				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>#}
-{#	    			</div>#}
-{#	    		</div>#}
-{#	    	</div>#}
-{#	    </div>#}
-{#	</div>#}
-{#</div>#}
-{#<div class="movie-items">#}
-{#	<div class="container">#}
-{#		<div class="row ipad-width">#}
-{#			<div class="col-md-8">#}
-{#				<div class="title-hd">#}
-{#					<h2>장르별로 인기 영화 보기</h2>#}
-{#					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>#}
-{#				</div>#}
-{#				<div class="tabs">#}
-{#					<ul class="tab-links">#}
-{#						<li class="active"><a href="#tab1">#Popular</a></li>#}
-{#						<li><a href="#tab2"> #Coming soon</a></li>#}
-{#						<li><a href="#tab3">  #Top rated  </a></li>#}
-{#						<li><a href="#tab4"> #Most reviewed</a></li>#}
-{#					</ul>#}
-{#				    <div class="tab-content">#}
-{#				        <div id="tab1" class="tab active">#}
-{#				            <div class="row">#}
-{#				            	<div class="slick-multiItem">#}
-{#                                    <!--tab1 for문-->#}
-{#				            		<div class="slide-it">#}
-{#				            			<div class="movie-item">#}
-{#					            			<div class="mv-img">#}
-{#					            				<img src="/static/images/uploads/mv-item1.jpg" alt="" width="185" height="284">#}
-{#					            			</div>#}
-{#					            			<div class="hvr-inner">#}
-{#					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>#}
-{#					            			</div>#}
-{#					            			<div class="title-in">#}
-{#					            				<h6><a href="#">Interstellar</a></h6>#}
-{#					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>#}
-{#					            			</div>#}
-{#					            		</div>#}
-{#				            		</div>#}
-{#				            	</div>#}
-{#				            </div>#}
-{#				        </div>#}
-{#				        <div id="tab2" class="tab">#}
-{#				           <div class="row">#}
-{#				            	<div class="slick-multiItem">#}
-{#                                    <!--tab2 for문-->#}
-{#				            		<div class="slide-it">#}
-{#				            			<div class="movie-item">#}
-{#					            			<div class="mv-img">#}
-{#					            				<img src="/static/images/uploads/mv-item5.jpg" alt="" width="185" height="284">#}
-{#					            			</div>#}
-{#					            			<div class="hvr-inner">#}
-{#					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>#}
-{#					            			</div>#}
-{#					            			<div class="title-in">#}
-{#					            				<h6><a href="#">Interstellar</a></h6>#}
-{#					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>#}
-{#					            			</div>#}
-{#					            		</div>#}
-{#				            		</div>#}
-{#								</div>#}
-{#				            </div>#}
-{#				        </div>#}
-{#				        <div id="tab3" class="tab">#}
-{#				        	<div class="row">#}
-{#				            	<div class="slick-multiItem">#}
-{#                                    <!--tab3 for문-->#}
-{#				            		<div class="slide-it">#}
-{#				            			<div class="movie-item">#}
-{#					            			<div class="mv-img">#}
-{#					            				<img src="/static/images/uploads/mv-item1.jpg" alt="" width="185" height="284">#}
-{#					            			</div>#}
-{#					            			<div class="hvr-inner">#}
-{#					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>#}
-{#					            			</div>#}
-{#					            			<div class="title-in">#}
-{#					            				<h6><a href="#">Interstellar</a></h6>#}
-{#					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>#}
-{#					            			</div>#}
-{#					            		</div>#}
-{#				            		</div>#}
-{#				            	</div>#}
-{#				            </div>#}
-{#			       	 	</div>#}
-{#			       	 	<div id="tab4" class="tab">#}
-{#				        	<div class="row">#}
-{#				            	<div class="slick-multiItem">#}
-{#                                    <!--tab4 for문-->#}
-{#				            		<div class="slide-it">#}
-{#				            			<div class="movie-item">#}
-{#					            			<div class="mv-img">#}
-{#					            				<img src="/static/images/uploads/mv-item5.jpg" alt="" width="185" height="284">#}
-{#					            			</div>#}
-{#					            			<div class="hvr-inner">#}
-{#					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>#}
-{#					            			</div>#}
-{#					            			<div class="title-in">#}
-{#					            				<h6><a href="#">Interstellar</a></h6>#}
-{#					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>#}
-{#					            			</div>#}
-{#					            		</div>#}
-{#				            		</div>#}
-{#				            	</div>#}
-{#				            </div>#}
-{#			       	 	</div>#}
-{#				    </div>#}
-{#				</div>#}
-{#			</div>#}
-{#            <div class="col-md-4"></div>#}
-{#		</div>#}
-{#	</div>#}
-{#</div>#}
+<div class="movie-items">
+	<div class="container">
+			<div class="col-md-8">
+				<div class="title-hd">
+				</div>
+				<div class="tabs">
+				</div>
+			</div>
+	</div>
+</div>
 {#<footer class="ht-footer">#}
 {#	<div class="ft-copyright">#}
 {#		<div class="ft-left">#}
@@ -164,4 +55,7 @@
 {#		</div>#}
 {#	</div>#}
 {#</footer>#}
-{#{% endblock %}#}
+    	    </div>
+	</div>
+</div>
+{% endblock %}
