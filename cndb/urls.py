@@ -18,13 +18,15 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
-
+from django.views.generic import RedirectView
+from django.conf.urls import url
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path('admin/', admin.site.urls),    # Admin page
     path('entmt_info/', include('entmt_info.urls')),
     path('entmt_manage/', include('entmt_manage.urls')),
-    path('users/', include('users.urls'))
+    path('users/', include('users.urls')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
 ] + static(settings.MEDIA_URL,
            document_root=settings.MEDIA_ROOT)
