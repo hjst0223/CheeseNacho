@@ -145,6 +145,9 @@
     {#							<i class="ion-ios-star-outline"></i>#}
     {#						</div>#}
 
+                    <!-- 로그인 상태에서만 찜하기 버튼 보이게 설정 -->
+                    {% if user.is_authenticated %}
+
                     <!-- 찜하기 -->
                     <div class="social-btn" style="margin: 20px 100px;">
                         <a href="#" class="parent-btn"
@@ -157,6 +160,7 @@
                     </a></div>
 {#                    <h4 style="color:white;">{{ like_count }}</h4></span><br>#}
 
+                    {% endif %}
 					</div>
                     <!-- 별점 평균 끝 -->
 
