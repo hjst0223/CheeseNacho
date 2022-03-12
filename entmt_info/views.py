@@ -264,7 +264,7 @@ def e_detail(request):
         print('movie, tv 이외의 거라서 구현이 안되어있어요!')
         print(media_type)
 
-    content = {
+    context = {
         'results': result,
         'comments': comments,
         'like_count': like_count,
@@ -272,11 +272,10 @@ def e_detail(request):
         'media_type': media_type,
         'comment_status': comment_status,
     }
-    print('댓글 개수')
-    print(comment_status)
+
     # return render(request, 'entmt_info/detail.html', content)
     # return render(request, 'entmt_info/moviesingle_jy.html', content)
-    return render(request, 'entmt_info/moviesingle.html', content)
+    return render(request, 'entmt_info/moviesingle.html', context)
 
 
 # 검색 결과 페이지
@@ -318,12 +317,12 @@ def e_results(request):
 
     # print(result)
 
-    content = {
+    context = {
         'results': result,
     }
 
     # return render(request, 'entmt_info/results.html', content)
-    return render(request, 'entmt_info/moviegrid.html', content)
+    return render(request, 'entmt_info/moviegrid.html', context)
 
 
 # 댓글 등록

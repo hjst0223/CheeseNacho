@@ -211,9 +211,11 @@ def ratings(request):
     # user에 해당하는 Scomment, Mcomment 찾아서 context로 보내줌
     mcomments = Mcomment.objects.filter(mc_member=request.user)
     scomments = Scomment.objects.filter(sc_member=request.user)
+
     context = {
         'mcomments': mcomments,
         'scomments': scomments,
+        'list_length': len(mcomments) + len(scomments)
     }
     # print(f'{mcomments}----------------')
     return render(request, 'users/ratings.html', context)
