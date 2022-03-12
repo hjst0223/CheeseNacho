@@ -14,7 +14,7 @@ class Movies(models.Model):
         return self.m_title
 
     def print_rate(self):
-        return round(self.m_rateScore, 2)
+        return round(self.m_rateScore, 1)
 
 
 class Series(models.Model):
@@ -31,7 +31,7 @@ class Series(models.Model):
         return self.s_title
 
     def print_rate(self):
-        return round(self.s_rateScore, 2)
+        return round(self.s_rateScore, 1)
 
 
 class Genres(models.Model):

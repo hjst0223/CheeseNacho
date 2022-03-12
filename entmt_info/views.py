@@ -294,10 +294,10 @@ def e_results(request):
             result_rate.append(None)
         else:
             if res_comp['res_media_type'] == 'movie':
-                try: result_rate.append(Movies.objects.get(movie_id=int(res_comp['res_id'])).m_rateScore)
+                try: result_rate.append(Movies.objects.get(movie_id=int(res_comp['res_id'])).print_rate())
                 except: result_rate.append(0.0)
             else:
-                try: result_rate.append(Series.objects.get(series_id=int(res_comp['res_id'])).s_rateScore)
+                try: result_rate.append(Series.objects.get(series_id=int(res_comp['res_id'])).print_rate())
                 except: result_rate.append(0.0)
 
     print(f'result_rate={result_rate}')
@@ -305,7 +305,7 @@ def e_results(request):
     for res, res_rate in zip(result, result_rate):
         res['rate'] = res_rate
 
-    print(result)
+    # print(result)
 
     content = {
         'results': result,
