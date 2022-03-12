@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block html_header %}
+<title>signup - CNDB</title>
+{% endblock %}
+
+{% block html_body %}
+{#<div class="container my-3">#}
+{#    <!-- 상단 '회원가입' 텍스트 -->#}
+{#    <fieldset class="form-group">#}
+{#        <legend class="border-bottom mb-4">#}
+{#            회원가입 </legend>#}
+{#    </fieldset>#}
+{##}
+{#    <!-- 회원가입 폼 -->#}
+{#    <form method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        {% include "users/form_errors.html" %}#}
+{##}
+{#        <!-- 사용자 이름 입력 폼 -->#}
+{#        <div class="form-group">#}
+{#            <label for="username">사용자 이름</label>#}
+{#            <input type="text" class="form-control" name="username" id="username"#}
+{#                   value="{{ form.username.value|default_if_none:'' }}">#}
+{#        </div>#}
+{##}
+{#        <!-- 비밀번호 입력 폼 -->#}
+{#        <div class="form-group">#}
+{#            <label for="password1">비밀번호</label>#}
+{#            <input type="password" class="form-control" name="password1" id="password1"#}
+{#                   value="{{ form.password1.value|default_if_none:'' }}">#}
+{#        </div>#}
+{##}
+{#        <!-- 비밀번호 확인 입력 폼 -->#}
+{#        <div class="form-group">#}
+{#            <label for="password2">비밀번호 확인</label>#}
+{#            <input type="password" class="form-control" name="password2" id="password2"#}
+{#                   value="{{ form.password2.value|default_if_none:'' }}">#}
+{#        </div>#}
+{##}
+{#        <!-- 이메일 입력 폼 -->#}
+{#        <div class="form-group">#}
+{#            <label for="email">이메일</label>#}
+{#            <input type="text" class="form-control" name="email" id="email"#}
+{#                   value="{{ form.email.value|default_if_none:'' }}">#}
+{#        </div>#}
+{##}
+{#        <!-- 전화번호 입력 폼 -->#}
+{#        <div class="form-group">#}
+{#            <label for="u_mobile">전화번호</label>#}
+{#            <input type="text" class="form-control" name="u_mobile" id="u_mobile"#}
+{#                   value="{{ form.u_mobile.value|default_if_none:'' }}">#}
+{#        </div>#}
+{#        <br>#}
+{#        <button class="btn btn-outline-info" type="submit" class="btn btn-primary">가입하기</button>#}
+{#    </form>#}
+{##}
+{#    <!-- 클릭 시 로그인 페이지로 이동 -->#}
+{#    <div class="row my-3" style="text-align: left">#}
+{#        <div class="col-8 text-right">#}
+{#            <span>또는 <a href="{% url 'users:login' %}">로그인하세요</a></span>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+
+
+<div class="slider movie-items">
+    <div class="container my-3">
+        <div class="form-style-1 user-pro">
+            <br>
+{#            <form method="post" class="post-form" action="{% url 'users:login' %}">#}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+{#                <input type="hidden" name="next" value="{{ next }}">  <!-- 로그인 성공후 이동되는 URL -->#}
+
+
+{#                <div class="container">#}
+
+{#            <form method="post" enctype="multipart/form-data" class="form-horizontal">#}
+{#                <div class="form-inline form-group" >#}
+{#                    <label for="phone_num" class="col-sm-7 control-label">#}
+{#                        <h4 style="font-size: medium;">U s e r n a m e </h4>#}
+{#                    </label>#}
+{#                    <div class="col-sm-3" style="width: 300px;">#}
+{#                        <input type="text" class="form-control" id="phone_num" name="phone_num">#}
+{#                    </div>#}
+{#                </div><br><br><br>#}
+{##}
+{#                <div class="form-inline form-group" >#}
+{#                    <label for="phone_num" class="col-sm-2 control-label">전화번호:</label>#}
+{#                    <div class="col-sm-10">#}
+{#                        <input type="text" class="form-control" id="phone_num" name="phone_num">#}
+{#                    </div>#}
+{#                </div>#}
+{#            </form>#}
+{##}
+{##}
+{#                <br><br><br>#}
+
+
+{#                <div class="form-group-lg">#}
+{#                    <label for="username"><h4 style="font-size: large;">U s e r n a m e </h4></label>#}
+{#                    <div style="display: inline-block; text-align: center;">#}
+{#                    <input type="text" class="form-control" name="username" id="username"#}
+{#                           style="width: 300px; height: 50px; text-align: center;"#}
+{#                           value="{{ form.username.value|default_if_none:'' }}">#}
+{#                    </div>#}
+{#                </div><br>#}
+
+                <div class="form-group-lg">
+                    <label for="username"><h4 style="font-size: medium;">U s e r n a m e</h4></label>
+                    <div style="display: inline-block; padding: 0 20px;">
+                    <input type="text" class="form-control" name="username" id="username"
+                           style="
+                           {#padding: 0 100px;#}
+                           width: 300px; height: 40px;
+                           text-align: center;"
+                           value="{{ form.username.value|default_if_none:'' }}">
+                    </div><br>
+
+                    <label for="password1"><h4 style="font-size: medium;">P a s s w o r d</h4></label>
+                    <div style="display: inline-block; padding: 0 20px;">
+                    <input type="password" class="form-control" name="password1" id="password1"
+                           style="
+                           {#padding: 0 100px;#}
+                           width: 300px; height: 40px;
+                           text-align: center;"
+                           value="{{ form.password1.value|default_if_none:'' }}">
+                    </div><br>
+
+                    <div style="">
+                    <label for="password2"
+{#                           style="float: left;margin-left:10px;"#}
+                    ><h4 style="font-size: medium;">
+                        R e - t y p e<br>P a s s w o r d</h4></label>
+{#                    <span style="padding: 0 100px 100px;">#}
+                    <div style="display: inline-block; padding: 0 20px 20px 20px;">
+                    <input type="password" class="form-control" name="password2" id="password2"
+                           style="
+
+                           {#padding: 0 100px;#}
+                           width: 300px; height: 40px;
+                           text-align: center;"
+                           value="{{ form.password2.value|default_if_none:'' }}">
+                    </div><br>
+                        </div>
+{#                        </span>#}
+
+                    <label for="email"><h4 style="font-size: medium;">e m a i l</h4></label>
+                    <div style="display: inline-block; padding-left: 45px;">
+                    <input type="text" class="form-control" name="email" id="email"
+                           style="
+                           {#padding: 0 50px 100px;#}
+                           width: 300px; height: 40px;
+                           text-align: center;"
+                           value="{{ form.email.value|default_if_none:'' }}">
+                    </div><br>
+
+                    <label for="u_mobile"><h4 style="font-size: medium;">m o b i l e</h4></label>
+                    <div style="display: inline-block; padding-left: 33px;">
+                    <input type="text" class="form-control" name="u_mobile" id="u_mobile"
+                           style="
+                           {#padding: 0 100px;#}
+                           width: 300px; height: 40px;
+                           text-align: center;"
+                           value="{{ form.u_mobile.value|default_if_none:'' }}">
+                    </div>
+                </div>
+
+
+                <button type="submit" class="redbtn"
+                        style="border-radius: 5em; border: 1px solid #0F2133;
+                        width: 450px; height: 55px; font-size: large"
+                >sign up</button>
+            </form>
+            <br>
+
+            <div style="display: inline-block; text-align: center; width: 700px; height: 50px;">
+                {% include "users/form_errors.html" %}
+            </div>
+
+            <br><br><br><br><br><br>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
