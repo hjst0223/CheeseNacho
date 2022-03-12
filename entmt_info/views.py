@@ -4,7 +4,6 @@ from entmt_manage.models import Mcomment, Scomment, Mgenres, Sgenres
 from entmt_info.forms import McommentForm, ScommentForm
 from django.contrib import messages
 from users.models import Members, Ugenres
-from entmt_manage.models import Mgenres, Sgenres
 from users.models import Mlike, Slike
 
 from entmt_info import api_python   # api 관련 함수 모음
@@ -78,7 +77,6 @@ def homepage(request):
     }
     return render(request, 'entmt_info/homepage.html', context)
 
-
     # print(genre_movies_f)
     # print(f'----pop_genres_f : {pop_genres_f}')
     # print(f'----pop_genres : {pop_genres}')
@@ -108,6 +106,7 @@ def ei_genre(request):
     print('done - downloading genre')
     return redirect('entmt_info:ei_page')
 
+
 # db save code for movies
 def dbsave_movie(result):
 
@@ -132,6 +131,7 @@ def dbsave_movie(result):
             m_genre.mg_movie = Movie
             m_genre.mg_genre = Genre
             m_genre.save()
+
 
 # db save code for series
 def dbsave_series(result):
@@ -325,6 +325,7 @@ def e_results(request):
     # return render(request, 'entmt_info/results.html', content)
     return render(request, 'entmt_info/moviegrid.html', content)
 
+
 # 댓글 등록
 def submit_comment(request, media_id, media_type):
     # 현재 페이지 url
@@ -336,7 +337,6 @@ def submit_comment(request, media_id, media_type):
     elif media_type == 'tv':
         print(f'변경전 starRate : {Series.objects.get(series_id=media_id).s_rateScore}')
 
-
     if request.method == 'POST':
         # 기존 리뷰를 업데이트하는 경우
         if Mcomment.objects.filter(Q(mc_movie_id=media_id) & Q(mc_member=request.user)).exists():
@@ -347,9 +347,12 @@ def submit_comment(request, media_id, media_type):
                 starRate(request.user.id, media_id, media_type, 'update', form.cleaned_data['mc_star'])
                 form.save()
                 messages.success(request, 'Your review has been updated!')
-                return redirect(url)
+
+            # 리뷰 제목을 입력하지 않았을 경우 경고 메시지
             else:
-                print('무효무효~!!')
+                messages.error(request, 'Please write the title of your review!')
+
+            return redirect(url)
 
         elif Scomment.objects.filter(Q(sc_series_id=media_id) & Q(sc_member=request.user)).exists():
             # filter에 객체가 존재하는 경우 업데이트
@@ -360,9 +363,12 @@ def submit_comment(request, media_id, media_type):
                 starRate(request.user.id, media_id, media_type, 'update', form.cleaned_data['sc_star'])
                 form.save()
                 messages.success(request, 'Your review has been updated!')
-                return redirect(url)
+
+            # 리뷰 제목을 입력하지 않았을 경우 경고 메시지
             else:
-                print('무효무효~!!')
+                messages.error(request, 'Please write the title of your review!')
+
+            return redirect(url)
 
         # 새 리뷰를 등록하는 경우
         else:
@@ -384,7 +390,13 @@ def submit_comment(request, media_id, media_type):
                     data.save()
                     messages.success(request, 'Your review has been posted!')
 
-                    return redirect(url)
+                    # return redirect(url)
+
+                # 리뷰 제목을 입력하지 않았을 경우 경고 메시지
+                else:
+                    messages.error(request, 'Please write the title of your review!')
+
+                return redirect(url)
 
             elif media_type == 'tv':
                 # 필터에 객체가 없는 경우 새로 등록
@@ -405,6 +417,11 @@ def submit_comment(request, media_id, media_type):
 
                     return redirect(url)
 
+                # 리뷰 제목을 입력하지 않았을 경우 경고 메시지
+                else:
+                    messages.error(request, 'Please write the title of your review!')
+                    return redirect(url)
+
     else:
         print('get 방식으로 하셨나유? 코드작성 하셔유')
 
@@ -413,9 +430,6 @@ def submit_comment(request, media_id, media_type):
         print(f'변경후 starRate : {Movies.objects.get(movie_id=media_id).m_rateScore}')
     elif media_type == 'tv':
         print(f'변경후 starRate : {Series.objects.get(series_id=media_id).s_rateScore}')
-
-
-
 
         # # 새 리뷰를 등록하는 경우
         # else:
@@ -480,8 +494,6 @@ def submit_comment(request, media_id, media_type):
         #
         #             else:
         #                 messages.error(request, '오류!')
-
-
 
 
 def delete_comment(request, comment_id, media_type):
@@ -592,5 +604,3 @@ def starRate(user_id, media_id, media_type, update_type, score):
         else: print('오류오류~')
         print(f'update_score: {update_score} = {Series.objects.get(series_id=media_id).s_rateScore}')
     else: print('오류오류~')
-
-
