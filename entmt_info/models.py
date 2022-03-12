@@ -7,14 +7,14 @@ class Movies(models.Model):
     m_posterPath = models.CharField(max_length=50, blank=True, null=True)   # 포스터 path
     m_likeCount = models.IntegerField(default=0)    # 찜 수
     m_rateScore = models.FloatField(default=0)    # 별점
-    m_releaseDate = models.DateField()    # 개봉일
+    m_releaseDate = models.DateField(null=True, blank=True)    # 개봉일
     m_popularity = models.FloatField()    # 인기도
 
     def __str__(self):
         return self.m_title
 
     def print_rate(self):
-        return round(self.m_rateScore, 2)
+        return round(self.m_rateScore, 1)
 
 
 class Series(models.Model):
@@ -23,15 +23,15 @@ class Series(models.Model):
     s_posterPath = models.CharField(max_length=50, blank=True, null=True)   # 포스터 path
     s_likeCount = models.IntegerField(default=0)    # 찜 수
     s_rateScore = models.FloatField(default=0)  # 별점
-    s_firstAirDate = models.DateField(null=True)    # 첫 방영일
-    s_lastAirDate = models.DateField(null=True)    # 마지막 방영일
+    s_firstAirDate = models.DateField(null=True, blank=True)    # 첫 방영일
+    s_lastAirDate = models.DateField(null=True, blank=True)    # 마지막 방영일
     s_popularity = models.FloatField()    # 인기도
 
     def __str__(self):
         return self.s_title
 
     def print_rate(self):
-        return round(self.s_rateScore, 2)
+        return round(self.s_rateScore, 1)
 
 
 class Genres(models.Model):

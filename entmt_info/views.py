@@ -26,7 +26,9 @@ def homepage(request):
                          for movie, genre in zip(pop_movies, movies_genres)]
     pop_series_genres = [{'series': series, 'genre': genre}
                          for series, genre in zip(pop_series, series_genres)]
-    print(pop_movies_genres)
+    # print(f'pop_movies------{pop_movies}')
+    # print(f'pop_series-------{pop_series}')
+    # print(pop_movies_genres)
     print('-----hello-------')
     try:
         # autho가 선택한 genre 가져오기
@@ -160,16 +162,20 @@ def dbsave_series(result):
 
 # add movie object, add genre object
 def ei_movie(request):
+    # movie_csv = 'entmt_info/data/movie_500r.csv'
     movie_csv = 'entmt_info/data/movie_200.csv'
-
+    result = ''
     with open(movie_csv, 'r', encoding='utf-8') as f:
         rdr = csv.reader(f)
         for line in rdr:
-            url_movies = 'https://api.themoviedb.org/3/movie/' + line[0]
-            result = api_python.api_request(url_movies)
+            try:
+                url_movies = 'https://api.themoviedb.org/3/movie/' + line[0]
+                result = api_python.api_request(url_movies)
 
-            # db에 추가
-            dbsave_movie(result)
+                # db에 추가
+                dbsave_movie(result)
+            except:
+                print(result)
 
     print('done - downloading movies')
 
@@ -178,16 +184,20 @@ def ei_movie(request):
 
 # add series object, add genre object
 def ei_tv(request):
+    # tv_csv = 'entmt_info/data/tv_500r.csv'
     tv_csv = 'entmt_info/data/tv_200.csv'
-
+    result = ''
     with open(tv_csv, 'r', encoding='utf-8') as f:
         rdr = csv.reader(f)
         for line in rdr:
-            url_series = 'https://api.themoviedb.org/3/tv/' + line[0]
-            result = api_python.api_request(url_series)
+            try:
+                url_series = 'https://api.themoviedb.org/3/tv/' + line[0]
+                result = api_python.api_request(url_series)
 
-            # db에 추가
-            dbsave_series(result)
+                # db에 추가
+                dbsave_series(result)
+            except:
+                print(result)
 
     print('done - downloading series')
 
@@ -295,10 +305,10 @@ def e_results(request):
             result_rate.append(None)
         else:
             if res_comp['res_media_type'] == 'movie':
-                try: result_rate.append(Movies.objects.get(movie_id=int(res_comp['res_id'])).m_rateScore)
+                try: result_rate.append(Movies.objects.get(movie_id=int(res_comp['res_id'])).print_rate())
                 except: result_rate.append(0.0)
             else:
-                try: result_rate.append(Series.objects.get(series_id=int(res_comp['res_id'])).s_rateScore)
+                try: result_rate.append(Series.objects.get(series_id=int(res_comp['res_id'])).print_rate())
                 except: result_rate.append(0.0)
 
     print(f'result_rate={result_rate}')
@@ -306,7 +316,7 @@ def e_results(request):
     for res, res_rate in zip(result, result_rate):
         res['rate'] = res_rate
 
-    print(result)
+    # print(result)
 
     content = {
         'results': result,
