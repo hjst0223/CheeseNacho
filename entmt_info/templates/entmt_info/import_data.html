@@ -1,28 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
+{% extends 'base.html' %}
+
+{% block html_header %}
+<title>Main Page</title>
+
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="/static/js/menu_btn.js"></script>
+{% endblock %}
 
-</head>
-<body>
-     <br>
-     <button type="button"
-        class="btn btn-success"
-        onclick="import_genres()">장르목록 download 하기 : import_genres</button>
-     <p></p>
-     <button type="button"
-        class="btn btn-success"
-        onclick="import_movie()">영화내용 download 하기 : import_movie</button>
-     <p></p>
-     <button type="button"
-        class="btn btn-success"
-        onclick="import_tv()">시리즈내용 download 하기 : import_tv</button>
-     <p></p>
-     <a href="{% url 'home' %}">main으로 가기</a>
-</body>
-</html>
+{% block html_body %}
+
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row">
+            <button type="button"
+                class="redbtn"
+                    style="color: #FD9F28; background-color: #233A50;
+                           border-radius: .5em; border-color: #233A50;
+                           border: 1px solid #0F2133;"
+                    onclick="import_genres()">장르목록 download 하기 : import_genres</button><p></p>
+                <button type="button"
+                class="redbtn"
+                    style="color: #FD9F28; background-color: #233A50;
+                           border-radius: .5em; border-color: #233A50;
+                           border: 1px solid #0F2133;"
+                    onclick="import_movie()">영화내용 download 하기 : import_movie</button><p></p>
+                <button type="button"
+                class="redbtn"
+                    style="color: #FD9F28; background-color: #233A50;
+                           border-radius: .5em; border-color: #233A50;
+                           border: 1px solid #0F2133;"
+                    onclick="import_tv()">시리즈내용 download 하기 : import_tv</button><p></p>
+                <a href="{% url 'entmt_info:homepage' %}">
+                <button type="button" class="redbtn"
+                style="color: #FD9F28; background-color: #233A50;
+                       border-radius: .5em; border-color: #233A50;
+                       border: 1px solid #0F2133;"
+                >homepage로 가기</button></a>
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row">
+	    	<div  class="slick-multiItemSlider">
+	    	</div>
+	    </div>
+	</div>
+</div>
+<div class="movie-items">
+				<div class="tabs">
+				</div>
+</div>
+    	    </div>
+	</div>
+</div>
+{% endblock %}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Main Page</title>#}
+{#    <link rel="icon" href="data:;base64,iVBORw0KGgo=">#}
+{#    <!-- jQuery CDN -->#}
+{#    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>#}
+{#    <script src="/static/js/menu_btn.js"></script>#}
+{##}
+{#</head>#}
+{#<body>#}
+{#     <br>#}
+{#     <button type="button"#}
+{#        class="btn btn-success"#}
+{#        onclick="import_genres()">장르목록 download 하기 : import_genres</button>#}
+{#     <p></p>#}
+{#     <button type="button"#}
+{#        class="btn btn-success"#}
+{#        onclick="import_movie()">영화내용 download 하기 : import_movie</button>#}
+{#     <p></p>#}
+{#     <button type="button"#}
+{#        class="btn btn-success"#}
+{#        onclick="import_tv()">시리즈내용 download 하기 : import_tv</button>#}
+{#     <p></p>#}
+{#     <a href="{% url 'home' %}">main으로 가기</a>#}
+{#</body>#}
+{#</html>#}
