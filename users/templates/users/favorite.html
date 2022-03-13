@@ -64,13 +64,13 @@
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="topbar-filter user">
 					<p>Found <span>{{ list_length }} media</span> in total</p>
-					<label>Sort by:</label>
-					<select>
-						<option value="range">-- Choose option --</option>
-						<option value="saab">-- Choose option 2--</option>
-					</select>
-					<a href="userfavoritelist.html" class="list"><i class="ion-ios-list-outline "></i></a>
-					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>
+{#					<label>Sort by:</label>#}
+{#					<select>#}
+{#						<option value="range">-- Choose option --</option>#}
+{#						<option value="saab">-- Choose option 2--</option>#}
+{#					</select>#}
+{#					<a href="userfavoritelist.html" class="list"><i class="ion-ios-list-outline "></i></a>#}
+{#					<a  href="userfavoritegrid.html" class="grid"><i class="ion-grid active"></i></a>#}
 				</div>
 				<div class="flex-wrap-movielist grid-fav">
                     {% for movie in movie_list %}
@@ -107,7 +107,7 @@
 	            			</div>
                             <div class="mv-item-infor">
                                 <h6><a href='/entmt_info/detail/?res_id={{ series.series_id }}&media_type=tv'>{{ series.s_title }}</a></h6>
-								<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
+								<p class="rate"><i class="ion-android-star"></i><span>{{ series.print_rate }}</span> /10</p>
 							</div>
 						</div>
                     {% endfor %}
