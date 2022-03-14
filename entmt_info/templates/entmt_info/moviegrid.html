@@ -27,14 +27,16 @@
 {#			<div class="col-md-8 col-sm-12 col-xs-12">#}
 				<div class="topbar-filter">
 					<p>Found <span><span>
-                        <script type="text/javascript">
-                            var length = 0
-                            {% for res in results %}
-                                length += 1
-                            {% endfor %}
-                            document.write(length)
-                        </script>
-                    </span> media</span> in total</p>
+{#                        <script type="text/javascript">#}
+{#                            var length = 0#}
+{#                            {% for res in results %}#}
+{#                                length += 1#}
+{#                            {% endfor %}#}
+{#                            document.write(length)#}
+{#                        </script>#}
+                        {{ total_results }}
+                        {% if total_results <= 1 %} </span> media</span>
+                        {% else %} </span> medias</span> {% endif %}in total</p>
 
 {#					<label>Sort by:</label>#}
 {#					<select>#}

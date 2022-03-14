@@ -35,3 +35,14 @@ def api_search(search_word):
     # print(response_body)
     getJson = json.loads(response_body)['results']
     return getJson
+
+def api_search2(search_word):
+    url = 'https://api.themoviedb.org/3/search/multi?language=en-US&page=1&include_adult=false'
+    queryParms = '&api_key=' + USER_API_KEY + '&query=' + quote(search_word)
+    request = Request(url + queryParms + '&_type=json')
+    request.get_method = lambda: 'GET'
+    response_body = urlopen(request).read()
+    # print(response_body)
+    getJson1 = json.loads(response_body)['results']
+    getJson2 = json.loads(response_body)['total_results']
+    return getJson1, getJson2

@@ -281,8 +281,9 @@ def e_detail(request):
 # 검색 결과 페이지
 def e_results(request):
     search_word = request.GET.get('search', '')
-    result = api_python.api_search(search_word)
-
+    result, total_results = api_python.api_search2(search_word)
+    # print(result)
+    print(total_results)
     # 장르 한글로 변경
     for i in range(len(result)):
         try:
@@ -319,6 +320,7 @@ def e_results(request):
 
     context = {
         'results': result,
+        'total_results': total_results,
     }
 
     # return render(request, 'entmt_info/results.html', content)
