@@ -6,7 +6,7 @@
 
 기간 : `2022/02/22`~`2022/03/14`
 
-![main](images/main.gif) <img src="images/main2.gif" width="490" height="423"/>
+![main](images/main.gif) <img src="images/main2.gif" width="450" height="423"/>
 
 ## 1. CNDB 소개
 TV시리즈와 영화 모두를 아우르는 한국형 Media 검색•리뷰 등록 사이트로, TV 시리즈와 영화를 함께 다루지 않는 국내 Media DB 사이트들의 한계점을 보완하였다. TMDB의 데이터를 기반으로 한국뿐만 아니라 전세계의 TV 시리즈와 영화에 대해 각 사용자마다 리뷰를 등록하고 관리할 수 있도록 구현하였다.  
